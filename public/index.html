@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JustSketchMe</title>
+
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+
+    <script type="text/javascript" src="scripts/jquery-3.3.1.js"></script>
+
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#fff">
+    <meta name="apple-mobile-web-app-title" content="JustSketchMe">
+    <link rel="apple-touch-startup-image" href="images/icons_old/icon-512x512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
+    <link rel="manifest" href="images/icons/site.webmanifest">
+    <link rel="mask-icon" href="images/icons/safari-pinned-tab.svg" color="#00aba9">
+    <link rel="shortcut icon" href="images/icons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+  </head>
+  <body>
+
+    <div id="info">
+			<a href="javascript:toggleJoints();">"Q" toggle joints</a> 
+			<a href="javascript:loadModel('engine/IdleF.fbx');">"F" female model</a>
+			<a href="javascript:loadModel('engine/IdleM.fbx');">"M" male model</a>
+		</div>
+
+		<script src="engine/js/three.js"></script>
+
+		<script src="engine/js/libs/inflate.min.js"></script>
+		<script src="engine/js/loaders/FBXLoader.js"></script>
+
+		<script src="engine/js/controls/OrbitControls.js"></script>
+		<script src="engine/js/controls/TransformControls.js"></script>
+
+		<script src="engine/js/WebGL.js"></script>
+		<script src="engine/js/libs/stats.min.js"></script>
+
+    <script src="engine/script.js"></script>
+    <script src="scripts/app.js"></script>
+  </body>
+</html>
