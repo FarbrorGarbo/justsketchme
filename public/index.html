@@ -26,12 +26,15 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body>
+    <button id="menu" onclick="toggle_visibility('info');"><b>Toggle menu</b></button>
     <div id="info">
       <h3>Tools:</h3>
       <a href="javascript:toggleJoints();">Toggle joints</a> 
       <br><a href="javascript:effect.enabled = !effect.enabled;">Toggle line shader</a>
-      <br>Directional light: <a href="javascript:directionalLight.intensity += 0.3;">+</a> <a href="javascript:directionalLight.intensity -= 0.3;">-</a>
-      <br>Ambient light: <a href="javascript:hemisphereLight.intensity += 0.3;">+</a> <a href="javascript:hemisphereLight.intensity -= 0.3;">-</a>
+      <br>Directional light: 
+      <br><button onclick="directionalLight.intensity += 0.5;">Increase</button> <button onclick="directionalLight.intensity -= 0.5;">Decrease</button>
+      <br>Ambient light: 
+      <br><button onclick="hemisphereLight.intensity += 0.8;">Increase</button> <button onclick="hemisphereLight.intensity -= 0.8;">Decrease</button>
       <br>
       <h3>Models:</h3>
     </div>

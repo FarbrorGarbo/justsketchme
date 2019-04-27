@@ -77,7 +77,7 @@ function lightSetup () {
   scene.add( lightControl );
 }
 
-function pointLoader () {
+function pointLoader (size = 1) {
   var material = new THREE.MeshPhongMaterial( { depthTest: false} );
 
   var geometry = new THREE.SphereGeometry( 3, 5, 5 );
@@ -88,7 +88,7 @@ function pointLoader () {
   sphere.material.receiveShadow = false;
   sphere.material.castShadow = false;
   sphere.renderOrder = 1;
-
+  sphere.scale.set(1/size,1/size,1/size);
   return sphere;
 }
 
@@ -116,7 +116,7 @@ function loadModel(modelIndex) {
           !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(child.name);
           
           if(model.joints.includes(child.name)){
-            var sphere = pointLoader();
+            var sphere = pointLoader(model.scale);
             childObjects.push(sphere);
             child.add( sphere );
           }
