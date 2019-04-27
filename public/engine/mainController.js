@@ -3,8 +3,8 @@
 if ( WEBGL.isWebGLAvailable() === false ) {
   document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 }
-var container, stats, controls, jointControl;
-var camera, scene, renderer, light;
+var container, stats, controls, jointControl, lightControl;
+var camera, scene, renderer, hemisphereLight, directionalLight;
 var childObjects = [];
 var clock = new THREE.Clock();
 var mixer;
@@ -42,42 +42,57 @@ function init() {
   // scene.fog = new THREE.Fog( 0xffffff, 200, 1000 );
 
   // ground
-  var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
-  mesh.rotation.x = - Math.PI / 2;
-  mesh.receiveShadow = true;
-  scene.add( mesh );
+  // var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+  // mesh.rotation.x = - Math.PI / 2;
+  // mesh.receiveShadow = true;
+  // scene.add( mesh );
 
   var gridHelper = new THREE.PolarGridHelper( 300, 10 );
   scene.add( gridHelper );
 
   loadModel(3);
+  lightSetup();
+}
 
-  // Light
-  light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
-  light.position.set( 0, 200, 0 );
-  scene.add( light );
-  light = new THREE.DirectionalLight( 0xffffff );
-  light.position.set( 0, 200, 100 );
-  light.castShadow = true;
-  light.shadow.camera.top = 90;
-  light.shadow.camera.bottom = - 50;
-  light.shadow.camera.left = - 60;
-  light.shadow.camera.right = 60;
-  scene.add( light );
+function lightSetup () {
+  hemisphereLight = new THREE.HemisphereLight( 0x443333, 0x111122 );
+  scene.add( hemisphereLight );
 
+  directionalLight = new THREE.DirectionalLight( 0xffffbb, 2 );
+  directionalLight.position.set( 0, 250, 100 );
+  directionalLight.castShadow = true;
+  scene.add( directionalLight );
+
+  directionalLight.add(pointLoader());
+  
   lightControl = new THREE.TransformControls( camera, renderer.domElement );
   lightControl.addEventListener( 'change', render );
   lightControl.addEventListener( 'dragging-changed', function ( event ) {
     controls.enabled = ! event.value;
   } );
-  lightControl.attach( light );
+
+  lightControl.attach( directionalLight );
   lightControl.setMode( "translate" );
+  
   scene.add( lightControl );
 }
 
+function pointLoader () {
+  var material = new THREE.MeshPhongMaterial( { depthTest: false} );
+
+  var geometry = new THREE.SphereGeometry( 3, 5, 5 );
+  var sphere = new THREE.Mesh( geometry, material );
+
+  sphere.material.color.set( 0xffffff );
+  sphere.material.wireframe = true;
+  sphere.material.receiveShadow = false;
+  sphere.material.castShadow = false;
+  sphere.renderOrder = 1;
+
+  return sphere;
+}
+
 function loadModel(modelIndex) {
-  // loadMmd();
-  // return;
     // if(activeModel){
       scene.remove(activeModel);
       childObjects.forEach(child => scene.remove(child));
@@ -85,7 +100,7 @@ function loadModel(modelIndex) {
     // }
 
     const model = Models[modelIndex];
-    var loader = new THREE.FBXLoader();
+    var loader = model.type == 'fbx' ? new THREE.FBXLoader() : new THREE.MMDLoader();
     document.querySelector("#loading").style.visibility='visible'
     loader.load( `engine/models/${model.path}`, function ( object ) {
   
@@ -101,14 +116,7 @@ function loadModel(modelIndex) {
           !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(child.name);
           
           if(model.joints.includes(child.name)){
-            var material = new THREE.MeshPhongMaterial( { side: THREE.DoubleSide, depthTest: false } );
-            var geometry = new THREE.SphereGeometry( 3, 5, 5 );
-            var sphere = new THREE.Mesh( geometry, material );
-  
-            sphere.material.color.set( 0xffffff );
-            sphere.material.wireframe = true;
-            sphere.renderOrder = 1;
-  
+            var sphere = pointLoader();
             childObjects.push(sphere);
             child.add( sphere );
           }
@@ -120,30 +128,15 @@ function loadModel(modelIndex) {
       object.scale.set(model.scale, model.scale, model.scale);
       scene.add( object );
       document.querySelector("#loading").style.visibility='hidden'
-    } );
-}
-
-function addJoints(child) {
-
+    }, onProgress );
 }
 
 function onProgress( xhr ) {
   if ( xhr.lengthComputable ) {
     var percentComplete = xhr.loaded / xhr.total * 100;
-    console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+    document.querySelector("#loading").innerHTML = `Loading - ${Math.round( percentComplete, 2 )}% downloaded`;
   }
 }
-
-function loadMmd(id){
-  var modelFile = 'engine/models/mmd/miku/miku_v2.pmd';
-  var loader = new THREE.MMDLoader();
-  loader.load( modelFile, function ( object ) {
-    mesh = object;
-    mesh.position.y = 0;
-    scene.add( mesh );
-  }, onProgress, null );
-}
-
 
 
 function onWindowResize() {
@@ -199,13 +192,9 @@ function toggleJoints () {
   childObjects.forEach(child => child.visible = !child.visible);
 }
 
-window.addEventListener( 'keydown', function ( event ) {
-    switch ( event.keyCode ) {
-      case 81: // Q
-        toggleJoints();
-        break;
-    }
-});
+function updateLightIntensity(amount) {
+  directionalLight.intensity += amount;
+}
 
 document.addEventListener('mousedown', function (event) {
   event.preventDefault();
