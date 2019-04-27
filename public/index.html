@@ -9,8 +9,6 @@
 
     <link rel="stylesheet" type="text/css" href="styles/style.css">
 
-    <script type="text/javascript" src="scripts/jquery-3.3.1.js"></script>
-
     <link rel="manifest" href="/manifest.json">
 
     <!-- Add to home screen for Safari on iOS -->
@@ -30,23 +28,35 @@
   <body>
 
     <div id="info">
-			<a href="javascript:toggleJoints();">"Q" toggle joints</a> 
-			<a href="javascript:loadModel('engine/IdleF.fbx');">"F" female model</a>
-			<a href="javascript:loadModel('engine/IdleM.fbx');">"M" male model</a>
-		</div>
+      <h3>Tools:</h3>
+      <a href="javascript:toggleJoints();">Toggle joints</a> 
+      <br><a href="javascript:effect.enabled = !effect.enabled;">Toggle line shader</a>
+      <br>
+      <h3>Models:</h3>
+    </div>
+    <div id="loading">Loading model...</div>
+    <script src="engine/models/models.js"></script>
 
-		<script src="engine/js/three.js"></script>
-
+    <script src="engine/js/three.js"></script>
+    <script src="engine/js/effects/OutlineEffect.js"></script>
+    
 		<script src="engine/js/libs/inflate.min.js"></script>
-		<script src="engine/js/loaders/FBXLoader.js"></script>
+    <script src="engine/js/loaders/FBXLoader.js"></script>
+
+    <script src="engine/js/libs/mmdparser.min.js"></script>
+    <script src="engine/js/loaders/MMDLoader.js"></script>
+    <script src="engine/js/animation/MMDAnimationHelper.js"></script>
 
 		<script src="engine/js/controls/OrbitControls.js"></script>
 		<script src="engine/js/controls/TransformControls.js"></script>
 
+    
 		<script src="engine/js/WebGL.js"></script>
 		<script src="engine/js/libs/stats.min.js"></script>
 
-    <script src="engine/script.js"></script>
+
+    <script src="engine/menu.js"></script>
+    <script src="engine/mainController.js"></script>
     <script src="scripts/app.js"></script>
   </body>
 </html>

@@ -1,20 +1,27 @@
 body {
   font-family: Monospace;
-  background-color: #000;
-  color: #fff;
+  background-color: #fff;
   margin: 0px;
   overflow: hidden;
 }
 #info {
-  color: #fff;
   position: absolute;
   top: 10px;
-  width: 100%;
-  text-align: center;
+  left: 10px;
+  text-align: left;
   z-index: 100;
   display:block;
 }
 #info a {
   color: #046;
+  font-weight: bold;
+}
+
+#loading {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  color: goldenrod;
   font-weight: bold;
 }
