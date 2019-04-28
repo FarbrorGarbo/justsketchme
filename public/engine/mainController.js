@@ -6,7 +6,6 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 var container, stats, controls, jointControl, lightControl;
 var camera, scene, renderer, hemisphereLight, directionalLight;
 var childObjects = [];
-var jointRotationStore = [];
 var clock = new THREE.Clock();
 var mixer;
 var raycaster = new THREE.Raycaster();
@@ -94,12 +93,12 @@ function pointLoader (size = 1) {
   return sphere;
 }
 
+
 function loadModel(modelIndex) {
     if(activeModel){
       scene.remove(activeModel);
       childObjects.forEach(child => scene.remove(child));
       childObjects = [];
-      storeRotations(activeModel);
     }
 
     modelLoader = Models[modelIndex];
@@ -118,7 +117,8 @@ function loadModel(modelIndex) {
       object.scale.set(modelLoader.scale, modelLoader.scale, modelLoader.scale);
       scene.add( object );
       document.querySelector("#loading").style.visibility='hidden'
-      setPose(jointRotationStore[jointRotationStore.length-1]);
+
+      setPose(currentPose.pose);
     }, onProgress );
 }
 
@@ -168,8 +168,6 @@ function render() {
   effect.render( scene, camera );
 }
 
-var draggingHackeroony = true;
-
 function selectJoint(event, x, y) {
 
     mouse.x = (x / renderer.domElement.clientWidth) * 2 - 1;
@@ -188,14 +186,7 @@ function selectJoint(event, x, y) {
         jointControl.addEventListener( 'dragging-changed', function ( event ) {
           controls.enabled = ! event.value;
           
-          if(draggingHackeroony){
-            // Drag begin
-            storeRotations(activeModel)
-            draggingHackeroony = false;
-          } else {
-            // Drag end
-            draggingHackeroony = true;
-          }
+          setCurrentPose(modelLoader.id, activeModel);
         } );
         scene.add( jointControl );
       } else {
@@ -206,66 +197,6 @@ function selectJoint(event, x, y) {
         jointControl.detach();
       }
     }
-    
-}
-
-function storeRotations(model) {
-  var rotationValues = [];
-  traverseJoints(modelLoader, model, function (child) {
-    rotationValues.push({
-      x: child.rotation.x,
-      y: child.rotation.y,
-      z: child.rotation.z,
-    });
-  });
-  jointRotationStore.push(rotationValues);
-  console.log(jointRotationStore);
-  return rotationValues;
-}
-
-function undo () {
-  console.log("Undoing");
-  if(jointRotationStore.length > 0) {
-    setPose(jointRotationStore.pop())
-  }
-}
-
-function reset() {
-  jointRotationStore = jointRotationStore.slice(0);
-  setPose(jointRotationStore[0]);
-}
-
-function setPose (pose) {
-  if (!pose) return;
-  var i = 0;
-  traverseJoints(modelLoader, activeModel, function (child) {
-    child.rotation.set(pose[i].x, pose[i].y, pose[i].z);
-    i++;
-  });
-}
-
-function takeScreenshot() {
-/*
-  // open in new window like this
-  //
-  var w = window.open('', '');
-  w.document.title = "Screenshot";
-  //w.document.body.style.backgroundColor = "red";
-  var img = new Image();
-  // Without 'preserveDrawingBuffer' set to true, we must render now
-  renderer.render(scene, camera);
-  img.src = renderer.domElement.toDataURL();
-  w.document.body.appendChild(img);  
-*/
-
-  // download file like this.
-  //
-  var a = document.createElement('a');
-  // Without 'preserveDrawingBuffer' set to true, we must render now
-  renderer.render(scene, camera);
-  a.href = renderer.domElement.toDataURL().replace("image/png", "image/octet-stream");
-  a.download = 'JustSketchMe - Screenshot.png'
-  a.click();
 }
 
 function toggleJoints () {

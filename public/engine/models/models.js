@@ -2,6 +2,7 @@
 const Models = [
   {
     name: 'Male mannequin',
+    id: 0,
     path: 'IdleM.fbx',
     scale: 1,
     type: 'fbx',
@@ -9,6 +10,7 @@ const Models = [
   },
   {
     name: 'Female mannequin',
+    id: 1,
     path: 'IdleF.fbx',
     scale: 1,
     type: 'fbx',
@@ -16,6 +18,7 @@ const Models = [
   },
   {
     name: 'Knight',
+    id: 2,
     path: 'paladin_j_nordstrom.fbx',
     scale: 1.2,
     type: 'fbx',
@@ -23,6 +26,7 @@ const Models = [
   },
   {
     name: 'Assassin',
+    id: 3,
     path: 'akai_e_espiritu.fbx',
     scale: 1,
     type: 'fbx',
@@ -30,6 +34,7 @@ const Models = [
   },
   {
     name: 'Eve',
+    id: 4,
     path: 'eve_j_gonzales.fbx',
     scale: 1.5,
     type: 'fbx',
@@ -37,6 +42,7 @@ const Models = [
   },
   {
     name: 'Exo',
+    id: 5,
     path: 'exo_gray.fbx',
     scale: 1,
     type: 'fbx',
