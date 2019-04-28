@@ -6,12 +6,13 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 var container, stats, controls, jointControl, lightControl;
 var camera, scene, renderer, hemisphereLight, directionalLight;
 var childObjects = [];
+var jointRotationStore = [];
 var clock = new THREE.Clock();
 var mixer;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
-var activeModel;
+var activeModel, modelLoader;
 
 init();
 animate();
@@ -50,12 +51,13 @@ function init() {
   var gridHelper = new THREE.PolarGridHelper( 300, 10 );
   scene.add( gridHelper );
 
-  loadModel(3);
+  loadModel(0);
   lightSetup();
 }
 
 function lightSetup () {
-  hemisphereLight = new THREE.HemisphereLight( 0x443333, 0x111122 );
+  hemisphereLight = new THREE.HemisphereLight( 0x443333, 0x11112 );
+  hemisphereLight.intensity = 5;
   scene.add( hemisphereLight );
 
   directionalLight = new THREE.DirectionalLight( 0xffffbb, 2 );
@@ -93,41 +95,30 @@ function pointLoader (size = 1) {
 }
 
 function loadModel(modelIndex) {
-    // if(activeModel){
+    if(activeModel){
       scene.remove(activeModel);
       childObjects.forEach(child => scene.remove(child));
       childObjects = [];
-    // }
+      storeRotations(activeModel);
+    }
 
-    const model = Models[modelIndex];
-    var loader = model.type == 'fbx' ? new THREE.FBXLoader() : new THREE.MMDLoader();
+    modelLoader = Models[modelIndex];
+
+    var loader = modelLoader.type == 'fbx' ? new THREE.FBXLoader() : new THREE.MMDLoader();
     document.querySelector("#loading").style.visibility='visible'
-    loader.load( `engine/models/${model.path}`, function ( object ) {
-  
-      var jointChecker = [];
-      object.traverse( function ( child ) {
-        if ( child.isMesh ) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-        // child.material =  new THREE.MeshPhongMaterial();
+    loader.load( `engine/models/${modelLoader.path}`, function ( object ) {
 
-        if (child.isObject3D && child.name != "Alpha_Surface" && child.name != "Alpha_Joints"){
-          !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(child.name);
-          
-          if(model.joints.includes(child.name)){
-            var sphere = pointLoader(model.scale);
-            childObjects.push(sphere);
-            child.add( sphere );
-          }
-        }
-      } );
-      console.log(jointChecker.toString());
+      traverseJoints(modelLoader, object, function (child) {
+        var sphere = pointLoader(modelLoader.scale);
+        childObjects.push(sphere);
+        child.add( sphere );
+      });
       
       activeModel = object;
-      object.scale.set(model.scale, model.scale, model.scale);
+      object.scale.set(modelLoader.scale, modelLoader.scale, modelLoader.scale);
       scene.add( object );
       document.querySelector("#loading").style.visibility='hidden'
+      setPose(jointRotationStore[jointRotationStore.length-1]);
     }, onProgress );
 }
 
@@ -138,6 +129,27 @@ function onProgress( xhr ) {
   }
 }
 
+function traverseJoints (modelInfo, model, thingToDo) {
+  var jointChecker = [];
+  var checked = [];
+
+  model.traverse( function ( child ) {
+    if ( child.isMesh ) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+    }
+
+    if (child.isObject3D && child.name != "Alpha_Surface" && child.name != "Alpha_Joints"){
+      !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(child.name);
+      
+      if(modelInfo.joints.includes(child.name) && !checked.includes(child.name)){
+        thingToDo(child);
+        checked.push(child.name);
+      }
+    }
+  } );
+  // console.log(jointChecker.toString());
+}
 
 function onWindowResize() {
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -153,9 +165,10 @@ function animate() {
 }
 
 function render() {
-  // renderer.render( scene, camera );
   effect.render( scene, camera );
 }
+
+var draggingHackeroony = true;
 
 function selectJoint(event, x, y) {
 
@@ -174,6 +187,15 @@ function selectJoint(event, x, y) {
         jointControl.setSpace( "local" );
         jointControl.addEventListener( 'dragging-changed', function ( event ) {
           controls.enabled = ! event.value;
+          
+          if(draggingHackeroony){
+            // Drag begin
+            storeRotations(activeModel)
+            draggingHackeroony = false;
+          } else {
+            // Drag end
+            draggingHackeroony = true;
+          }
         } );
         scene.add( jointControl );
       } else {
@@ -183,9 +205,67 @@ function selectJoint(event, x, y) {
       if(controls.enabled && jointControl){
         jointControl.detach();
       }
-      
     }
+    
+}
 
+function storeRotations(model) {
+  var rotationValues = [];
+  traverseJoints(modelLoader, model, function (child) {
+    rotationValues.push({
+      x: child.rotation.x,
+      y: child.rotation.y,
+      z: child.rotation.z,
+    });
+  });
+  jointRotationStore.push(rotationValues);
+  console.log(jointRotationStore);
+  return rotationValues;
+}
+
+function undo () {
+  console.log("Undoing");
+  if(jointRotationStore.length > 0) {
+    setPose(jointRotationStore.pop())
+  }
+}
+
+function reset() {
+  jointRotationStore = jointRotationStore.slice(0);
+  setPose(jointRotationStore[0]);
+}
+
+function setPose (pose) {
+  if (!pose) return;
+  var i = 0;
+  traverseJoints(modelLoader, activeModel, function (child) {
+    child.rotation.set(pose[i].x, pose[i].y, pose[i].z);
+    i++;
+  });
+}
+
+function takeScreenshot() {
+/*
+  // open in new window like this
+  //
+  var w = window.open('', '');
+  w.document.title = "Screenshot";
+  //w.document.body.style.backgroundColor = "red";
+  var img = new Image();
+  // Without 'preserveDrawingBuffer' set to true, we must render now
+  renderer.render(scene, camera);
+  img.src = renderer.domElement.toDataURL();
+  w.document.body.appendChild(img);  
+*/
+
+  // download file like this.
+  //
+  var a = document.createElement('a');
+  // Without 'preserveDrawingBuffer' set to true, we must render now
+  renderer.render(scene, camera);
+  a.href = renderer.domElement.toDataURL().replace("image/png", "image/octet-stream");
+  a.download = 'JustSketchMe - Screenshot.png'
+  a.click();
 }
 
 function toggleJoints () {
