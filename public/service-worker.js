@@ -15,7 +15,16 @@ var filesToCache = [
  "./scripts/app.js",
  "./service-worker.js",
  "./styles",
- "./styles/style.css"
+ "./styles/style.css",
+ "./engine/models",
+ "./engine/models/akai_e_espiritu.fbx",
+ "./engine/models/eve_j_gonzales.fbx",
+ "./engine/models/exo_gray.fbx",
+ "./engine/models/IdleF.fbx",
+ "./engine/models/IdleM.fbx",
+ "./engine/models/malcolm.fbx",
+ "./engine/models/paladin_j_nordstrom.fbx",
+ "./engine/models/models.js",
 ];
 
 self.addEventListener('install', function(e) {
