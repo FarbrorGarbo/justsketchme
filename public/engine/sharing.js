@@ -27,9 +27,12 @@ function takeScreenshot() {
 }
 
 function share() {
-  var filename = prompt('What do you want to call your pose?') + '.jsm'
-  // console.log(currentPose.pose);
-  download(filename, JSON.stringify(currentPose));
+  // var filename = prompt('What do you want to call your pose?') + '.jsm'
+  console.log(JSON.stringify(currentPose));
+  var encoded = Base64.encode( JSON.stringify(currentPose));
+  console.log(encoded);
+  console.log(Base64.decode(encoded));
+  // download(filename, JSON.stringify(currentPose));
 }
 
 function download(filename, text) {

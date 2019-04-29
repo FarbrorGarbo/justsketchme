@@ -3,8 +3,9 @@
 if ( WEBGL.isWebGLAvailable() === false ) {
   document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 }
-var container, stats, controls, jointControl, lightControl;
-var camera, scene, renderer, hemisphereLight, directionalLight;
+var container, stats, controls, jointControl;
+var camera, scene, renderer;
+var ambientLight, directionalLight, ambientLightControl, directionalLightControl;
 var childObjects = [];
 var clock = new THREE.Clock();
 var mixer;
@@ -51,31 +52,50 @@ function init() {
   scene.add( gridHelper );
 
   loadModel(0);
-  lightSetup();
 }
 
-function lightSetup () {
-  hemisphereLight = new THREE.HemisphereLight( 0x443333, 0x11112 );
-  hemisphereLight.intensity = 5;
-  scene.add( hemisphereLight );
+function lightSetup (ambient, directional) {
+  if(ambientLight){
+    scene.remove (ambientLight);
+    scene.remove (ambientLightControl);
+  }
+  ambientLight = ambient;
 
-  directionalLight = new THREE.DirectionalLight( 0xffffbb, 2 );
-  directionalLight.position.set( 0, 250, 100 );
+  scene.add( ambientLight );
+
+  ambientLightControl = new THREE.TransformControls( camera, renderer.domElement );
+  ambientLightControl.addEventListener( 'change', render );
+  ambientLightControl.addEventListener( 'dragging-changed', function ( event ) {
+    controls.enabled = ! event.value;
+  } );
+
+  ambientLightControl.attach( ambientLight );
+  ambientLightControl.setMode( "translate" );
+  
+  // scene.add( ambientLightControl );
+  if(directionalLight){
+    scene.remove (directionalLight);
+    scene.remove (directionalLightControl);
+  }
+
+  directionalLight = directional;
+  directionalLight.position.set( 100, 100, 100 );
+  // directionalLight.position.set( - 1, 1, 1 ).normalize();
   directionalLight.castShadow = true;
   scene.add( directionalLight );
 
   directionalLight.add(pointLoader());
   
-  lightControl = new THREE.TransformControls( camera, renderer.domElement );
-  lightControl.addEventListener( 'change', render );
-  lightControl.addEventListener( 'dragging-changed', function ( event ) {
+  directionalLightControl = new THREE.TransformControls( camera, renderer.domElement );
+  directionalLightControl.addEventListener( 'change', render );
+  directionalLightControl.addEventListener( 'dragging-changed', function ( event ) {
     controls.enabled = ! event.value;
   } );
 
-  lightControl.attach( directionalLight );
-  lightControl.setMode( "translate" );
+  directionalLightControl.attach( directionalLight );
+  directionalLightControl.setMode( "translate" );
   
-  scene.add( lightControl );
+  scene.add( directionalLightControl );
 }
 
 function pointLoader (size = 1) {
@@ -103,7 +123,15 @@ function loadModel(modelIndex) {
 
     modelLoader = Models[modelIndex];
 
-    var loader = modelLoader.type == 'fbx' ? new THREE.FBXLoader() : new THREE.MMDLoader();
+    var loader;
+    if(modelLoader.type == 'fbx') {
+      lightSetup(new THREE.AmbientLight( 0x443333, 4 ), new THREE.DirectionalLight( 0xffffbb, 2 ));
+      loader = new THREE.FBXLoader();
+    } else if(modelLoader.type == 'mmd') {
+      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1.2 ));
+      loader = new THREE.MMDLoader();
+    }
+    
     document.querySelector("#loading").style.visibility='visible'
     loader.load( `engine/models/${modelLoader.path}`, function ( object ) {
 
@@ -140,7 +168,7 @@ function traverseJoints (modelInfo, model, thingToDo) {
     }
 
     if (child.isObject3D && child.name != "Alpha_Surface" && child.name != "Alpha_Joints"){
-      !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(child.name);
+      !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(`"${child.name}"`);
       
       if(modelInfo.joints.includes(child.name) && !checked.includes(child.name)){
         thingToDo(child);
@@ -148,7 +176,7 @@ function traverseJoints (modelInfo, model, thingToDo) {
       }
     }
   } );
-  // console.log(jointChecker.toString());
+  console.log(jointChecker.toString());
 }
 
 function onWindowResize() {
