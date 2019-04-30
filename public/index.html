@@ -26,7 +26,67 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    <div id="info">
+    <div id="info" class="menu">
+      <div class="models">
+        <button onclick="toggle_visibility('.model-list')"  title="Model list">
+          <img src="images/tools/users.svg"/>
+        </button>
+        <ul class="model-list">
+        </ul>
+      </div>
+      <div class="controls">
+          <button onclick="undo()" title="Undo">
+            <img src="images/tools/undo.svg"/>
+          </button>
+          <button onclick="reset()"  title="Reset">
+            <img src="images/tools/trash.svg"/>
+          </button>
+          <button disabled onclick="undo()"  title="Redo">
+            <img src="images/tools/redo.svg"/>
+          </button>
+      </div>
+      <div class="lights">
+          <button onclick="toggle_visibility('.light-controls')"  title="Light controls">
+            <img src="images/tools/bars.svg"/>
+          </button>
+          <div class="light-controls">
+            <div class="control">
+                <button onclick="ambientLight.intensity += 0.5;"  title="Increase ambient light intensity">
+                  <img src="images/tools/add-circular-button.svg"/>
+                </button>
+                <img src="images/tools/sunbeam.svg"/>
+                <button onclick="ambientLight.intensity -= 0.5;" title="Decrease ambient light intensity">
+                    <img src="images/tools/minus-circular-button.svg"/>
+                  </button>
+            </div>
+            <div class="control">
+                <button onclick="directionalLight.intensity += 0.3" title="Increase directional light intensity">
+                  <img src="images/tools/add-circular-button.svg"/>
+                </button>
+                <img src="images/tools/light-bulb.svg"/>
+                <button onclick="directionalLight.intensity -= 0.3" title="Decrease ambient light intensity">
+                    <img src="images/tools/minus-circular-button.svg"/>
+                  </button>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div id="bottom" class="menu">
+        <div></div>
+        <div class="controls">
+            <button onclick="effect.enabled = !effect.enabled" title="Toggle outlines">
+              <img src="images/tools/paintbrush.svg"/>
+            </button>
+            <button onclick="toggleJoints()" title="Toggle joints">
+              <img src="images/tools/vision.svg"/>
+            </button>
+            <button onclick="takeScreenshot()" title="Take screenshot">
+              <img src="images/tools/camera.svg"/>
+            </button>
+        </div>
+        <div></div>
+    </div>
+    <!-- <div id="info">
       <h3>Tools:</h3>
       <a href="javascript:toggleJoints();">Toggle joints</a> 
       <br><a href="javascript:effect.enabled = !effect.enabled;">Toggle line shader</a>
@@ -44,7 +104,7 @@
       <br><button onclick="openSharedPose()">Open pose file</button>
       <br>
       <h3>Models:</h3>
-    </div>
+    </div> -->
 
     <div id="loading">Loading model...</div>
     <script src="engine/models/models.js"></script>
