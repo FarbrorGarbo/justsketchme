@@ -211,6 +211,7 @@ function selectJoint(event, x, y) {
         jointControl.attach( intersects[0].object.parent );
         jointControl.setMode( "rotate" );
         jointControl.setSpace( "local" );
+        console.log(intersects[0].object.parent.name);
         jointControl.addEventListener( 'dragging-changed', function ( event ) {
           controls.enabled = ! event.value;
           

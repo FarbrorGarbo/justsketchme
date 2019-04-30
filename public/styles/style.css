@@ -5,13 +5,6 @@ body {
   overflow: hidden;
 }
 
-#menu {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 100;
-}
-
 #info {
   position: absolute;
   top: 20px;
