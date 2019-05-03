@@ -72,41 +72,27 @@
       </div>
     </div>
     <div id="bottom" class="menu">
-        <div></div>
-        <div class="controls">
-            <button onclick="effect.enabled = !effect.enabled" title="Toggle outlines">
-              <img src="images/tools/paintbrush.svg"/>
-            </button>
-            <button onclick="toggleJoints()" title="Toggle joints">
-              <img src="images/tools/vision.svg"/>
-            </button>
-            <button onclick="takeScreenshot()" title="Take screenshot">
-              <img src="images/tools/camera.svg"/>
-            </button>
-        </div>
-        <div></div>
+      <div></div>
+      <div class="controls">
+          <button onclick="effect.enabled = !effect.enabled" title="Toggle outlines">
+            <img src="images/tools/paintbrush.svg"/>
+          </button>
+          <button onclick="toggleJoints()" title="Toggle joints">
+            <img src="images/tools/vision.svg"/>
+          </button>
+          <button onclick="takeScreenshot()" title="Take screenshot">
+            <img src="images/tools/camera.svg"/>
+          </button>
+      </div>
+      <div>
+          <!-- <br><button onclick="share()">Share/save current pose</button>
+          <br>Upload a JSM pose file
+          <br><input type="file" id="fileToLoad" accept=".jsm" />
+          <br><button onclick="openSharedPose()">Open pose file</button> -->
+      </div>
     </div>
-    <!-- <div id="info">
-      <h3>Tools:</h3>
-      <a href="javascript:toggleJoints();">Toggle joints</a> 
-      <br><a href="javascript:effect.enabled = !effect.enabled;">Toggle line shader</a>
-      <br>Directional light: 
-      <br><button onclick="directionalLight.intensity += 0.5;">Increase</button> <button onclick="directionalLight.intensity -= 0.5;">Decrease</button>
-      <br>Ambient light: 
-      <br><button onclick="ambientLight.intensity += 0.8;">Increase</button> <button onclick="ambientLight.intensity -= 0.8;">Decrease</button>
-      <br><button onclick="undo()">Undo</button>
-      <br><button onclick="reset()">Reset scene</button>
-      <h3>Sharing (WIP)</h3>
-      <button onclick="takeScreenshot()">Take picture of scene</button>
-      <br><button onclick="share()">Share/save current pose</button>
-      <br>Upload a JSM pose file
-      <br><input type="file" id="fileToLoad" accept=".jsm" />
-      <br><button onclick="openSharedPose()">Open pose file</button>
-      <br>
-      <h3>Models:</h3>
-    </div> -->
-
     <div id="loading">Loading model...</div>
+
     <script src="engine/models/models.js"></script>
     <script src="engine/poseManager.js"></script>
     <script src="engine/encoder.js"></script>
@@ -130,10 +116,10 @@
     
 		<script src="engine/js/WebGL.js"></script>
 		<script src="engine/js/libs/stats.min.js"></script>
+    <script src="scripts/app.js"></script>
 
 
     <script src="engine/menu.js"></script>
     <script src="engine/mainController.js"></script>
-    <script src="scripts/app.js"></script>
   </body>
 </html>

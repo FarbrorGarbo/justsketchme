@@ -1,5 +1,5 @@
-var dataCacheName = 'justsketchme';
-var cacheName = 'justsketchme';
+var dataCacheName = 'v1';
+var cacheName = 'v1';
 var filesToCache = [
   '/',
  "./images",
@@ -16,15 +16,6 @@ var filesToCache = [
  "./service-worker.js",
  "./styles",
  "./styles/style.css",
- "./engine/models",
- "./engine/models/akai_e_espiritu.fbx",
- "./engine/models/eve_j_gonzales.fbx",
- "./engine/models/exo_gray.fbx",
- "./engine/models/IdleF.fbx",
- "./engine/models/IdleM.fbx",
- "./engine/models/malcolm.fbx",
- "./engine/models/paladin_j_nordstrom.fbx",
- "./engine/models/models.js",
 ];
 
 self.addEventListener('install', function(e) {
@@ -53,10 +44,27 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  console.log('[Service Worker] Fetch', e.request.url);
   e.respondWith(
     caches.match(e.request).then(function(response) {
-      return response || fetch(e.request);
+      if(response) {
+        console.log('[Service Worker] Fetch', e.request.url);
+        return response
+      } else {
+        console.log("Need to fetch and cache!");
+        return fetch(e.request).then(response => {
+          stashInCache(e.request, response.clone());
+          return response;
+        })
+      }
     })
   );
 });
+
+// Get this working at some point
+const stashInCache = (request, response) => {
+  if (response.status === 200) {
+    console.log("[Service Worker] Stashing", request.url);
+    caches.open(cacheName)
+      .then(cache => cache.put(request, response));
+  }
+};

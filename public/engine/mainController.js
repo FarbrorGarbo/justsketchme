@@ -120,7 +120,7 @@ function loadModel(modelIndex) {
       childObjects.forEach(child => scene.remove(child));
       childObjects = [];
     }
-
+    console.log("Loading model!");
     modelLoader = Models[modelIndex];
 
     var loader;
@@ -130,10 +130,14 @@ function loadModel(modelIndex) {
     } else if(modelLoader.type == 'mmd') {
       lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1.2 ));
       loader = new THREE.MMDLoader();
+    } else if (modelLoader.type == 'obj') {
+      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1.2 ));
+      loader = new THREE.OBJLoader();
     }
     
     document.querySelector("#loading").style.visibility='visible'
     loader.load( `engine/models/${modelLoader.path}`, function ( object ) {
+
 
       traverseJoints(modelLoader, object, function (child) {
         var sphere = pointLoader(modelLoader.scale);
@@ -176,7 +180,7 @@ function traverseJoints (modelInfo, model, thingToDo) {
       }
     }
   } );
-  console.log(jointChecker.toString());
+  // console.log(jointChecker.toString());
 }
 
 function onWindowResize() {
@@ -203,15 +207,14 @@ function selectJoint(event, x, y) {
     raycaster.setFromCamera(mouse, camera);
     
     var intersects = raycaster.intersectObjects(childObjects);
-
     if (intersects.length > 0) {
+      childObjects.forEach(child => child.material.color.setHex( 0xffffff ));
       if(!jointControl){
         jointControl = new THREE.TransformControls( camera, renderer.domElement );
         jointControl.addEventListener( 'change', render );
         jointControl.attach( intersects[0].object.parent );
         jointControl.setMode( "rotate" );
         jointControl.setSpace( "local" );
-        console.log(intersects[0].object.parent.name);
         jointControl.addEventListener( 'dragging-changed', function ( event ) {
           controls.enabled = ! event.value;
           
@@ -221,15 +224,19 @@ function selectJoint(event, x, y) {
       } else {
         jointControl.attach( intersects[0].object.parent );
       }
+      console.log(intersects[0].object.parent.name);
+      intersects[0].object.material.color.setHex( 0xff0000 );
     } else {
       if(controls.enabled && jointControl){
         jointControl.detach();
+        childObjects.forEach(child => child.material.color.setHex( 0xffffff ));
       }
     }
 }
 
 function toggleJoints () {
   childObjects.forEach(child => child.visible = !child.visible);
+  directionalLightControl.visible = !directionalLightControl.visible;
 }
 
 function updateLightIntensity(amount) {
@@ -247,3 +254,10 @@ document.addEventListener('touchstart', function (event) {
   selectJoint(event, event.touches[0].clientX, event.touches[0].clientY);
 }, false);
 
+function toggle_visibility(query) {
+  var e = document.querySelector(query);
+  if(e.style.display == 'block')
+     e.style.display = 'none';
+  else
+     e.style.display = 'block';
+}
