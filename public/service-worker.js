@@ -1,5 +1,5 @@
-var dataCacheName = 'v1';
-var cacheName = 'v1';
+var dataCacheName = 'v2';
+var cacheName = 'v2';
 var filesToCache = [
   '/',
  "./images",
@@ -13,7 +13,6 @@ var filesToCache = [
  "./manifest.json",
  "./scripts",
  "./scripts/app.js",
- "./service-worker.js",
  "./styles",
  "./styles/style.css",
 ];

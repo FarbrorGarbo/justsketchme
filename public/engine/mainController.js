@@ -40,13 +40,6 @@ function init() {
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color( 0xffffff );
-  // scene.fog = new THREE.Fog( 0xffffff, 200, 1000 );
-
-  // ground
-  // var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
-  // mesh.rotation.x = - Math.PI / 2;
-  // mesh.receiveShadow = true;
-  // scene.add( mesh );
 
   var gridHelper = new THREE.PolarGridHelper( 300, 10 );
   scene.add( gridHelper );
@@ -80,7 +73,6 @@ function lightSetup (ambient, directional) {
 
   directionalLight = directional;
   directionalLight.position.set( 100, 100, 100 );
-  // directionalLight.position.set( - 1, 1, 1 ).normalize();
   directionalLight.castShadow = true;
   scene.add( directionalLight );
 
@@ -125,13 +117,13 @@ function loadModel(modelIndex) {
 
     var loader;
     if(modelLoader.type == 'fbx') {
-      lightSetup(new THREE.AmbientLight( 0x443333, 4 ), new THREE.DirectionalLight( 0xffffbb, 2 ));
+      lightSetup(new THREE.AmbientLight( 0x443333, 3 ), new THREE.DirectionalLight( 0xffffbb, 1 ));
       loader = new THREE.FBXLoader();
     } else if(modelLoader.type == 'mmd') {
-      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1.2 ));
+      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1 ));
       loader = new THREE.MMDLoader();
     } else if (modelLoader.type == 'obj') {
-      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1.2 ));
+      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1 ));
       loader = new THREE.OBJLoader();
     }
     
@@ -140,7 +132,10 @@ function loadModel(modelIndex) {
 
 
       traverseJoints(modelLoader, object, function (child) {
-        var sphere = pointLoader(modelLoader.scale);
+        const fingerNames = ['Thumb','Index','Middle','Ring','Pinky'];
+        ;
+        const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? modelLoader.scale * 5 : modelLoader.scale;
+        var sphere = pointLoader(jointScale);
         childObjects.push(sphere);
         child.add( sphere );
       });
@@ -172,7 +167,7 @@ function traverseJoints (modelInfo, model, thingToDo) {
     }
 
     if (child.isObject3D && child.name != "Alpha_Surface" && child.name != "Alpha_Joints"){
-      !jointChecker.includes(child.name) && !/\d/.test(child.name) && jointChecker.push(`"${child.name}"`);
+      !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
       
       if(modelInfo.joints.includes(child.name) && !checked.includes(child.name)){
         thingToDo(child);
@@ -205,7 +200,7 @@ function selectJoint(event, x, y) {
     mouse.x = (x / renderer.domElement.clientWidth) * 2 - 1;
     mouse.y =  - (y / renderer.domElement.clientHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
-    
+
     var intersects = raycaster.intersectObjects(childObjects);
     if (intersects.length > 0) {
       childObjects.forEach(child => child.material.color.setHex( 0xffffff ));
@@ -222,6 +217,7 @@ function selectJoint(event, x, y) {
         } );
         scene.add( jointControl );
       } else {
+        jointControl.detach();
         jointControl.attach( intersects[0].object.parent );
       }
       console.log(intersects[0].object.parent.name);

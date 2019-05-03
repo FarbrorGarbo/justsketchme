@@ -1,5 +1,5 @@
 
-var namedJoints = ['Hips','Spine','LeftShoulder','LeftArm','LeftHand','LeftForeArm','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'];
+var namedJoints = ['Hips','Spine','LeftShoulder','LeftArm','LeftHand','Thumb','Index','Middle','Ring','Pinky','LeftForeArm','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'];
 var jointRotationStore = [];
 var currentPose = {};
 

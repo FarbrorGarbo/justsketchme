@@ -14,7 +14,7 @@ const Models = [
     path: 'IdleF.fbx',
     scale: 1,
     type: 'fbx',
-    joints: ["mixamorigHips", "mixamorigSpine", "mixamorigNeck", "mixamorigHead", "mixamorigLeftShoulder", "mixamorigLeftArm", "mixamorigLeftForeArm", "mixamorigLeftHand", "mixamorigRightShoulder", "mixamorigRightArm", "mixamorigRightForeArm", "mixamorigRightHand", "mixamorigRightUpLeg", "mixamorigRightLeg", "mixamorigRightFoot", "mixamorigRightToeBase", "mixamorigLeftUpLeg", "mixamorigLeftLeg", "mixamorigLeftFoot", "mixamorigLeftToeBase"],
+    joints: ["mixamorigHips", "mixamorigSpine", "mixamorigNeck", "mixamorigHead", "mixamorigLeftShoulder", "mixamorigLeftArm", "mixamorigLeftForeArm", "mixamorigLeftHand", "mixamorigRightShoulder", "mixamorigRightArm", "mixamorigRightForeArm", "mixamorigRightHand", "mixamorigRightUpLeg", "mixamorigRightLeg", "mixamorigRightFoot", "mixamorigRightToeBase", "mixamorigLeftUpLeg", "mixamorigLeftLeg", "mixamorigLeftFoot", "mixamorigLeftToeBase","mixamorigRightHandPinky1","mixamorigRightHandPinky2","mixamorigRightHandPinky3","mixamorigRightHandRing1","mixamorigRightHandRing2","mixamorigRightHandRing3","mixamorigRightHandMiddle1","mixamorigRightHandMiddle2","mixamorigRightHandMiddle3","mixamorigRightHandIndex1","mixamorigRightHandIndex2","mixamorigRightHandIndex3","mixamorigRightHandThumb1","mixamorigRightHandThumb2","mixamorigRightHandThumb3","mixamorigLeftHandPinky1","mixamorigLeftHandPinky2","mixamorigLeftHandPinky3","mixamorigLeftHandRing1","mixamorigLeftHandRing2","mixamorigLeftHandRing3","mixamorigLeftHandMiddle1","mixamorigLeftHandMiddle2","mixamorigLeftHandMiddle3","mixamorigLeftHandIndex1","mixamorigLeftHandIndex2","mixamorigLeftHandIndex3","mixamorigLeftHandThumb1","mixamorigLeftHandThumb2","mixamorigLeftHandThumb3"],
   },
   {
     name: 'Male mannequin',
@@ -22,7 +22,7 @@ const Models = [
     path: 'IdleM.fbx',
     scale: 1,
     type: 'fbx',
-    joints: ["mixamorigHips", "mixamorigSpine", "mixamorigNeck", "mixamorigHead", "mixamorigLeftShoulder", "mixamorigLeftArm", "mixamorigLeftForeArm", "mixamorigLeftHand", "mixamorigRightShoulder", "mixamorigRightArm", "mixamorigRightForeArm", "mixamorigRightHand", "mixamorigRightUpLeg", "mixamorigRightLeg", "mixamorigRightFoot", "mixamorigRightToeBase", "mixamorigLeftUpLeg", "mixamorigLeftLeg", "mixamorigLeftFoot", "mixamorigLeftToeBase"],
+    joints: ["mixamorigHips", "mixamorigSpine", "mixamorigNeck", "mixamorigHead", "mixamorigLeftShoulder", "mixamorigLeftArm", "mixamorigLeftForeArm", "mixamorigLeftHand", "mixamorigRightShoulder", "mixamorigRightArm", "mixamorigRightForeArm", "mixamorigRightHand", "mixamorigRightUpLeg", "mixamorigRightLeg", "mixamorigRightFoot", "mixamorigRightToeBase", "mixamorigLeftUpLeg", "mixamorigLeftLeg", "mixamorigLeftFoot", "mixamorigLeftToeBase","mixamorigRightHandPinky1","mixamorigRightHandPinky2","mixamorigRightHandPinky3","mixamorigRightHandRing1","mixamorigRightHandRing2","mixamorigRightHandRing3","mixamorigRightHandMiddle1","mixamorigRightHandMiddle2","mixamorigRightHandMiddle3","mixamorigRightHandIndex1","mixamorigRightHandIndex2","mixamorigRightHandIndex3","mixamorigRightHandThumb1","mixamorigRightHandThumb2","mixamorigRightHandThumb3","mixamorigLeftHandPinky1","mixamorigLeftHandPinky2","mixamorigLeftHandPinky3","mixamorigLeftHandRing1","mixamorigLeftHandRing2","mixamorigLeftHandRing3","mixamorigLeftHandMiddle1","mixamorigLeftHandMiddle2","mixamorigLeftHandMiddle3","mixamorigLeftHandIndex1","mixamorigLeftHandIndex2","mixamorigLeftHandIndex3","mixamorigLeftHandThumb1","mixamorigLeftHandThumb2","mixamorigLeftHandThumb3"],
   },
   {
     name: 'Knight',
@@ -30,7 +30,7 @@ const Models = [
     path: 'paladin_j_nordstrom.fbx',
     scale: 1.2,
     type: 'fbx',
-    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'],
+    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
   },
   {
     name: 'Assassin',
@@ -38,7 +38,7 @@ const Models = [
     path: 'akai_e_espiritu.fbx',
     scale: 1,
     type: 'fbx',
-    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'],
+    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
   },
   {
     name: 'Eve',
@@ -46,7 +46,7 @@ const Models = [
     path: 'eve_j_gonzales.fbx',
     scale: 1.5,
     type: 'fbx',
-    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'],
+    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
   },
   {
     name: 'Exo',
@@ -54,7 +54,7 @@ const Models = [
     path: 'exo_gray.fbx',
     scale: 1,
     type: 'fbx',
-    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'],
+    joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
   },
   {
     name: 'Hatsune Miku',
