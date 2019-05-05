@@ -57,7 +57,7 @@ const Models = [
     joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
   },
   {
-    name: 'Hatsune Miku',
+    name: 'Hatsune Miku [WIP]',
     path: 'mmd/miku/miku_v2.pmd',
     scale: 10,
     type: 'mmd',

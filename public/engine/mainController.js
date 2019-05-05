@@ -56,16 +56,6 @@ function lightSetup (ambient, directional) {
 
   scene.add( ambientLight );
 
-  ambientLightControl = new THREE.TransformControls( camera, renderer.domElement );
-  ambientLightControl.addEventListener( 'change', render );
-  ambientLightControl.addEventListener( 'dragging-changed', function ( event ) {
-    controls.enabled = ! event.value;
-  } );
-
-  ambientLightControl.attach( ambientLight );
-  ambientLightControl.setMode( "translate" );
-  
-  // scene.add( ambientLightControl );
   if(directionalLight){
     scene.remove (directionalLight);
     scene.remove (directionalLightControl);
@@ -78,16 +68,7 @@ function lightSetup (ambient, directional) {
 
   directionalLight.add(pointLoader());
   
-  directionalLightControl = new THREE.TransformControls( camera, renderer.domElement );
-  directionalLightControl.addEventListener( 'change', render );
-  directionalLightControl.addEventListener( 'dragging-changed', function ( event ) {
-    controls.enabled = ! event.value;
-  } );
-
-  directionalLightControl.attach( directionalLight );
-  directionalLightControl.setMode( "translate" );
-  
-  scene.add( directionalLightControl );
+  directionalLightControl = addControl(directionalLight, "translate");
 }
 
 function pointLoader (size = 1) {
@@ -133,7 +114,7 @@ function loadModel(modelIndex) {
 
       traverseJoints(modelLoader, object, function (child) {
         const fingerNames = ['Thumb','Index','Middle','Ring','Pinky'];
-        ;
+  
         const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? modelLoader.scale * 5 : modelLoader.scale;
         var sphere = pointLoader(jointScale);
         childObjects.push(sphere);
@@ -143,6 +124,8 @@ function loadModel(modelIndex) {
       activeModel = object;
       object.scale.set(modelLoader.scale, modelLoader.scale, modelLoader.scale);
       scene.add( object );
+      // addControl(object, "translate");
+
       document.querySelector("#loading").style.visibility='hidden'
 
       setPose(currentPose.pose);
@@ -154,6 +137,22 @@ function onProgress( xhr ) {
     var percentComplete = xhr.loaded / xhr.total * 100;
     document.querySelector("#loading").innerHTML = `Loading - ${Math.round( percentComplete, 2 )}% downloaded`;
   }
+}
+
+function addControl(object, type, space="local", ondragCallback=null) {
+  var transformControl = new THREE.TransformControls( camera, renderer.domElement );
+  transformControl.addEventListener( 'change', render );
+  transformControl.addEventListener( 'dragging-changed', function ( event ) {
+    controls.enabled = ! event.value;
+    ondragCallback();
+  } );
+
+  transformControl.attach( object );
+  transformControl.setMode( type );
+  transformControl.setSpace( space );
+  
+  scene.add( transformControl );
+  return transformControl;
 }
 
 function traverseJoints (modelInfo, model, thingToDo) {
@@ -205,17 +204,18 @@ function selectJoint(event, x, y) {
     if (intersects.length > 0) {
       childObjects.forEach(child => child.material.color.setHex( 0xffffff ));
       if(!jointControl){
-        jointControl = new THREE.TransformControls( camera, renderer.domElement );
-        jointControl.addEventListener( 'change', render );
-        jointControl.attach( intersects[0].object.parent );
-        jointControl.setMode( "rotate" );
-        jointControl.setSpace( "local" );
-        jointControl.addEventListener( 'dragging-changed', function ( event ) {
-          controls.enabled = ! event.value;
+        // jointControl = new THREE.TransformControls( camera, renderer.domElement );
+        // jointControl.addEventListener( 'change', render );
+        // jointControl.attach( intersects[0].object.parent );
+        // jointControl.setMode( "rotate" );
+        // jointControl.setSpace( "local" );
+        // jointControl.addEventListener( 'dragging-changed', function ( event ) {
+        //   controls.enabled = ! event.value;
           
-          setCurrentPose(modelLoader.id, activeModel);
-        } );
-        scene.add( jointControl );
+        //   setCurrentPose(modelLoader.id, activeModel);
+        // } );
+        // scene.add( jointControl );
+        jointControl = addControl(intersects[0].object.parent, "rotate", () => setCurrentPose(modelLoader.id, activeModel));
       } else {
         jointControl.detach();
         jointControl.attach( intersects[0].object.parent );

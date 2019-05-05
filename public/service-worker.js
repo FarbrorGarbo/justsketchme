@@ -1,5 +1,5 @@
-var dataCacheName = 'v2';
-var cacheName = 'v2';
+var dataCacheName = 'v4';
+var cacheName = 'v4';
 var filesToCache = [
   '/',
  "./images",
@@ -59,7 +59,6 @@ self.addEventListener('fetch', function(e) {
   );
 });
 
-// Get this working at some point
 const stashInCache = (request, response) => {
   if (response.status === 200) {
     console.log("[Service Worker] Stashing", request.url);
