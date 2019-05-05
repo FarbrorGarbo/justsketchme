@@ -27,12 +27,13 @@ function takeScreenshot() {
 }
 
 function share() {
-  var filename = prompt('What do you want to call your pose?') + '.jsm'
-  // console.log(JSON.stringify(currentPose));
-  // var encoded = Base64.encode( JSON.stringify(currentPose));
-  // console.log(encoded);
+  // var filename = prompt('What do you want to call your pose?') + '.jsm'
+
+  // console.log(Base64.encode( JSON.stringify(currentPose)));
+  var encoded = Base64.encode( JSON.stringify(currentPose));
+  prompt('Copy the link below', `${window.location}?pose=${encoded}`)
   // console.log(Base64.decode(encoded));
-  download(filename, JSON.stringify(currentPose));
+  // download(filename, JSON.stringify(currentPose));
 }
 
 function download(filename, text) {
@@ -63,4 +64,27 @@ function openSharedPose() {
   };
 
   fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+  });
+  return vars;
+}
+
+function getUrlParam(parameter, defaultvalue){
+  var urlparameter = defaultvalue;
+  if(window.location.href.indexOf(parameter) > -1){
+      urlparameter = getUrlVars()[parameter];
+      }
+  return urlparameter;
+}
+
+function getPoseFromUrlParam() {
+  var param = getUrlParam('pose');
+  if (!param)
+    return false;
+  return JSON.parse(Base64.decode(param).pose);
 }

@@ -98,3 +98,48 @@ img {
   width: 130px;
   padding: 10px;
 }
+
+
+.contribute-popup {
+	position: fixed;
+	max-width: 500px;
+	width: 100%;
+	left: calc(50% - 280px);
+	top: 150px;
+	padding: 30px;
+	border-radius: 5px;
+	font-size: 14px;
+	background: #fff;
+	z-index: 100;
+	box-shadow: 4px 4px 23px -2px rgba(0,0,0,0.75);
+	text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+  .contribute-popup {
+    left: auto;
+    max-width: none;
+    width: auto;
+    margin: 0 10px;
+  }
+}
+
+.contribute-popup button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.contribute-popup img {
+  max-width: 100%;
+}
+
+.contribute-popup .contribute {
+  width: 175px;
+  height:37px;
+  margin: 0 auto 20px;
+}
