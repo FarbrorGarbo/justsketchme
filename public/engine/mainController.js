@@ -15,6 +15,8 @@ var mouse = new THREE.Vector2();
 var loading = false;
 var activeModel, modelLoader;
 
+var local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
+
 init();
 animate();
 
@@ -113,7 +115,10 @@ function loadModel(modelIndex) {
     }
     
     document.querySelector("#loading").style.visibility='visible'
-    loader.load( `engine/models/${modelLoader.path}`, function ( object ) {
+
+    var modelPath = local || !modelLoader.src ?  modelLoader.path : `https://cors-anywhere.herokuapp.com/${modelLoader.src}`;
+
+    loader.load(modelPath, function ( object ) {
 
 
       traverseJoints(modelLoader, object, function (child) {
@@ -130,11 +135,17 @@ function loadModel(modelIndex) {
       scene.add( object );
       // addControl(object, "translate");
 
+      document.querySelector("#loading").innerHTML = "";
       document.querySelector("#loading").style.visibility='hidden'
       
       setPose(currentPose.pose);
       loading = false;
-    }, onProgress );
+    }, onProgress, onError );
+}
+
+function onError() {
+  document.querySelector("#loading").innerHTML = "Failed to load model :(";
+  loading = false;
 }
 
 function onProgress( xhr ) {

@@ -5,12 +5,24 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "**/testing_models/**"
+      "**/models/**"
     ],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source" : "**/*.@(fbx|obj|pmd)",
+        "headers" : [ {
+            "key" : "Cache-Control",
+            "value" : "max-age=1000000"
+        },{
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }]
       }
     ]
   }
