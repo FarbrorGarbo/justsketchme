@@ -1,5 +1,5 @@
-var dataCacheName = 'v8';
-var cacheName = 'v8';
+var dataCacheName = 'v9';
+var cacheName = 'v9';
 var filesToCache = [
   '/',
  "./images",
@@ -66,3 +66,9 @@ const stashInCache = (request, response) => {
       .then(cache => cache.put(request, response));
   }
 };
+
+self.addEventListener('message', function (event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
