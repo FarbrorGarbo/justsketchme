@@ -1,5 +1,5 @@
-var dataCacheName = 'v11';
-var cacheName = 'v11';
+var dataCacheName = 'v12';
+var cacheName = 'v12';
 var filesToCache = [
   '/',
  "./images",
