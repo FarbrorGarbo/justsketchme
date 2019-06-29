@@ -4,8 +4,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
   document.body.appendChild( WEBGL.getWebGLErrorMessage() );
 }
 var container, stats, controls, jointControl;
-var camera, scene, renderer;
-var ambientLight, directionalLight, ambientLightControl, directionalLightControl;
+var camera, scene;
 var childObjects = [];
 var clock = new THREE.Clock();
 var mixer;
@@ -17,62 +16,62 @@ var activeModel, modelLoader;
 
 var local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
 
-init();
-animate();
+
+function update() {};
 
 function init() {
-  container = document.createElement( 'div' );
-  document.body.appendChild( container );
-  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 2, 2000 );
-  camera.position.set( 100, 200, 300 );
+  // container = document.createElement( 'div' );
+  // document.body.appendChild( container );
+  // camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 2, 2000 );
+  // camera.position.set( 100, 200, 300 );
 
 
-  renderer = new THREE.WebGLRenderer( { antialias: true } );
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  renderer.shadowMap.enabled = true;
-  container.appendChild( renderer.domElement );
+  // renderer = new THREE.WebGLRenderer( { antialias: true } );
+  // renderer.setPixelRatio( window.devicePixelRatio );
+  // renderer.setSize( window.innerWidth, window.innerHeight );
+  // renderer.shadowMap.enabled = true;
+  // container.appendChild( renderer.domElement );
 
-  effect = new THREE.OutlineEffect( renderer );
-  window.addEventListener( 'resize', onWindowResize, false );
+  // effect = new THREE.OutlineEffect( renderer );
+  // window.addEventListener( 'resize', onWindowResize, false );
 
-  controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.target.set( 0, 100, 0 );
-  controls.screenSpacePanning = true;
-  controls.update();
+  // controls = new THREE.OrbitControls( camera, renderer.domElement );
+  // controls.target.set( 0, 100, 0 );
+  // controls.screenSpacePanning = true;
+  // controls.update();
 
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color( 0xffffff );
+  // scene = new THREE.Scene();
+  // scene.background = new THREE.Color( 0xffffff );
 
-  var gridHelper = new THREE.PolarGridHelper( 300, 10 );
-  scene.add( gridHelper );
+  // var gridHelper = new THREE.PolarGridHelper( 300, 10 );
+  // scene.add( gridHelper );
 
-  loadModel(0);
+  // loadModel(0);
 }
 
-function lightSetup (ambient, directional) {
-  if(ambientLight){
-    scene.remove (ambientLight);
-    scene.remove (ambientLightControl);
-  }
-  ambientLight = ambient;
+// function lightSetup (ambient, directional) {
+//   if(ambientLight){
+//     scene.remove (ambientLight);
+//     scene.remove (ambientLightControl);
+//   }
+//   ambientLight = ambient;
 
-  scene.add( ambientLight );
+//   scene.add( ambientLight );
 
-  if(directionalLight){
-    scene.remove (directionalLight);
-    scene.remove (directionalLightControl);
-  }
+//   if(directionalLight){
+//     scene.remove (directionalLight);
+//     scene.remove (directionalLightControl);
+//   }
 
-  directionalLight = directional;
-  directionalLight.position.set( 100, 100, 100 );
-  directionalLight.castShadow = true;
-  scene.add( directionalLight );
+//   directionalLight = directional;
+//   directionalLight.position.set( 100, 100, 100 );
+//   directionalLight.castShadow = true;
+//   scene.add( directionalLight );
 
-  directionalLight.add(pointLoader());
+//   directionalLight.add(pointLoader());
   
-  directionalLightControl = addControl(directionalLight, "translate");
-}
+//   directionalLightControl = addControl(directionalLight, "translate");
+// }
 
 function pointLoader (size = 1) {
   var material = new THREE.MeshPhongMaterial( { depthTest: false} );
@@ -90,29 +89,22 @@ function pointLoader (size = 1) {
 }
 
 
-function loadModel(modelIndex) {
+function loadModel(modelIndex, orbitControl, _camera, _scene) {
+  scene = _scene;
+  camera = _camera;
+  controls = orbitControl;
     if (loading) return;
     loading = true;
 
-    if(activeModel){
-      scene.remove(activeModel);
-      childObjects.forEach(child => scene.remove(child));
-      childObjects = [];
-    }
+    // if(activeModel){
+    //   scene.remove(activeModel);
+    //   childObjects.forEach(child => scene.remove(child));
+    //   childObjects = [];
+    // }
     console.log("Loading model!");
     modelLoader = Models[modelIndex];
 
-    var loader;
-    if(modelLoader.type == 'fbx') {
-      lightSetup(new THREE.AmbientLight( 0x443333, 3 ), new THREE.DirectionalLight( 0xffffbb, 1 ));
-      loader = new THREE.FBXLoader();
-    } else if(modelLoader.type == 'mmd') {
-      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1 ));
-      loader = new THREE.MMDLoader();
-    } else if (modelLoader.type == 'obj') {
-      lightSetup(new THREE.AmbientLight( 0x666666, 0.5 ), new THREE.DirectionalLight( 0x887766, 1 ));
-      loader = new THREE.OBJLoader();
-    }
+    var loader = new THREE.FBXLoader();
     
     document.querySelector("#loading").style.visibility='visible'
 
@@ -156,7 +148,7 @@ function onProgress( xhr ) {
 }
 
 function addControl(object, type, space="local") {
-  var transformControl = new THREE.TransformControls( camera, renderer.domElement );
+  var transformControl = new THREE.TransformControls( camera, canvas );
   transformControl.addEventListener( 'change', render );
   transformControl.addEventListener( 'dragging-changed', function ( event ) {
     controls.enabled = ! event.value;
@@ -171,10 +163,11 @@ function addControl(object, type, space="local") {
   return transformControl;
 }
 
-function selectJoint(x, y) {
+function selectJoint() {
 
-  mouse.x = (x / renderer.domElement.clientWidth) * 2 - 1;
-  mouse.y =  - (y / renderer.domElement.clientHeight) * 2 + 1;
+  mouse.x= ((event.clientX - canvas.offsetLeft)/canvas.clientWidth) * 2 - 1;
+  mouse.y=-((event.clientY - canvas.offsetTop)/canvas.clientHeight) * 2 + 1;
+
   raycaster.setFromCamera(mouse, camera);
 
   var intersects = raycaster.intersectObjects(childObjects);
@@ -229,22 +222,15 @@ function traverseJoints (modelInfo, model, thingToDo) {
   // console.log(jointChecker.toString());
 }
 
-function onWindowResize() {
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+// function onWindowResize() {
+//   renderer.setSize( window.innerWidth, window.innerHeight );
+//   camera.aspect = window.innerWidth / window.innerHeight;
+//   camera.updateProjectionMatrix();
 
-  effect.setSize( window.innerWidth, window.innerHeight );
-}
+//   effect.setSize( window.innerWidth, window.innerHeight );
+// }
 
-function animate() {
-  requestAnimationFrame( animate );
-  render();
-}
 
-function render() {
-  effect.render( scene, camera );
-}
 
 function toggleJoints () {
   childObjects.forEach(child => child.visible = !child.visible);
