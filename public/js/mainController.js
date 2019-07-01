@@ -12,12 +12,9 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
 var loading = false;
-var activeModel, modelLoader;
+var modelLoader;
 
 var local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-
-
-function update() {};
 
 function init() {
   // container = document.createElement( 'div' );
@@ -96,11 +93,11 @@ function loadModel(modelIndex, orbitControl, _camera, _scene) {
     if (loading) return;
     loading = true;
 
-    // if(activeModel){
-    //   scene.remove(activeModel);
-    //   childObjects.forEach(child => scene.remove(child));
-    //   childObjects = [];
-    // }
+    if(activeModel){
+      scene.remove(activeModel);
+      childObjects.forEach(child => scene.remove(child));
+      childObjects = [];
+    }
     console.log("Loading model!");
     modelLoader = Models[modelIndex];
 
@@ -132,7 +129,7 @@ function loadModel(modelIndex, orbitControl, _camera, _scene) {
       
       setPose(currentPose.pose);
       loading = false;
-    }, onProgress, onError );
+    }, onProgress, onError ); 
 }
 
 function onError() {
@@ -163,10 +160,10 @@ function addControl(object, type, space="local") {
   return transformControl;
 }
 
-function selectJoint() {
+function selectJoint(x, y) {
 
-  mouse.x= ((event.clientX - canvas.offsetLeft)/canvas.clientWidth) * 2 - 1;
-  mouse.y=-((event.clientY - canvas.offsetTop)/canvas.clientHeight) * 2 + 1;
+  mouse.x= ((x - canvas.offsetLeft)/canvas.clientWidth) * 2 - 1;
+  mouse.y=-((y - canvas.offsetTop)/canvas.clientHeight) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
 
@@ -222,15 +219,6 @@ function traverseJoints (modelInfo, model, thingToDo) {
   // console.log(jointChecker.toString());
 }
 
-// function onWindowResize() {
-//   renderer.setSize( window.innerWidth, window.innerHeight );
-//   camera.aspect = window.innerWidth / window.innerHeight;
-//   camera.updateProjectionMatrix();
-
-//   effect.setSize( window.innerWidth, window.innerHeight );
-// }
-
-
 
 function toggleJoints () {
   childObjects.forEach(child => child.visible = !child.visible);
@@ -241,11 +229,11 @@ function updateLightIntensity(amount) {
   directionalLight.intensity += amount;
 }
 
-document.addEventListener('mousedown', function (event) {
-  event.preventDefault();
+// document.addEventListener('mousedown', function (event) {
+//   event.preventDefault();
   
-  selectJoint(event.clientX, event.clientY);
-}, false);
+//   selectJoint(event.clientX, event.clientY);
+// }, false);
 
 document.addEventListener('touchstart', function (event) {
   event.preventDefault();

@@ -18,6 +18,8 @@ function SceneManager(canvas) {
   const orbitControl = buildOrbitController();
   const sceneSubjects = createSceneSubjects(scene);
 
+  
+
 
   function buildScene() {
       const scene = new THREE.Scene();
@@ -68,9 +70,10 @@ function SceneManager(canvas) {
       const sceneSubjects = [
           // new Character(scene, 0, local),
           // new SceneSubject(scene)
+          // loadModel(1, orbitControl, camera, scene),
       ];
-      // loadModel(0, orbitControl, camera, scene);
-      loadModel(1, orbitControl, camera, scene);
+      loadModel(1, activeModel, orbitControl, camera, scene);
+      
       return sceneSubjects;
   }
 
@@ -93,5 +96,9 @@ function SceneManager(canvas) {
       camera.updateProjectionMatrix();
       
       effect.setSize(width, height);
+  }
+
+  this.onClick = function(x, y) {
+    selectJoint(x, y);
   }
 }
