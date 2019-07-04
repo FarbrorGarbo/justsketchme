@@ -2,29 +2,6 @@
 
 
 
-function takeScreenshot() {
-  /*
-    // open in new window like this
-    //
-    var w = window.open('', '');
-    w.document.title = "Screenshot";
-    //w.document.body.style.backgroundColor = "red";
-    var img = new Image();
-    // Without 'preserveDrawingBuffer' set to true, we must render now
-    renderer.render(scene, camera);
-    img.src = renderer.domElement.toDataURL();
-    w.document.body.appendChild(img);  
-  */
-
-  // download file like this.
-  //
-  var a = document.createElement('a');
-  // Without 'preserveDrawingBuffer' set to true, we must render now
-  renderer.render(scene, camera);
-  a.href = renderer.domElement.toDataURL().replace("image/png", "image/octet-stream");
-  a.download = 'JustSketchMe - Screenshot.png'
-  a.click();
-}
 
 function share() {
   // var filename = prompt('What do you want to call your pose?') + '.jsm'

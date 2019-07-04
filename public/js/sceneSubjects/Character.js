@@ -3,8 +3,11 @@ function Character(characterIndex) {
 
   let jointControl = null;
   const character = this;
+
   const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
   const characterInfo = Models[characterIndex];
+
+  this.name = characterInfo.name;
 
   let joints = [];
   const loader = new THREE.FBXLoader();
@@ -19,13 +22,12 @@ function Character(characterIndex) {
 
       const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? characterInfo.scale * 5 : characterInfo.scale;
 
-      const joint = new Joint(jointScale);
+      const joint = new Joint(jointScale, 0xffffff);
 
       joints.push(joint);
 
       child.add(joint);
     });
-    character.addControl(rig, "translate")
     rig.position.set(Math.random() * 100, 0, Math.random() * 100)
     rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
     scene.add(rig);
@@ -57,6 +59,7 @@ function Character(characterIndex) {
   }
 
   character.selectJoint = function (x, y, joints) {
+
     const mouse = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
   
@@ -106,6 +109,10 @@ function Character(characterIndex) {
 
   character.onClick = function (x, y) {
     character.selectJoint(x, y, joints);
+  }
+
+  character.toggleJoints = function () {
+    joints.forEach(joint => joint.visible = !joint.visible);
   }
 }
 

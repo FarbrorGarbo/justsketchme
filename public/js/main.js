@@ -6,23 +6,35 @@ bindEventListeners();
 render();
 
 function bindEventListeners() {
-	window.onresize = resizeCanvas;
-	resizeCanvas();	
+  window.onresize = resizeCanvas;
+  resizeCanvas();
 }
 
 function resizeCanvas() {
-	canvas.style.width = window.innerWidth;
-	canvas.style.height = window.innerHeight;
-	
-	canvas.width  = window.innerWidth;
-	canvas.height = window.innerHeight;
-    
+  canvas.style.width = window.innerWidth;
+  canvas.style.height = window.innerHeight;
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
   sceneManager.onWindowResize();
 }
 
 function render() {
-    requestAnimationFrame(render);
-    sceneManager.update();
+  requestAnimationFrame(render);
+  sceneManager.update();
+}
+
+function addCharacterToScene(characterIndex) {
+  sceneManager.addCharacterToScene(characterIndex);
+}
+
+function toggleEffect() {
+  sceneManager.toggleEffect();
+}
+
+function takeScreenshot() {
+  sceneManager.takeScreenshot();
 }
 
 document.addEventListener('mousedown', function (event) {

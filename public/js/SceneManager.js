@@ -20,9 +20,6 @@ function SceneManager(canvas) {
   orbitControl = buildOrbitController();
   const sceneSubjects = createSceneSubjects();
 
-  
-
-
   function buildScene() {
       const scene = new THREE.Scene();
       scene.background = new THREE.Color( 0xffffff );
@@ -70,13 +67,26 @@ function SceneManager(canvas) {
 
   function createSceneSubjects() {
       const sceneSubjects = [
-          new Character(3),
           new Character(0),
-          new Character(2),
-          new Character(1),
       ];
       
       return sceneSubjects;
+  }
+
+  this.addCharacterToScene = function (characterIndex) {
+      sceneSubjects.push(new Character(characterIndex));
+  }
+
+  this.toggleEffect = function () {
+    effect.enabled = !effect.enabled;
+  }
+
+  this.takeScreenshot = function () {
+    var a = document.createElement('a');
+    effect.render(scene, camera);
+    a.href = renderer.domElement.toDataURL().replace("image/png", "image/octet-stream");
+    a.download = 'JustSketchMe - Screenshot.png'
+    a.click();
   }
 
   this.update = function() {
@@ -101,7 +111,8 @@ function SceneManager(canvas) {
   }
 
   this.onClick = function(x, y) {
-    for(let i=0; i<sceneSubjects.length; i++)
-        sceneSubjects[i].onClick(x, y);
+    for(let i=0; i<sceneSubjects.length; i++) {
+      sceneSubjects[i].onClick(x, y);
+    }
   }
 }
