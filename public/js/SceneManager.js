@@ -6,6 +6,8 @@ const gizmos = {
   TRANSLATE: 'translate',
   SCALE: 'scale',
   ROTATE: 'rotate',
+  NONE: 'none',
+  DELETE: 'delete',
 }
 
 let activeGizmo = gizmos.ROTATE;
@@ -85,12 +87,17 @@ function SceneManager(canvas) {
   this.setGizmo = function (gizmo) {
     activeGizmo = gizmo;
     for(let i=0; i<sceneSubjects.length; i++) {
-      sceneSubjects[i].setGizmo();
+      if(!sceneSubjects[i].alive){
+        sceneSubjects.splice(i, 1);
+      }
+      if(sceneSubjects[i]){
+        sceneSubjects[i].setGizmo();
+      }
     }
   }
 
   this.addCharacterToScene = function (characterIndex) {
-      sceneSubjects.push(new Character(characterIndex));
+    sceneSubjects.push(new Character(characterIndex));
   }
 
   this.toggleEffect = function () {

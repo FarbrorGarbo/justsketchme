@@ -137,20 +137,20 @@
       </ul>
     </div>
     <div class="controls">
-      <button onclick="undo()" title="Undo">
+      <!-- <button onclick="undo()" title="Undo">
         <img src="images/tools/undo.svg" />
-      </button>
-      <button onclick="removeCharacter()" title="Delete">
+      </button> -->
+      <button onclick="setGizmo('delete')" title="Delete">
         <img src="images/tools/trash.svg" />
       </button>
       <button onclick="setGizmo('rotate')" title="Joint manipulator">
         <img src="images/tools/joint.svg" />
       </button>
-      <!-- <button onclick="setGizmo('translate')" title="Move">
-        <img src="images/tools/grab.svg" />
-      </button> -->
       <button onclick="setGizmo('translate')" title="Move">
         <img src="images/tools/scale.svg" />
+      </button>
+      <button onclick="setGizmo('none')" title="Hide controls">
+        <img src="images/tools/vision.svg" />
       </button>
     </div>
     <div class="lights">
@@ -189,9 +189,6 @@
     <div class="controls">
       <button onclick="toggleEffect()" title="Toggle outlines">
         <img src="images/tools/paintbrush.svg" />
-      </button>
-      <button onclick="toggleJoints()" title="Toggle joints">
-        <img src="images/tools/vision.svg" />
       </button>
       <button onclick="takeScreenshot()" title="Take screenshot">
         <img src="images/tools/camera.svg" />

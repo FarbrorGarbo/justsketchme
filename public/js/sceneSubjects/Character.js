@@ -1,7 +1,7 @@
 
 function Character(characterIndex) {
 
-  let jointControl = null;
+  
   const character = this;
 
   const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
@@ -9,6 +9,9 @@ function Character(characterIndex) {
 
   character.name = characterInfo.name;
   character.translateControl = null;
+  character.jointControl = null;
+  character.rig = null;
+  character.alive = true;
 
   let joints = [];
   const loader = new THREE.FBXLoader();
@@ -31,7 +34,10 @@ function Character(characterIndex) {
     });
     rig.position.set(Math.random() * 100, 0, Math.random() * 100)
     rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
+    
     scene.add(rig);
+    
+    character.rig = rig;
 
     character.setGizmo(activeGizmo);
 
@@ -62,33 +68,40 @@ function Character(characterIndex) {
   }
 
   character.selectJoint = function (x, y, joints) {
+    const mouse = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+
+    mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
+    mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    var intersects = raycaster.intersectObjects(joints);
     if (activeGizmo === gizmos.ROTATE) {
-      const mouse = new THREE.Vector2();
-      const raycaster = new THREE.Raycaster();
-
-      mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
-      mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-
-      var intersects = raycaster.intersectObjects(joints);
       if (intersects.length > 0) {
 
         joints.forEach(joint => joint.material.color.setHex(0xffffff));
 
-        if (!jointControl) {
-          jointControl = character.addControl(intersects[0].object.parent, "rotate");
+        if (!character.jointControl) {
+          character.jointControl = character.addControl(intersects[0].object.parent, "rotate");
         } else {
-          jointControl.detach();
-          jointControl.attach(intersects[0].object.parent);
+          character.jointControl.detach();
+          character.jointControl.attach(intersects[0].object.parent);
         }
         console.log(intersects[0].object.parent.name);
         intersects[0].object.material.color.setHex(0xff0000);
       } else {
-        if (orbitControl.enabled && jointControl) {
-          jointControl.detach();
+        if (orbitControl.enabled && character.jointControl) {
+          character.jointControl.detach();
           joints.forEach(joint => joint.material.color.setHex(0xffffff));
         }
+      }
+    }
+    if(activeGizmo === gizmos.DELETE) {
+      if (intersects.length > 0) {
+      //TODO: Remove references to this character to clean it up.
+        scene.remove(character.rig);
+        character.alive = false;
       }
     }
   }
@@ -113,12 +126,25 @@ function Character(characterIndex) {
   character.setGizmo = function () {
     joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
     joints[0].visible = true;
+    joints[0].material.color.setHex(0xffffff);
 
     if(character.translateControl) {
       character.translateControl.detach();
     }
     if (activeGizmo === gizmos.TRANSLATE) {
       character.translateControl = character.addControl(joints[0].parent, "translate");
+    }
+    if(activeGizmo === gizmos.NONE) {
+      joints.forEach(joint => joint.visible = false);
+      if(character.translateControl) {
+        character.translateControl.detach();
+      }
+      if(character.jointControl) {
+        character.jointControl.detach();
+      }
+    }
+    if(activeGizmo === gizmos.DELETE) {
+      joints[0].material.color.setHex(0xff0000);
     }
   }
 
@@ -127,10 +153,6 @@ function Character(characterIndex) {
 
   character.onClick = function (x, y) {
     character.selectJoint(x, y, joints);
-  }
-
-  character.toggleJoints = function () {
-    joints.forEach(joint => joint.visible = !joint.visible);
   }
 }
 
