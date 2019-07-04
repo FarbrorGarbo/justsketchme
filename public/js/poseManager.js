@@ -25,7 +25,7 @@ function setCurrentPose (modelId, model) {
   } else {
     currentPose.modelId = modelId;
     currentPose.pose = rotationValues;
-    console.log(Base64.encode( JSON.stringify(currentPose)));
+    // console.log(Base64.encode( JSON.stringify(currentPose)));
   }
   log = !log;
 

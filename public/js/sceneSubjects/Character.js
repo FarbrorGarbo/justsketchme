@@ -1,130 +1,122 @@
-function Character(scene, modelIndex, local) {
-  var childObjects = [];
-  modelLoader = Models[modelIndex];
-  var modelPath = local || !modelLoader.src ?  modelLoader.path : `https://cors-anywhere.herokuapp.com/${modelLoader.src}`;
 
+function Character(characterIndex) {
+
+  let jointControl = null;
+  const character = this;
+  const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
+  const characterInfo = Models[characterIndex];
+
+  let joints = [];
   const loader = new THREE.FBXLoader();
+  
+  document.querySelector("#loading").style.visibility = 'visible'
 
-  loader.load(modelPath, function ( object ) {
+  const modelPath = local || !characterInfo.src ? characterInfo.path : `https://cors-anywhere.herokuapp.com/${characterInfo.src}`;
 
+  loader.load(modelPath, function (rig) {
+    character.traverseJoints(characterInfo, rig, function (child) {
+      const fingerNames = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
 
-    traverseJoints(modelLoader, object, function (child) {
-      const fingerNames = ['Thumb','Index','Middle','Ring','Pinky'];
+      const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? characterInfo.scale * 5 : characterInfo.scale;
 
-      const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? modelLoader.scale * 5 : modelLoader.scale;
-      var sphere = pointLoader(jointScale);
-      childObjects.push(sphere);
-      child.add( sphere );
+      const joint = new Joint(jointScale);
+
+      joints.push(joint);
+
+      child.add(joint);
     });
-    
-    // activeModel = object;
-    object.scale.set(modelLoader.scale, modelLoader.scale, modelLoader.scale);
-    scene.add( object );
-    // addControl(object, "translate");
+    character.addControl(rig, "translate")
+    rig.position.set(Math.random() * 100, 0, Math.random() * 100)
+    rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
+    scene.add(rig);
 
     document.querySelector("#loading").innerHTML = "";
-    document.querySelector("#loading").style.visibility='hidden'
-    
-    // setPose(currentPose.pose);
-    // loading = false;
-  }, onProgress, onError );
+    document.querySelector("#loading").style.visibility = 'hidden'
 
-  this.update = function(){};
-}
+  }, onProgress, (err) => onError(err));
 
-function onError(msg) {
-  console.log(msg);
-  document.querySelector("#loading").innerHTML = "Failed to load model :(";
-  loading = false;
-}
-
-function onProgress( xhr ) {
-  if ( xhr.lengthComputable ) {
-    var percentComplete = xhr.loaded / xhr.total * 100;
-    document.querySelector("#loading").innerHTML = `Loading - ${Math.round( percentComplete, 2 )}% downloaded`;
+  character.traverseJoints = function (characterInfo, rig, thingToDo) {
+    var jointChecker = [];
+    var checked = [];
+  
+    rig.traverse(function (child) {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+  
+      if (child.isObject3D) {
+        !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
+  
+        if (characterInfo.joints.includes(child.name) && !checked.includes(child.name)) {
+          thingToDo(child);
+          checked.push(child.name);
+        }
+      }
+    });
   }
-}
 
-function traverseJoints (modelInfo, model, thingToDo) {
-  var jointChecker = [];
-  var checked = [];
-
-  model.traverse( function ( child ) {
-    if ( child.isMesh ) {
-      child.castShadow = true;
-      child.receiveShadow = true;
-    }
-
-    if (child.isObject3D && child.name != "Alpha_Surface" && child.name != "Alpha_Joints"){
-      !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
-      
-      if(modelInfo.joints.includes(child.name) && !checked.includes(child.name)){
-        thingToDo(child);
-        checked.push(child.name);
+  character.selectJoint = function (x, y, joints) {
+    const mouse = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+  
+    mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
+    mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
+  
+    raycaster.setFromCamera(mouse, camera);
+  
+    var intersects = raycaster.intersectObjects(joints);
+    if (intersects.length > 0) {
+  
+      joints.forEach(joint => joint.material.color.setHex(0xffffff));
+  
+      if (!jointControl) {
+        jointControl = character.addControl(intersects[0].object.parent, "rotate");
+      } else {
+        jointControl.detach();
+        jointControl.attach(intersects[0].object.parent);
+      }
+      console.log(intersects[0].object.parent.name);
+      intersects[0].object.material.color.setHex(0xff0000);
+    } else {
+      if (orbitControl.enabled && jointControl) {
+        jointControl.detach();
+        joints.forEach(joint => joint.material.color.setHex(0xffffff));
       }
     }
-  } );
-  // console.log(jointChecker.toString());
-}
+  }
 
-function selectJoint(x, y) {
+  character.addControl = function (object, type, space = "local") {
+    var transformControl = new THREE.TransformControls(camera, canvas);
+  
+    transformControl.addEventListener('dragging-changed', function (event) {
+      orbitControl.enabled = !event.value;
+    });
+  
+    transformControl.attach(object);
+    transformControl.setMode(type);
+    transformControl.setSpace(space);
+  
+    scene.add(transformControl);
+    return transformControl;
+  }
 
-  mouse.x = (x / renderer.domElement.clientWidth) * 2 - 1;
-  mouse.y =  - (y / renderer.domElement.clientHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse, camera);
+  character.update = function (time) {
+  }
 
-  var intersects = raycaster.intersectObjects(childObjects);
-  if (intersects.length > 0) {
-    childObjects.forEach(child => child.material.color.setHex( 0xffffff ));
-    if(!jointControl){
-      // jointControl = new THREE.TransformControls( camera, renderer.domElement );
-      // jointControl.addEventListener( 'change', render );
-      // jointControl.attach( intersects[0].object.parent );
-      // jointControl.setMode( "rotate" );
-      // jointControl.setSpace( "local" );
-      // jointControl.addEventListener( 'dragging-changed', function ( event ) {
-      //   controls.enabled = ! event.value;
-        
-      //   setCurrentPose(modelLoader.id, activeModel);
-      // } );
-      // scene.add( jointControl );
-      jointControl = addControl(intersects[0].object.parent, "rotate");
-    } else {
-      jointControl.detach();
-      jointControl.attach( intersects[0].object.parent );
-    }
-    console.log(intersects[0].object.parent.name);
-    intersects[0].object.material.color.setHex( 0xff0000 );
-  } else {
-    if(controls.enabled && jointControl){
-      jointControl.detach();
-      childObjects.forEach(child => child.material.color.setHex( 0xffffff ));
-    }
+  character.onClick = function (x, y) {
+    character.selectJoint(x, y, joints);
   }
 }
 
-function pointLoader (size = 1) {
-  var material = new THREE.MeshPhongMaterial( { depthTest: false} );
-
-  var geometry = new THREE.SphereGeometry( 3, 5, 5 );
-  var sphere = new THREE.Mesh( geometry, material );
-
-  sphere.material.color.set( 0xffffff );
-  sphere.material.wireframe = true;
-  sphere.material.receiveShadow = false;
-  sphere.material.castShadow = false;
-  sphere.renderOrder = 1;
-  sphere.scale.set(1/size,1/size,1/size);
-  return sphere;
+function onError(err) {
+  document.querySelector("#loading").innerHTML = "Failed to load model :(";
+  console.log(err);
 }
 
-document.addEventListener('mousedown', function (event) {
-  event.preventDefault();
-  
-  selectJoint(event.clientX, event.clientY);
-}, false);
-
-document.addEventListener('touchstart', function (event) {
-  event.preventDefault();
-  selectJoint(event.touches[0].clientX, event.touches[0].clientY);
-}, false);
+function onProgress(xhr) {
+  if (xhr.lengthComputable) {
+    var percentComplete = xhr.loaded / xhr.total * 100;
+    document.querySelector("#loading").innerHTML = `Loading - ${Math.round(percentComplete, 2)}% downloaded`;
+  }
+}

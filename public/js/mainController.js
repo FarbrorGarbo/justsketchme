@@ -93,11 +93,6 @@ function loadModel(modelIndex, orbitControl, _camera, _scene) {
     if (loading) return;
     loading = true;
 
-    if(activeModel){
-      scene.remove(activeModel);
-      childObjects.forEach(child => scene.remove(child));
-      childObjects = [];
-    }
     console.log("Loading model!");
     modelLoader = Models[modelIndex];
 
@@ -207,7 +202,7 @@ function traverseJoints (modelInfo, model, thingToDo) {
       child.receiveShadow = true;
     }
 
-    if (child.isObject3D && child.name != "Alpha_Surface" && child.name != "Alpha_Joints"){
+    if (child.isObject3D){
       !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
       
       if(modelInfo.joints.includes(child.name) && !checked.includes(child.name)){

@@ -1,3 +1,7 @@
+let camera = null;
+let scene = null;
+let orbitControl = null;
+
 function SceneManager(canvas) {
 
   const clock = new THREE.Clock();
@@ -7,16 +11,14 @@ function SceneManager(canvas) {
       height: canvas.height
   }
 
-  var local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-
   let ambientLight, directionalLight = null;  
 
-  const scene = buildScene();
+  scene = buildScene();
   const renderer = buildRender(screenDimensions);
   const effect = new THREE.OutlineEffect( renderer );
-  const camera = buildCamera(screenDimensions);
-  const orbitControl = buildOrbitController();
-  const sceneSubjects = createSceneSubjects(scene);
+  camera = buildCamera(screenDimensions);
+  orbitControl = buildOrbitController();
+  const sceneSubjects = createSceneSubjects();
 
   
 
@@ -66,13 +68,13 @@ function SceneManager(canvas) {
     return controls;
   }
 
-  function createSceneSubjects(scene) {
+  function createSceneSubjects() {
       const sceneSubjects = [
-          // new Character(scene, 0, local),
-          // new SceneSubject(scene)
-          // loadModel(1, orbitControl, camera, scene),
+          new Character(3),
+          new Character(0),
+          new Character(2),
+          new Character(1),
       ];
-      loadModel(1, activeModel, orbitControl, camera, scene);
       
       return sceneSubjects;
   }
@@ -99,6 +101,7 @@ function SceneManager(canvas) {
   }
 
   this.onClick = function(x, y) {
-    selectJoint(x, y);
+    for(let i=0; i<sceneSubjects.length; i++)
+        sceneSubjects[i].onClick(x, y);
   }
 }
