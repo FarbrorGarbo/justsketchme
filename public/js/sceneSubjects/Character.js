@@ -7,11 +7,12 @@ function Character(characterIndex) {
   const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
   const characterInfo = Models[characterIndex];
 
-  this.name = characterInfo.name;
+  character.name = characterInfo.name;
+  character.translateControl = null;
 
   let joints = [];
   const loader = new THREE.FBXLoader();
-  
+
   document.querySelector("#loading").style.visibility = 'visible'
 
   const modelPath = local || !characterInfo.src ? characterInfo.path : `https://cors-anywhere.herokuapp.com/${characterInfo.src}`;
@@ -32,6 +33,8 @@ function Character(characterIndex) {
     rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
     scene.add(rig);
 
+    character.setGizmo(activeGizmo);
+
     document.querySelector("#loading").innerHTML = "";
     document.querySelector("#loading").style.visibility = 'hidden'
 
@@ -40,16 +43,16 @@ function Character(characterIndex) {
   character.traverseJoints = function (characterInfo, rig, thingToDo) {
     var jointChecker = [];
     var checked = [];
-  
+
     rig.traverse(function (child) {
       if (child.isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
       }
-  
+
       if (child.isObject3D) {
         !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
-  
+
         if (characterInfo.joints.includes(child.name) && !checked.includes(child.name)) {
           thingToDo(child);
           checked.push(child.name);
@@ -59,49 +62,64 @@ function Character(characterIndex) {
   }
 
   character.selectJoint = function (x, y, joints) {
+    if (activeGizmo === gizmos.ROTATE) {
+      const mouse = new THREE.Vector2();
+      const raycaster = new THREE.Raycaster();
 
-    const mouse = new THREE.Vector2();
-    const raycaster = new THREE.Raycaster();
-  
-    mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
-    mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
-  
-    raycaster.setFromCamera(mouse, camera);
-  
-    var intersects = raycaster.intersectObjects(joints);
-    if (intersects.length > 0) {
-  
-      joints.forEach(joint => joint.material.color.setHex(0xffffff));
-  
-      if (!jointControl) {
-        jointControl = character.addControl(intersects[0].object.parent, "rotate");
-      } else {
-        jointControl.detach();
-        jointControl.attach(intersects[0].object.parent);
-      }
-      console.log(intersects[0].object.parent.name);
-      intersects[0].object.material.color.setHex(0xff0000);
-    } else {
-      if (orbitControl.enabled && jointControl) {
-        jointControl.detach();
+      mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
+      mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+
+      var intersects = raycaster.intersectObjects(joints);
+      if (intersects.length > 0) {
+
         joints.forEach(joint => joint.material.color.setHex(0xffffff));
+
+        if (!jointControl) {
+          jointControl = character.addControl(intersects[0].object.parent, "rotate");
+        } else {
+          jointControl.detach();
+          jointControl.attach(intersects[0].object.parent);
+        }
+        console.log(intersects[0].object.parent.name);
+        intersects[0].object.material.color.setHex(0xff0000);
+      } else {
+        if (orbitControl.enabled && jointControl) {
+          jointControl.detach();
+          joints.forEach(joint => joint.material.color.setHex(0xffffff));
+        }
       }
     }
   }
 
   character.addControl = function (object, type, space = "local") {
     var transformControl = new THREE.TransformControls(camera, canvas);
-  
+
     transformControl.addEventListener('dragging-changed', function (event) {
       orbitControl.enabled = !event.value;
     });
-  
-    transformControl.attach(object);
+
+    if(object) {
+      transformControl.attach(object);
+    }
     transformControl.setMode(type);
     transformControl.setSpace(space);
-  
+
     scene.add(transformControl);
     return transformControl;
+  }
+
+  character.setGizmo = function () {
+    joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
+    joints[0].visible = true;
+
+    if(character.translateControl) {
+      character.translateControl.detach();
+    }
+    if (activeGizmo === gizmos.TRANSLATE) {
+      character.translateControl = character.addControl(joints[0].parent, "translate");
+    }
   }
 
   character.update = function (time) {

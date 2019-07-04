@@ -29,6 +29,10 @@ function addCharacterToScene(characterIndex) {
   sceneManager.addCharacterToScene(characterIndex);
 }
 
+function setGizmo(gizmo) {
+  sceneManager.setGizmo(gizmo);
+}
+
 function toggleEffect() {
   sceneManager.toggleEffect();
 }

@@ -2,6 +2,14 @@ let camera = null;
 let scene = null;
 let orbitControl = null;
 
+const gizmos = {
+  TRANSLATE: 'translate',
+  SCALE: 'scale',
+  ROTATE: 'rotate',
+}
+
+let activeGizmo = gizmos.ROTATE;
+
 function SceneManager(canvas) {
 
   const clock = new THREE.Clock();
@@ -19,6 +27,7 @@ function SceneManager(canvas) {
   camera = buildCamera(screenDimensions);
   orbitControl = buildOrbitController();
   const sceneSubjects = createSceneSubjects();
+
 
   function buildScene() {
       const scene = new THREE.Scene();
@@ -71,6 +80,13 @@ function SceneManager(canvas) {
       ];
       
       return sceneSubjects;
+  }
+
+  this.setGizmo = function (gizmo) {
+    activeGizmo = gizmo;
+    for(let i=0; i<sceneSubjects.length; i++) {
+      sceneSubjects[i].setGizmo();
+    }
   }
 
   this.addCharacterToScene = function (characterIndex) {
