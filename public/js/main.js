@@ -62,6 +62,11 @@ document.addEventListener('mousedown', function (event) {
   sceneManager.onClick(event.clientX, event.clientY)
 }, false);
 
+document.addEventListener('mousemove', function (event) {
+  event.preventDefault();
+  sceneManager.onMouseMove(event.clientX, event.clientY)
+}, false);
+
 document.addEventListener('touchstart', function (event) {
   event.preventDefault();
   sceneManager.onClick(event.touches[0].clientX, event.touches[0].clientY);

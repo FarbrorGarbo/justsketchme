@@ -75,6 +75,8 @@ function Character(characterIndex, center = false) {
   const resetJointColor = (joint) => {
     const jointInfo = characterInfo.joints.find(jointInfo => jointInfo.name === joint.name)
     joint.material.color.setHex(jointInfo.color);
+    joint.material.opacity = jointOpacities.DEFAULT_OPACITY;
+
   }
 
   character.selectJoint = function (x, y, joints) {
@@ -89,29 +91,59 @@ function Character(characterIndex, center = false) {
     var intersects = raycaster.intersectObjects(joints);
     if (activeGizmo === gizmos.ROTATE) {
       if (intersects.length > 0) {
-
-        joints.forEach(joint => resetJointColor(joint));
+        var selectedJoint = intersects[0].object;
+        joints.forEach(joint => {
+          resetJointColor(joint);
+          joint.selected = false;
+        });
 
         if (!character.jointControl) {
-          character.jointControl = new Control(intersects[0].object.parent, "rotate");
+          character.jointControl = new Control(selectedJoint.parent, "rotate");
         } else {
           character.jointControl.detach();
-          character.jointControl.attach(intersects[0].object.parent);
+          character.jointControl.attach(selectedJoint.parent);
         }
-        intersects[0].object.material.color.setHex(jointColors.SELECTED_COLOR);
-        
+        selectedJoint.material.color.setHex(jointColors.SELECTED_COLOR);
+        selectedJoint.material.opacity = jointOpacities.SELECTED_OPACITY;
+        selectedJoint.selected = true;
+
       } else {
         if (orbitControl.enabled && character.jointControl) {
           character.jointControl.detach();
-          joints.forEach(joint => resetJointColor(joint));
+          joints.forEach(joint => {
+            resetJointColor(joint);
+            joint.selected = false;
+          });
         }
       }
     }
     if (activeGizmo === gizmos.DELETE) {
       if (intersects.length > 0) {
-        //TODO: Remove references to this character to clean it up.
         scene.remove(character.rig);
         character.alive = false;
+      }
+    }
+  }
+
+  character.hoverJoint = function (x, y, joints) {
+    const mouse = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+
+    mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
+    mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    var intersects = raycaster.intersectObjects(joints);
+    if (activeGizmo === gizmos.ROTATE) {
+      if (intersects.length > 0) {
+        intersects[0].object.material.opacity = jointOpacities.HIGHLIGHTED_OPACITY;
+      } else {
+        joints.forEach(joint => {
+          if (!joint.selected) {
+            joint.material.opacity = jointOpacities.DEFAULT_OPACITY;
+          }
+        });
       }
     }
   }
@@ -144,6 +176,11 @@ function Character(characterIndex, center = false) {
   character.onClick = function (x, y) {
     character.selectJoint(x, y, joints);
   }
+
+  character.onMouseMove = function (x, y) {
+    character.hoverJoint(x, y, joints);
+  }
+
 }
 
 function onError(err) {

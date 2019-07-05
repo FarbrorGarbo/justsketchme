@@ -168,4 +168,11 @@ function SceneManager(canvas) {
       sceneSubjects[i].onClick(x, y);
     }
   }
+
+  this.onMouseMove = function (x, y) {
+    for (let i = 0; i < sceneSubjects.length; i++) {
+      sceneSubjects[i].onMouseMove(x, y);
+    }
+  }
+  
 }
