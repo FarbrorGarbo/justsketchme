@@ -1,7 +1,6 @@
+function Character(characterIndex, center = false) {
 
-function Character(characterIndex, center=false) {
 
-  
   const character = this;
 
   const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
@@ -22,25 +21,24 @@ function Character(characterIndex, center=false) {
 
   loader.load(modelPath, function (rig) {
     character.traverseJoints(characterInfo, rig, function (child) {
-      const fingerNames = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
 
-      const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? characterInfo.scale * 5 : characterInfo.scale;
-
+      const jointInfo = characterInfo.joints.find(joint => joint.name === child.name)
+      const jointScale = jointInfo.scale;
       const joint = new Joint(jointScale, 0xffffff);
 
       joints.push(joint);
 
       child.add(joint);
     });
-    if(center) {
-      rig.position.set(0,0,0);
+    if (center) {
+      rig.position.set(0, 0, 0);
     } else {
       rig.position.set(Math.random() * 100, 0, Math.random() * 100)
     }
     rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
-    
+
     scene.add(rig);
-    
+
     character.rig = rig;
 
     character.setGizmo(activeGizmo);
@@ -63,7 +61,7 @@ function Character(characterIndex, center=false) {
       if (child.isObject3D) {
         !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
 
-        if (characterInfo.joints.includes(child.name) && !checked.includes(child.name)) {
+        if (characterInfo.joints.some(joint => joint.name === child.name) && !checked.includes(child.name)) {
           thingToDo(child);
           checked.push(child.name);
         }
@@ -92,7 +90,6 @@ function Character(characterIndex, center=false) {
           character.jointControl.detach();
           character.jointControl.attach(intersects[0].object.parent);
         }
-        console.log(intersects[0].object.parent.name);
         intersects[0].object.material.color.setHex(0xff0000);
       } else {
         if (orbitControl.enabled && character.jointControl) {
@@ -101,9 +98,9 @@ function Character(characterIndex, center=false) {
         }
       }
     }
-    if(activeGizmo === gizmos.DELETE) {
+    if (activeGizmo === gizmos.DELETE) {
       if (intersects.length > 0) {
-      //TODO: Remove references to this character to clean it up.
+        //TODO: Remove references to this character to clean it up.
         scene.remove(character.rig);
         character.alive = false;
       }
@@ -115,22 +112,22 @@ function Character(characterIndex, center=false) {
     joints[0].visible = true;
     joints[0].material.color.setHex(0xffffff);
 
-    if(character.translateControl) {
+    if (character.translateControl) {
       character.translateControl.detach();
     }
     if (activeGizmo === gizmos.TRANSLATE) {
       character.translateControl = new Control(joints[0].parent, "translate");
     }
-    if(activeGizmo === gizmos.NONE) {
+    if (activeGizmo === gizmos.NONE) {
       joints.forEach(joint => joint.visible = false);
-      if(character.translateControl) {
+      if (character.translateControl) {
         character.translateControl.detach();
       }
-      if(character.jointControl) {
+      if (character.jointControl) {
         character.jointControl.detach();
       }
     }
-    if(activeGizmo === gizmos.DELETE) {
+    if (activeGizmo === gizmos.DELETE) {
       joints[0].material.color.setHex(0xff0000);
     }
   }
