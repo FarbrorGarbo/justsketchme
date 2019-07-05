@@ -1,162 +1,260 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      
-      ga('create', 'UA-87109679-1', 'auto');
-      ga('send', 'pageview', 'firebaseapp');
-    </script>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Analytics -->
+  <script>
+      // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      // })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      // ga('create', 'UA-87109679-1', 'auto');
+      // ga('send', 'pageview', 'firebaseapp');
+  </script>
   <!-- End Google Analytics -->
 
-    <title>JustSketchMe</title>
+  <title>JustSketchMe</title>
 
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
+  <link rel="stylesheet" type="text/css" href="styles/style.css">
 
-    <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="/manifest.json">
 
-    <!-- Add to home screen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#fff">
-    <meta name="apple-mobile-web-app-title" content="JustSketchMe">
-    <link rel="apple-touch-startup-image" href="images/icons/icon-512x512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
-    <link rel="mask-icon" href="images/icons/safari-pinned-tab.svg" color="#00aba9">
-    <link rel="shortcut icon" href="images/icons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#00aba9">
-    <meta name="msapplication-config" content="images/icons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
-  </head>
-  <body>
-    <div class="contribute-popup">
-      <button onclick="document.querySelector('.contribute-popup').style.display = 'none';">Close</button>
-      <h2>Keep JustSketchMe awesome!</h2>
-      <p>
-        JustSketchMe is free to use and doesn't contain ads.
-      </p>
-      <p>
-        <b>We want to keep it that way!</b>
-      </p>
-      <p>
-        Support the development? 
-      </p>
-      <div class="contribute">
-          <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#FFFFFF !important;background-color:#FF813F !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 0px 9px !important;font-size: 17px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#FFFFFF !important;}</style><link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/AdmtxiM4N"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
-      </div>
+  <!-- Add to home screen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#fff">
+  <meta name="apple-mobile-web-app-title" content="JustSketchMe">
+  <link rel="apple-touch-startup-image" href="images/icons/icon-512x512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
+  <link rel="mask-icon" href="images/icons/safari-pinned-tab.svg" color="#00aba9">
+  <link rel="shortcut icon" href="images/icons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="msapplication-config" content="images/icons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+  <div class="contribute-popup">
+    <button onclick="document.querySelector('.contribute-popup').style.display = 'none';">Close</button>
+    <h2>Keep JustSketchMe awesome!</h2>
+    <p>
+      JustSketchMe is free to use and doesn't contain ads.
+    </p>
+    <p>
+      <b>We want to keep it that way!</b>
+    </p>
+    <p>
+      Support the development?
+    </p>
+    <div class="contribute">
+      <style>
+        .bmc-button img {
+          width: 27px !important;
+          margin-bottom: 1px !important;
+          box-shadow: none !important;
+          border: none !important;
+          vertical-align: middle !important;
+        }
+
+        .bmc-button {
+          line-height: 36px !important;
+          height: 37px !important;
+          text-decoration: none !important;
+          display: inline-flex !important;
+          color: #FFFFFF !important;
+          background-color: #FF813F !important;
+          border-radius: 3px !important;
+          border: 1px solid transparent !important;
+          padding: 0px 9px !important;
+          font-size: 17px !important;
+          letter-spacing: -0.08px !important;
+          box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+          -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+          margin: 0 auto !important;
+          font-family: 'Lato', sans-serif !important;
+          -webkit-box-sizing: border-box !important;
+          box-sizing: border-box !important;
+          -o-transition: 0.3s all linear !important;
+          -webkit-transition: 0.3s all linear !important;
+          -moz-transition: 0.3s all linear !important;
+          -ms-transition: 0.3s all linear !important;
+          transition: 0.3s all linear !important;
+        }
+
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+          -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+          text-decoration: none !important;
+          box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+          opacity: 0.85 !important;
+          color: #FFFFFF !important;
+        }
+      </style>
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet"><a
+        class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/AdmtxiM4N"><img
+          src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg"
+          alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
     </div>
+  </div>
 
-    <div id="info" class="menu">
-      <div class="models">
-        <button onclick="toggle_visibility('.model-list')"  title="Model list">
-          <img src="images/tools/users.svg"/>
+  <div id="info" class="menu">
+    <div class="models">
+      <button onclick="toggle_visibility('.model-list')" title="Character list">
+        <img src="images/tools/users.svg" />
+      </button>
+      <ul class="model-list">
+        <li>
+          <button class="model" onclick="addCharacterToScene(0);toggle_visibility('.model-list');">
+            <img src="images/tools/stick-man.svg" />
+            Female mannequin
+          </button>
+        </li>
+        <li>
+          <button class="model" onclick="addCharacterToScene(1);toggle_visibility('.model-list');">
+            <img src="images/tools/stick-man.svg" />
+            Male mannequin
+          </button>
+        </li>
+        <li>
+            <button class="model" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
+              <img src="images/tools/stick-man.svg" />
+              Knight
+            </button>
+          </li>
+        <li>
+          <button class="model" onclick="addCharacterToScene(3);toggle_visibility('.model-list');">
+            <img src="images/tools/stick-man.svg" />
+            Assassin
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="controls">
+      <button onclick="setGizmo('rotate')" title="Joint manipulator">
+        <img src="images/tools/joint.svg" />
+      </button>
+      <button onclick="setGizmo('translate')" title="Move character">
+        <img src="images/tools/scale.svg" />
+      </button>
+      <button onclick="setGizmo('delete')" title="Remove character">
+          <img src="images/tools/trash.svg" />
         </button>
-        <ul class="model-list">
+      <button onclick="setGizmo('none')" title="Hide controls">
+        <img src="images/tools/vision.svg" />
+      </button>
+    </div>
+    <div>
+      <button onclick="alert('Working on making this work again')" title="Undo">
+        <img src="images/tools/undo.svg" />
+      </button>
+    </div>
+  </div>
+  <div id="snackbar"><a id="reload">A new version of this app is available. Click here to update.</a></div>
+  <div id="bottom" class="menu">
+    <div>
+      <a href="https://www.buymeacoffee.com/AdmtxiM4N" target="_blank" rel="noopener noreferrer">
+        <img src="images/tools/coffee.svg" />
+      </a>
+    </div>
+    <div class="controls">
+      <button onclick="toggleEffect()" title="Toggle outlines">
+        <img src="images/tools/paintbrush.svg" />
+      </button>
+      <div class="lights">
+        <button onclick="toggle_visibility('.light-controls')" title="Light controls">
+          <img src="images/tools/bars.svg" />
+        </button>
+        <div class="light-controls">
+          <div class="control">
+            <button onclick="increaseAmbientLightIntensity()" title="Increase ambient light intensity">
+              <img src="images/tools/add-circular-button.svg" />
+            </button>
+            <img src="images/tools/sunbeam.svg" />
+            <button onclick="decreaseAmbientLightIntensity()" title="Decrease ambient light intensity">
+              <img src="images/tools/minus-circular-button.svg" />
+            </button>
+          </div>
+          <div class="control">
+            <button onclick="increaseDirectionalLightIntensity()" title="Increase directional light intensity">
+              <img src="images/tools/add-circular-button.svg" />
+            </button>
+            <img src="images/tools/light-bulb.svg" />
+            <button onclick="decreaseDirectionalLightIntensity()" title="Decrease ambient light intensity">
+              <img src="images/tools/minus-circular-button.svg" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <button onclick="takeScreenshot()" title="Take screenshot">
+        <img src="images/tools/camera.svg" />
+      </button>
+    </div>
+    <div>
+     <button onclick="toggle_visibility('.info')"" title="Info">
+      <img src="images/tools/info.svg" />
+      <div class="info" style="display: block;">
+        <b>
+          Better instructions coming soon, but for now:
+        </b>
+        <br>
+        <ul>
+          <li>Rotate around the scene by holding down the main mouse button and dragging.</li>
+          <li>Pan around the scene by holding down the secondary mouse button and dragging.</li>
+          <li>Zoom by scrolling.</li>
+          <li>Add characters to the scene with the character selector in the top left.</li>
+          <li>Toggle joint manipulation with the cute bone-looking gizmo in the center top.</li>
+          <li>Move characters around the scene with the arrows gizmo in the center top.</li>
+          <li>Remove characters by selecting the trash gizmo in the center top and selecting the character.</li>
+          <li>Hide all armature info and gizmos with the eye tool in the center top.</li>
+          <li>Undo a move with the undo button in the top right.</li>
+          <li>Toggle the outline effect with the paintbrush iun the bottom center.</li>
+          <li>Change the light intensity (both ambient and spotlight) with the slider menu in the bottom center.</li>
+          <li>Take a screenshot with the camera icon in the bottom center.</li>
+          <li>Buy the developers a coffee with the donate button in the bottom left.</li>
+          <li>The "i" button in the bottom right brings this up again.</li>
         </ul>
       </div>
-      <div class="controls">
-          <button onclick="undo()" title="Undo">
-            <img src="images/tools/undo.svg"/>
-          </button>
-          <button onclick="reset()"  title="Reset">
-            <img src="images/tools/trash.svg"/>
-          </button>
-          <button disabled onclick="undo()"  title="Redo">
-            <img src="images/tools/redo.svg"/>
-          </button>
-      </div>
-      <div class="lights">
-          <button onclick="toggle_visibility('.light-controls')"  title="Light controls">
-            <img src="images/tools/bars.svg"/>
-          </button>
-          <div class="light-controls">
-            <div class="control">
-                <button onclick="ambientLight.intensity += 0.5;"  title="Increase ambient light intensity">
-                  <img src="images/tools/add-circular-button.svg"/>
-                </button>
-                <img src="images/tools/sunbeam.svg"/>
-                <button onclick="ambientLight.intensity -= 0.5;" title="Decrease ambient light intensity">
-                    <img src="images/tools/minus-circular-button.svg"/>
-                  </button>
-            </div>
-            <div class="control">
-                <button onclick="directionalLight.intensity += 0.3" title="Increase directional light intensity">
-                  <img src="images/tools/add-circular-button.svg"/>
-                </button>
-                <img src="images/tools/light-bulb.svg"/>
-                <button onclick="directionalLight.intensity -= 0.3" title="Decrease ambient light intensity">
-                    <img src="images/tools/minus-circular-button.svg"/>
-                  </button>
-            </div>
-          </div>
-      </div>
+    </button>
     </div>
-    <div id="snackbar"><a id="reload">A new version of this app is available. Click here to update.</a></div>
-    <div id="bottom" class="menu">
-      <div>
-        <a href="https://www.buymeacoffee.com/AdmtxiM4N" target="_blank" rel="noopener noreferrer">
-          <img src="images/tools/donation.svg"/>
-        </a>
-      </div>
-      <div class="controls">
-          <button onclick="effect.enabled = !effect.enabled" title="Toggle outlines">
-            <img src="images/tools/paintbrush.svg"/>
-          </button>
-          <button onclick="toggleJoints()" title="Toggle joints">
-            <img src="images/tools/vision.svg"/>
-          </button>
-          <button onclick="takeScreenshot()" title="Take screenshot">
-            <img src="images/tools/camera.svg"/>
-          </button>
-      </div>
-      <div>
-          <!-- <button onclick="share()" title="Share">
-            <img src="images/tools/links.svg"/>
-          </button> -->
+  </div>
 
-          <!-- <br>Upload a JSM pose file
-          <br><input type="file" id="fileToLoad" accept=".jsm" />
-          <br><button onclick="openSharedPose()">Open pose file</button> -->
-      </div>
-    </div>
-    <div id="loading">Loading model...</div>
+  <canvas id="canvas"></canvas>
 
-    <script src="engine/models.js"></script>
-    <script src="engine/poseManager.js"></script>
-    <script src="engine/encoder.js"></script>
-    <script src="engine/sharing.js"></script>
+  <div id="loading">Loading model...</div>
 
-    <script src="engine/js/three.js"></script>
-    <script src="engine/js/effects/OutlineEffect.js"></script>
-    
-		<script src="engine/js/libs/inflate.min.js"></script>
-    <script src="engine/js/loaders/FBXLoader.js"></script>
-    <script src="engine/js/loaders/OBJLoader.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/poseManager.js"></script>
+  <script src="js/encoder.js"></script>
+  <script src="js/sharing.js"></script>
+
+  <script src="js/threelibs/three.js"></script>
+  <script src="js/threelibs/effects/OutlineEffect.js"></script>
+
+  <script src="js/threelibs/libs/inflate.min.js"></script>
+  <script src="js/threelibs/loaders/FBXLoader.js"></script>
+
+  <script src="js/threelibs/controls/OrbitControls.js"></script>
+  <script src="js/threelibs/controls/TransformControls.js"></script>
 
 
-    <script src="engine/js/libs/mmdparser.min.js"></script>
-    <script src="engine/js/loaders/MMDLoader.js"></script>
-    <script src="engine/js/animation/MMDAnimationHelper.js"></script>
+  <script src="js/threelibs/WebGL.js"></script>
+  <script src="js/threelibs/libs/stats.min.js"></script>
+  <script src="scripts/app.js"></script>
 
-		<script src="engine/js/controls/OrbitControls.js"></script>
-		<script src="engine/js/controls/TransformControls.js"></script>
+  <script src="js/sceneSubjects/Light.js"></script>
+  <script src="js/sceneSubjects/Control.js"></script>
+  <script src="js/sceneSubjects/Character.js"></script>
+  <script src="js/sceneSubjects/Joint.js"></script>
 
-    
-		<script src="engine/js/WebGL.js"></script>
-		<script src="engine/js/libs/stats.min.js"></script>
-    <script src="scripts/app.js"></script>
+  <script src="js/SceneManager.js"></script>
+  <script src="js/main.js"></script>
+</body>
 
-
-    <script src="engine/menu.js"></script>
-    <script src="engine/mainController.js"></script>
-  </body>
 </html>
