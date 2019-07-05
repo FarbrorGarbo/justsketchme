@@ -4,7 +4,7 @@ function Character(characterIndex, center = false) {
   const character = this;
 
   const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-  const characterInfo = Models[characterIndex];
+  const characterInfo = characters[characterIndex];
 
   character.name = characterInfo.name;
   character.translateControl = null;
@@ -23,8 +23,11 @@ function Character(characterIndex, center = false) {
     character.traverseJoints(characterInfo, rig, function (child) {
 
       const jointInfo = characterInfo.joints.find(joint => joint.name === child.name)
+      const jointName = jointInfo.name;
       const jointScale = jointInfo.scale;
-      const joint = new Joint(jointScale, 0xffffff);
+      const jointColor = jointInfo.color;
+
+      const joint = new Joint(jointScale, jointColor, jointName);
 
       joints.push(joint);
 
@@ -69,6 +72,11 @@ function Character(characterIndex, center = false) {
     });
   }
 
+  const resetJointColor = (joint) => {
+    const jointInfo = characterInfo.joints.find(jointInfo => jointInfo.name === joint.name)
+    joint.material.color.setHex(jointInfo.color);
+  }
+
   character.selectJoint = function (x, y, joints) {
     const mouse = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
@@ -82,7 +90,7 @@ function Character(characterIndex, center = false) {
     if (activeGizmo === gizmos.ROTATE) {
       if (intersects.length > 0) {
 
-        joints.forEach(joint => joint.material.color.setHex(0xffffff));
+        joints.forEach(joint => resetJointColor(joint));
 
         if (!character.jointControl) {
           character.jointControl = new Control(intersects[0].object.parent, "rotate");
@@ -90,11 +98,12 @@ function Character(characterIndex, center = false) {
           character.jointControl.detach();
           character.jointControl.attach(intersects[0].object.parent);
         }
-        intersects[0].object.material.color.setHex(0xff0000);
+        intersects[0].object.material.color.setHex(jointColors.SELECTED_COLOR);
+        
       } else {
         if (orbitControl.enabled && character.jointControl) {
           character.jointControl.detach();
-          joints.forEach(joint => joint.material.color.setHex(0xffffff));
+          joints.forEach(joint => resetJointColor(joint));
         }
       }
     }
@@ -110,7 +119,7 @@ function Character(characterIndex, center = false) {
   character.setGizmo = function () {
     joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
     joints[0].visible = true;
-    joints[0].material.color.setHex(0xffffff);
+    resetJointColor(joints[0]);
 
     if (character.translateControl) {
       character.translateControl.detach();
@@ -128,7 +137,7 @@ function Character(characterIndex, center = false) {
       }
     }
     if (activeGizmo === gizmos.DELETE) {
-      joints[0].material.color.setHex(0xff0000);
+      joints[0].material.color.setHex(jointColors.DELETE_COLOR);
     }
   }
 
