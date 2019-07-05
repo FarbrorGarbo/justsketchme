@@ -55,6 +55,7 @@ button {
 
 img {
   max-width: 40px;
+  width: 100%;
 }
 
 /* Model list */
@@ -83,15 +84,24 @@ img {
   font-size: 14px;
 }
 
-/* Light controls */
 .light-controls{
   position: absolute;
   display: none;
-  top: 64px;
-  right: 0;
+  bottom: 64px;
+  right: calc(50% - 85px);
   list-style: none;
   padding: 10px;
   background: #e2e2e28c;
+}
+
+.info{
+  position: absolute;
+  bottom: 64px;
+  right: 0;
+  list-style: none;
+  padding: 10px;
+  text-align: left;
+  background: #e2e2e2;
 }
 
 .control {

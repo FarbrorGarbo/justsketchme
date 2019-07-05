@@ -106,7 +106,7 @@
 
   <div id="info" class="menu">
     <div class="models">
-      <button onclick="toggle_visibility('.model-list')" title="Model list">
+      <button onclick="toggle_visibility('.model-list')" title="Character list">
         <img src="images/tools/users.svg" />
       </button>
       <ul class="model-list">
@@ -137,65 +137,91 @@
       </ul>
     </div>
     <div class="controls">
-      <!-- <button onclick="undo()" title="Undo">
-        <img src="images/tools/undo.svg" />
-      </button> -->
-      <button onclick="setGizmo('delete')" title="Delete">
-        <img src="images/tools/trash.svg" />
-      </button>
       <button onclick="setGizmo('rotate')" title="Joint manipulator">
         <img src="images/tools/joint.svg" />
       </button>
-      <button onclick="setGizmo('translate')" title="Move">
+      <button onclick="setGizmo('translate')" title="Move character">
         <img src="images/tools/scale.svg" />
       </button>
+      <button onclick="setGizmo('delete')" title="Remove character">
+          <img src="images/tools/trash.svg" />
+        </button>
       <button onclick="setGizmo('none')" title="Hide controls">
         <img src="images/tools/vision.svg" />
       </button>
     </div>
-    <div class="lights">
-      <button onclick="toggle_visibility('.light-controls')" title="Light controls">
-        <img src="images/tools/bars.svg" />
+    <div>
+      <button onclick="alert('Working on making this work again')" title="Undo">
+        <img src="images/tools/undo.svg" />
       </button>
-      <div class="light-controls">
-        <div class="control">
-          <button onclick="ambientLight.intensity += 0.5;" title="Increase ambient light intensity">
-            <img src="images/tools/add-circular-button.svg" />
-          </button>
-          <img src="images/tools/sunbeam.svg" />
-          <button onclick="ambientLight.intensity -= 0.5;" title="Decrease ambient light intensity">
-            <img src="images/tools/minus-circular-button.svg" />
-          </button>
-        </div>
-        <div class="control">
-          <button onclick="directionalLight.intensity += 0.3" title="Increase directional light intensity">
-            <img src="images/tools/add-circular-button.svg" />
-          </button>
-          <img src="images/tools/light-bulb.svg" />
-          <button onclick="directionalLight.intensity -= 0.3" title="Decrease ambient light intensity">
-            <img src="images/tools/minus-circular-button.svg" />
-          </button>
-        </div>
-      </div>
     </div>
   </div>
   <div id="snackbar"><a id="reload">A new version of this app is available. Click here to update.</a></div>
   <div id="bottom" class="menu">
     <div>
       <a href="https://www.buymeacoffee.com/AdmtxiM4N" target="_blank" rel="noopener noreferrer">
-        <img src="images/tools/donation.svg" />
+        <img src="images/tools/coffee.svg" />
       </a>
     </div>
     <div class="controls">
       <button onclick="toggleEffect()" title="Toggle outlines">
         <img src="images/tools/paintbrush.svg" />
       </button>
+      <div class="lights">
+        <button onclick="toggle_visibility('.light-controls')" title="Light controls">
+          <img src="images/tools/bars.svg" />
+        </button>
+        <div class="light-controls">
+          <div class="control">
+            <button onclick="increaseAmbientLightIntensity()" title="Increase ambient light intensity">
+              <img src="images/tools/add-circular-button.svg" />
+            </button>
+            <img src="images/tools/sunbeam.svg" />
+            <button onclick="decreaseAmbientLightIntensity()" title="Decrease ambient light intensity">
+              <img src="images/tools/minus-circular-button.svg" />
+            </button>
+          </div>
+          <div class="control">
+            <button onclick="increaseDirectionalLightIntensity()" title="Increase directional light intensity">
+              <img src="images/tools/add-circular-button.svg" />
+            </button>
+            <img src="images/tools/light-bulb.svg" />
+            <button onclick="decreaseDirectionalLightIntensity()" title="Decrease ambient light intensity">
+              <img src="images/tools/minus-circular-button.svg" />
+            </button>
+          </div>
+        </div>
+      </div>
       <button onclick="takeScreenshot()" title="Take screenshot">
         <img src="images/tools/camera.svg" />
       </button>
     </div>
     <div>
-     I
+     <button onclick="toggle_visibility('.info')"" title="Info">
+      <img src="images/tools/info.svg" />
+      <div class="info" style="display: block;">
+        <b>
+          Better instructions coming soon, but for now:
+        </b>
+        <br>
+        <ul>
+          <li>Rotate around the scene by holding down the main mouse button and dragging.</li>
+          <li>Pan around the scene by holding down the secondary mouse button and dragging.</li>
+          <li>Zoom by scrolling.</li>
+          <li>Add characters to the scene with the character selector in the top left.</li>
+          <li>Toggle joint manipulation with the cute bone-looking gizmo in the center top.</li>
+          <li>Move characters around the scene with the arrows gizmo in the center top.</li>
+          <li>Remove characters by selecting the trash gizmo in the center top and selecting the character.</li>
+          <li>Hide all armature info and gizmos with the eye tool in the center top.</li>
+          <li>Undo a move with the undo button in the top right.</li>
+          <li>Toggle the outline effect with the paintbrush iun the bottom center.</li>
+          <li>Change the light intensity (both ambient and spotlight) with the slider menu in the bottom center.</li>
+          <li>Take a screenshot with the camera icon in the bottom center.</li>
+          <li>Buy the developers a coffee with the donate button in the bottom left.</li>
+          <li>The "i" button in the bottom right brings this up again.</li>
+        </ul>
+      </div>
+    </button>
     </div>
   </div>
 
@@ -223,6 +249,7 @@
   <script src="scripts/app.js"></script>
 
   <script src="js/sceneSubjects/Light.js"></script>
+  <script src="js/sceneSubjects/Control.js"></script>
   <script src="js/sceneSubjects/Character.js"></script>
   <script src="js/sceneSubjects/Joint.js"></script>
 

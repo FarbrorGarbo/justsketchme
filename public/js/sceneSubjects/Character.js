@@ -1,5 +1,5 @@
 
-function Character(characterIndex) {
+function Character(characterIndex, center=false) {
 
   
   const character = this;
@@ -32,7 +32,11 @@ function Character(characterIndex) {
 
       child.add(joint);
     });
-    rig.position.set(Math.random() * 100, 0, Math.random() * 100)
+    if(center) {
+      rig.position.set(0,0,0);
+    } else {
+      rig.position.set(Math.random() * 100, 0, Math.random() * 100)
+    }
     rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
     
     scene.add(rig);
@@ -83,7 +87,7 @@ function Character(characterIndex) {
         joints.forEach(joint => joint.material.color.setHex(0xffffff));
 
         if (!character.jointControl) {
-          character.jointControl = character.addControl(intersects[0].object.parent, "rotate");
+          character.jointControl = new Control(intersects[0].object.parent, "rotate");
         } else {
           character.jointControl.detach();
           character.jointControl.attach(intersects[0].object.parent);
@@ -106,23 +110,6 @@ function Character(characterIndex) {
     }
   }
 
-  character.addControl = function (object, type, space = "local") {
-    var transformControl = new THREE.TransformControls(camera, canvas);
-
-    transformControl.addEventListener('dragging-changed', function (event) {
-      orbitControl.enabled = !event.value;
-    });
-
-    if(object) {
-      transformControl.attach(object);
-    }
-    transformControl.setMode(type);
-    transformControl.setSpace(space);
-
-    scene.add(transformControl);
-    return transformControl;
-  }
-
   character.setGizmo = function () {
     joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
     joints[0].visible = true;
@@ -132,7 +119,7 @@ function Character(characterIndex) {
       character.translateControl.detach();
     }
     if (activeGizmo === gizmos.TRANSLATE) {
-      character.translateControl = character.addControl(joints[0].parent, "translate");
+      character.translateControl = new Control(joints[0].parent, "translate");
     }
     if(activeGizmo === gizmos.NONE) {
       joints.forEach(joint => joint.visible = false);
@@ -146,9 +133,6 @@ function Character(characterIndex) {
     if(activeGizmo === gizmos.DELETE) {
       joints[0].material.color.setHex(0xff0000);
     }
-  }
-
-  character.update = function (time) {
   }
 
   character.onClick = function (x, y) {

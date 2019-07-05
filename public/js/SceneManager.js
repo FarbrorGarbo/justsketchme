@@ -15,85 +15,96 @@ let activeGizmo = gizmos.ROTATE;
 function SceneManager(canvas) {
 
   const clock = new THREE.Clock();
-  
-  const screenDimensions = {
-      width: canvas.width,
-      height: canvas.height
-  }
 
-  let ambientLight, directionalLight = null;  
+  const screenDimensions = {
+    width: canvas.width,
+    height: canvas.height
+  }
 
   scene = buildScene();
   const renderer = buildRender(screenDimensions);
-  const effect = new THREE.OutlineEffect( renderer );
+  const effect = new THREE.OutlineEffect(renderer);
   camera = buildCamera(screenDimensions);
   orbitControl = buildOrbitController();
   const sceneSubjects = createSceneSubjects();
+  let ambientLight, directionalLight = null;
+  const lights = createLights();
 
 
   function buildScene() {
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color( 0xffffff );
-    
-      const gridHelper = new THREE.PolarGridHelper( 300, 10 );
-      scene.add( gridHelper );
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
 
-      ambientLight = new Light(scene, new THREE.AmbientLight( 0x443333, 3 ));
-      directionalLight = new Light(scene, new THREE.DirectionalLight( 0xffffbb, 1 ));
+    const gridHelper = new THREE.PolarGridHelper(300, 10);
+    scene.add(gridHelper);
 
-      return scene;
+    return scene;
   }
 
   function buildRender({ width, height }) {
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true }); 
-      const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
-      renderer.setPixelRatio(DPR);
-      renderer.setSize(width, height);
-      renderer.shadowMap.enabled = true;
-      renderer.gammaInput = true;
-      renderer.gammaOutput = true; 
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
+    renderer.setPixelRatio(DPR);
+    renderer.setSize(width, height);
+    renderer.shadowMap.enabled = true;
+    renderer.gammaInput = true;
+    renderer.gammaOutput = true;
 
-      return renderer;
+    return renderer;
   }
 
   function buildCamera({ width, height }) {
-      const aspectRatio = width / height;
-      const fieldOfView = 45;
-      const nearPlane = 2;
-      const farPlane = 2000; 
-      const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
+    const aspectRatio = width / height;
+    const fieldOfView = 45;
+    const nearPlane = 2;
+    const farPlane = 2000;
+    const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
 
-      camera.position.set( 100, 200, 300 );
+    camera.position.set(100, 200, 300);
 
-      return camera;
+    return camera;
   }
 
   function buildOrbitController() {
-    let controls = new THREE.OrbitControls( camera, renderer.domElement );
-    controls.target.set( 0, 100, 0 );
+    let controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 100, 0);
     controls.screenSpacePanning = true;
     controls.update();
     return controls;
   }
 
   function createSceneSubjects() {
-      const sceneSubjects = [
-          new Character(0),
-      ];
-      
-      return sceneSubjects;
+    const sceneSubjects = [
+      new Character(0, true),
+    ];
+
+    return sceneSubjects;
+  }
+
+  function createLights() {
+    ambientLight = new Light(scene, new THREE.AmbientLight(0x443333, 3), new THREE.Vector3(0, 0, 0));
+    directionalLight = new Light(scene, new THREE.DirectionalLight(0xffffbb, 1), new THREE.Vector3(100, 100, 100), true);
+    const lights = [
+      ambientLight,
+      directionalLight
+    ];
+
+    return lights;
   }
 
   this.setGizmo = function (gizmo) {
     activeGizmo = gizmo;
-    for(let i=0; i<sceneSubjects.length; i++) {
-      if(!sceneSubjects[i].alive){
+    for (let i = 0; i < sceneSubjects.length; i++) {
+      if (!sceneSubjects[i].alive) {
         sceneSubjects.splice(i, 1);
       }
-      if(sceneSubjects[i]){
+      if (sceneSubjects[i]) {
         sceneSubjects[i].setGizmo();
       }
     }
+
+    for (let i = 0; i < lights.length; i++)
+      lights[i].setGizmo();
   }
 
   this.addCharacterToScene = function (characterIndex) {
@@ -112,29 +123,48 @@ function SceneManager(canvas) {
     a.click();
   }
 
-  this.update = function() {
-      const elapsedTime = clock.getElapsedTime();
-
-      for(let i=0; i<sceneSubjects.length; i++)
-        sceneSubjects[i].update(elapsedTime);
-
-      effect.render(scene, camera);
+  this.increaseAmbientLightIntensity = function () {
+    ambientLight.increaseIntensity();
+  }
+  
+  this.decreaseAmbientLightIntensity = function () {
+    ambientLight.decreaseIntensity();
   }
 
-  this.onWindowResize = function() {
-      const { width, height } = canvas;
-
-      screenDimensions.width = width;
-      screenDimensions.height = height;
-
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      
-      effect.setSize(width, height);
+  this.increaseDirectionalLightIntensity = function () {
+    directionalLight.increaseIntensity();
   }
 
-  this.onClick = function(x, y) {
-    for(let i=0; i<sceneSubjects.length; i++) {
+  this.decreaseDirectionalLightIntensity = function () {
+    directionalLight.decreaseIntensity();
+  }
+
+  this.update = function () {
+    const elapsedTime = clock.getElapsedTime();
+
+    // for (let i = 0; i < sceneSubjects.length; i++)
+    //   sceneSubjects[i].update(elapsedTime);
+    
+    // for (let i = 0; i < lights.length; i++)
+    //   lights[i].update(elapsedTime);
+
+    effect.render(scene, camera);
+  }
+
+  this.onWindowResize = function () {
+    const { width, height } = canvas;
+
+    screenDimensions.width = width;
+    screenDimensions.height = height;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    effect.setSize(width, height);
+  }
+
+  this.onClick = function (x, y) {
+    for (let i = 0; i < sceneSubjects.length; i++) {
       sceneSubjects[i].onClick(x, y);
     }
   }

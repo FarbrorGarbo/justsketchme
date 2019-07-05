@@ -36,28 +36,4 @@ const Models = [
     type: 'fbx',
     joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
   },
-  // {
-  //   name: 'Eve',
-  //   id: 4,
-  //   path: 'eve_j_gonzales.fbx',
-  //   scale: 1.5,
-  //   type: 'fbx',
-  //   joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
-  // },
-  // {
-  //   name: 'Exo',
-  //   id: 5,
-  //   src: 'https://justsketchme.nyc3.cdn.digitaloceanspaces.com/untitled-1/exo_gray.fbx',
-  //   path: 'exo_gray.fbx',
-  //   scale: 1,
-  //   type: 'fbx',
-  //   joints: ['Hips','Spine','LeftShoulder','LeftArm','LeftForeArm','LeftHand','Neck','Head','RightShoulder','RightArm','RightForeArm','RightHand','LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase',"LeftHandThumb1","LeftHandThumb2","LeftHandThumb3","LeftHandPinky1","LeftHandPinky2","LeftHandPinky3","LeftHandRing1","LeftHandRing2","LeftHandRing3","LeftHandMiddle1","LeftHandMiddle2","LeftHandMiddle3","LeftHandIndex1","LeftHandIndex2","LeftHandIndex3","RightHandThumb1","RightHandThumb2","RightHandThumb3","RightHandPinky1","RightHandPinky2","RightHandPinky3","RightHandRing1","RightHandRing2","RightHandRing3","RightHandMiddle1","RightHandMiddle2","RightHandMiddle3","RightHandIndex1","RightHandIndex2","RightHandIndex3"],
-  // },
-  // {
-  //   name: 'Hatsune Miku [WIP]',
-  //   path: 'models/mmd/miku/miku_v2.pmd',
-  //   scale: 10,
-  //   type: 'mmd',
-  //   joints: ['上半身','頭','左髪１','左髪２','左髪３','左髪４','左髪５','左髪６','右髪１','右髪２','右髪３','右髪４','右髪５','右髪６','左肩','左腕','左ひじ','左手首','左親指１','左親指２','左親指先','左人指１','左人指２','左人指３','左人差指先','左中指１','左中指２','左中指３','左中指先','左薬指１','左薬指２','左薬指３','左薬指先','左小指１','左小指２','左小指３','左小指先','左手先','左手捩先','右肩','右腕','右ひじ','右手首','右親指１','右親指２','右親指先','右人指１','右人指２','右人指３','右人差指先','右中指１','右中指２','右中指３','右中指先','右薬指１','右薬指２','右薬指３','右薬指先','右小指１','右小指２','右小指３','右小指先','右手先','右手捩先','左足','左ひざ','左足首','右足','右ひざ','右足首','下半身先'],
-  // },
 ];

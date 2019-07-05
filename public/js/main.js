@@ -41,6 +41,22 @@ function takeScreenshot() {
   sceneManager.takeScreenshot();
 }
 
+function increaseAmbientLightIntensity () {
+  sceneManager.increaseAmbientLightIntensity();
+}
+
+function decreaseAmbientLightIntensity () {
+  sceneManager.decreaseAmbientLightIntensity();
+}
+
+function increaseDirectionalLightIntensity () {
+  sceneManager.increaseDirectionalLightIntensity();
+}
+
+function decreaseDirectionalLightIntensity () {
+  sceneManager.decreaseDirectionalLightIntensity();
+}
+
 document.addEventListener('mousedown', function (event) {
   event.preventDefault();
   sceneManager.onClick(event.clientX, event.clientY)
