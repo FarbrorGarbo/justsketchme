@@ -72,11 +72,9 @@ function Character(characterIndex, center = false) {
     });
   }
 
-  const resetJointColor = (joint) => {
-    const jointInfo = characterInfo.joints.find(jointInfo => jointInfo.name === joint.name)
-    joint.material.color.setHex(jointInfo.color);
-    joint.material.opacity = jointOpacities.DEFAULT_OPACITY;
-
+  const resetJoint = (joint) => {
+    joint.resetColor();
+    joint.resetOpacity();
   }
 
   character.selectJoint = function (x, y, joints) {
@@ -93,7 +91,7 @@ function Character(characterIndex, center = false) {
       if (intersects.length > 0) {
         var selectedJoint = intersects[0].object;
         joints.forEach(joint => {
-          resetJointColor(joint);
+          resetJoint(joint);
           joint.selected = false;
         });
 
@@ -103,15 +101,15 @@ function Character(characterIndex, center = false) {
           character.jointControl.detach();
           character.jointControl.attach(selectedJoint.parent);
         }
-        selectedJoint.material.color.setHex(jointColors.SELECTED_COLOR);
-        selectedJoint.material.opacity = jointOpacities.SELECTED_OPACITY;
+        selectedJoint.setColor(jointColors.SELECTED_COLOR);
+        selectedJoint.setOpacity(jointOpacities.SELECTED_OPACITY);
         selectedJoint.selected = true;
 
       } else {
         if (orbitControl.enabled && character.jointControl) {
           character.jointControl.detach();
           joints.forEach(joint => {
-            resetJointColor(joint);
+            resetJoint(joint);
             joint.selected = false;
           });
         }
@@ -137,11 +135,11 @@ function Character(characterIndex, center = false) {
     var intersects = raycaster.intersectObjects(joints);
     if (activeGizmo === gizmos.ROTATE) {
       if (intersects.length > 0) {
-        intersects[0].object.material.opacity = jointOpacities.HIGHLIGHTED_OPACITY;
+        intersects[0].object.setOpacity(jointOpacities.HIGHLIGHTED_OPACITY);
       } else {
         joints.forEach(joint => {
           if (!joint.selected) {
-            joint.material.opacity = jointOpacities.DEFAULT_OPACITY;
+            joint.resetOpacity();
           }
         });
       }
@@ -151,7 +149,7 @@ function Character(characterIndex, center = false) {
   character.setGizmo = function () {
     joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
     joints[0].visible = true;
-    resetJointColor(joints[0]);
+    resetJoint(joints[0]);
 
     if (character.translateControl) {
       character.translateControl.detach();
@@ -169,7 +167,7 @@ function Character(characterIndex, center = false) {
       }
     }
     if (activeGizmo === gizmos.DELETE) {
-      joints[0].material.color.setHex(jointColors.DELETE_COLOR);
+      joints[0].setColor(jointColors.DELETE_COLOR);
     }
   }
 
