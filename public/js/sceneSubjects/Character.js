@@ -72,11 +72,6 @@ function Character(characterIndex, center = false) {
     });
   }
 
-  const resetJoint = (joint) => {
-    joint.resetColor();
-    joint.resetOpacity();
-  }
-
   character.selectJoint = function (x, y, joints) {
     const mouse = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
@@ -91,8 +86,7 @@ function Character(characterIndex, center = false) {
       if (intersects.length > 0) {
         var selectedJoint = intersects[0].object;
         joints.forEach(joint => {
-          resetJoint(joint);
-          joint.selected = false;
+          joint.reset();
         });
 
         if (!character.jointControl) {
@@ -109,8 +103,7 @@ function Character(characterIndex, center = false) {
         if (orbitControl.enabled && character.jointControl) {
           character.jointControl.detach();
           joints.forEach(joint => {
-            resetJoint(joint);
-            joint.selected = false;
+            joint.reset();
           });
         }
       }
@@ -149,7 +142,7 @@ function Character(characterIndex, center = false) {
   character.setGizmo = function () {
     joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
     joints[0].visible = true;
-    resetJoint(joints[0]);
+    joints[0].reset();
 
     if (character.translateControl) {
       character.translateControl.detach();

@@ -25,6 +25,12 @@ function Joint (size = 1, color, name = "joint") {
     joint.setOpacity(joint.defaultOpacity);
   }
 
+  joint.reset = function() {
+    joint.selected = false;
+    joint.resetColor();
+    joint.resetOpacity();
+  }
+
   joint.setColor(joint.defaultColor);
   joint.setOpacity(joint.defaultOpacity);
 
