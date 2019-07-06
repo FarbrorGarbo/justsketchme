@@ -2,16 +2,6 @@ let camera = null;
 let scene = null;
 let orbitControl = null;
 
-const gizmos = {
-  TRANSLATE: 'translate',
-  SCALE: 'scale',
-  ROTATE: 'rotate',
-  NONE: 'none',
-  DELETE: 'delete',
-}
-
-let activeGizmo = gizmos.ROTATE;
-
 function SceneManager(canvas) {
 
   const clock = new THREE.Clock();
