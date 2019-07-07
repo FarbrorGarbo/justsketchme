@@ -6,10 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Analytics -->
+  
   <script>
     const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
+    const version = '18';
 
+    /* Google Analytics */
     if (!local) {
       (function (i, s, o, g, r, a, m) {
       i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -19,10 +21,11 @@
       })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
       ga('create', 'UA-87109679-1', 'auto');
-      ga('send', 'pageview', 'firebaseapp');
+      ga('send', 'pageview',  `webapp-v${version}`);
     }
+    /* End Google Analytics */
   </script>
-  <!-- End Google Analytics -->
+ 
 
   <title>JustSketchMe</title>
 
