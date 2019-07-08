@@ -61,14 +61,12 @@ function Character(characterIndex, center = false) {
       }
 
       if (child.isMesh && !characterInfo.joints.some(joint => joint.name === child.name)) {
-        console.log(child.name);
         child.castShadow = true;
         child.receiveShadow = true;
 
-        child.material.color.setHex( 0x9c8756 );
-        // child.material.shininess = 0.5;
-        // child.material.specular = 0.5;
-        // child.material.reflectivity = 0.2;
+        if( characterInfo.meshColor) {
+          child.material.color.setHex( characterInfo.meshColor );
+        }
       }
     });
   }
