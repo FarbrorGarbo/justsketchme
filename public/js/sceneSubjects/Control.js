@@ -14,3 +14,13 @@ function Control (object, type, space = "local") {
   scene.add(transformControl);
   return transformControl;
 }
+
+const gizmos = {
+  TRANSLATE: 'translate',
+  SCALE: 'scale',
+  ROTATE: 'rotate',
+  NONE: 'none',
+  DELETE: 'delete',
+}
+
+let activeGizmo = gizmos.ROTATE;

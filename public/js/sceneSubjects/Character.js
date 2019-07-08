@@ -1,7 +1,6 @@
-
-function Character(characterIndex, center=false) {
+function Character(characterIndex, center = false) {
   const character = this;
-  const characterInfo = Models[characterIndex];
+  const characterInfo = characters[characterIndex];
 
   character.name = characterInfo.name;
   character.translateControl = null;
@@ -18,25 +17,27 @@ function Character(characterIndex, center=false) {
 
   loader.load(modelPath, function (rig) {
     character.traverseJoints(characterInfo, rig, function (child) {
-      const fingerNames = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky'];
 
-      const jointScale = fingerNames.some(finger => child.name.includes(finger)) ? characterInfo.scale * 5 : characterInfo.scale;
+      const jointInfo = characterInfo.joints.find(joint => joint.name === child.name)
+      const jointName = jointInfo.name;
+      const jointScale = jointInfo.scale;
+      const jointColor = jointInfo.color;
 
-      const joint = new Joint(jointScale, 0xffffff);
+      const joint = new Joint(jointScale, jointColor, jointName);
 
       joints.push(joint);
 
       child.add(joint);
     });
-    if(center) {
-      rig.position.set(0,0,0);
+    if (center) {
+      rig.position.set(0, 0, 0);
     } else {
       rig.position.set(Math.random() * 100, 0, Math.random() * 100)
     }
     rig.scale.set(characterInfo.scale, characterInfo.scale, characterInfo.scale);
-    
+
     scene.add(rig);
-    
+
     character.rig = rig;
 
     character.setGizmo(activeGizmo);
@@ -59,7 +60,7 @@ function Character(characterIndex, center=false) {
       if (child.isObject3D) {
         !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
 
-        if (characterInfo.joints.includes(child.name) && !checked.includes(child.name)) {
+        if (characterInfo.joints.some(joint => joint.name === child.name) && !checked.includes(child.name)) {
           thingToDo(child);
           checked.push(child.name);
         }
@@ -79,29 +80,57 @@ function Character(characterIndex, center=false) {
     var intersects = raycaster.intersectObjects(joints);
     if (activeGizmo === gizmos.ROTATE) {
       if (intersects.length > 0) {
-
-        joints.forEach(joint => joint.material.color.setHex(0xffffff));
+        var selectedJoint = intersects[0].object;
+        joints.forEach(joint => {
+          joint.reset();
+        });
 
         if (!character.jointControl) {
-          character.jointControl = new Control(intersects[0].object.parent, "rotate");
+          character.jointControl = new Control(selectedJoint.parent, "rotate");
         } else {
           character.jointControl.detach();
-          character.jointControl.attach(intersects[0].object.parent);
+          character.jointControl.attach(selectedJoint.parent);
         }
-        console.log(intersects[0].object.parent.name);
-        intersects[0].object.material.color.setHex(0xff0000);
+        selectedJoint.setColor(jointColors.SELECTED_COLOR);
+        selectedJoint.setOpacity(jointOpacities.SELECTED_OPACITY);
+        selectedJoint.selected = true;
+
       } else {
         if (orbitControl.enabled && character.jointControl) {
           character.jointControl.detach();
-          joints.forEach(joint => joint.material.color.setHex(0xffffff));
+          joints.forEach(joint => {
+            joint.reset();
+          });
         }
       }
     }
-    if(activeGizmo === gizmos.DELETE) {
+    if (activeGizmo === gizmos.DELETE) {
       if (intersects.length > 0) {
-      //TODO: Remove references to this character to clean it up.
         scene.remove(character.rig);
         character.alive = false;
+      }
+    }
+  }
+
+  character.hoverJoint = function (x, y, joints) {
+    const mouse = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+
+    mouse.x = ((x - canvas.offsetLeft) / canvas.clientWidth) * 2 - 1;
+    mouse.y = -((y - canvas.offsetTop) / canvas.clientHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    var intersects = raycaster.intersectObjects(joints);
+    if (activeGizmo === gizmos.ROTATE) {
+      if (intersects.length > 0) {
+        intersects[0].object.setOpacity(jointOpacities.HIGHLIGHTED_OPACITY);
+      } else {
+        joints.forEach(joint => {
+          if (!joint.selected) {
+            joint.resetOpacity();
+          }
+        });
       }
     }
   }
@@ -109,31 +138,36 @@ function Character(characterIndex, center=false) {
   character.setGizmo = function () {
     joints.forEach(joint => joint.visible = activeGizmo === gizmos.ROTATE);
     joints[0].visible = true;
-    joints[0].material.color.setHex(0xffffff);
+    joints[0].reset();
 
-    if(character.translateControl) {
+    if (character.translateControl) {
       character.translateControl.detach();
     }
     if (activeGizmo === gizmos.TRANSLATE) {
       character.translateControl = new Control(joints[0].parent, "translate");
     }
-    if(activeGizmo === gizmos.NONE) {
+    if (activeGizmo === gizmos.NONE) {
       joints.forEach(joint => joint.visible = false);
-      if(character.translateControl) {
+      if (character.translateControl) {
         character.translateControl.detach();
       }
-      if(character.jointControl) {
+      if (character.jointControl) {
         character.jointControl.detach();
       }
     }
-    if(activeGizmo === gizmos.DELETE) {
-      joints[0].material.color.setHex(0xff0000);
+    if (activeGizmo === gizmos.DELETE) {
+      joints[0].setColor(jointColors.DELETE_COLOR);
     }
   }
 
   character.onClick = function (x, y) {
     character.selectJoint(x, y, joints);
   }
+
+  character.onMouseMove = function (x, y) {
+    character.hoverJoint(x, y, joints);
+  }
+
 }
 
 function onError(err) {
