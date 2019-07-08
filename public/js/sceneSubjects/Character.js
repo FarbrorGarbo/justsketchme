@@ -17,7 +17,6 @@ function Character(characterIndex, center = false) {
 
   loader.load(modelPath, function (rig) {
     character.traverseJoints(characterInfo, rig, function (child) {
-
       const jointInfo = characterInfo.joints.find(joint => joint.name === child.name)
       const jointName = jointInfo.name;
       const jointScale = jointInfo.scale;
@@ -52,11 +51,6 @@ function Character(characterIndex, center = false) {
     var checked = [];
 
     rig.traverse(function (child) {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-
       if (child.isObject3D) {
         !jointChecker.includes(child.name) && jointChecker.push(`"${child.name}"`);
 
@@ -64,6 +58,17 @@ function Character(characterIndex, center = false) {
           thingToDo(child);
           checked.push(child.name);
         }
+      }
+
+      if (child.isMesh && !characterInfo.joints.some(joint => joint.name === child.name)) {
+        console.log(child.name);
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+        child.material.color.setHex( 0x9c8756 );
+        // child.material.shininess = 0.5;
+        // child.material.specular = 0.5;
+        // child.material.reflectivity = 0.2;
       }
     });
   }

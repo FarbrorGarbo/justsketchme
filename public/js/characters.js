@@ -1,4 +1,707 @@
-const characters = [{
+const characters = [
+  {
+    name: 'Test',
+    id: 0,
+    path: 'models/female.fbx',
+    scale: 0.2,
+    type: 'fbx',
+    joints: [
+    {
+      name: "J_Pelvis",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Hip",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Lumbar",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Dorsal",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Dorsal2",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Neck1",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Neck2",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Head",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "L_Collar",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Arm",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Forearm",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Hand",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger11",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger12",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger13",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger14",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger15",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger16",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger17",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger18",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger19",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger20",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger21",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger22",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger23",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger31",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger32",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger33",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger41",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger42",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger43",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger51",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger52",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger53",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Thigh",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Leg",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Foot",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Toes",
+      scale: 2,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Bigtoe",
+      scale: 2,
+      color: 0xff0000,
+    },
+    {
+      name: "R_Collar",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Arm",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Forearm",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Hand",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger11",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger12",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger13",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger14",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger15",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger16",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger17",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger18",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger19",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger20",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger21",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger22",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger23",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger31",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger32",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger33",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger41",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger42",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger43",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger51",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger52",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger53",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Thigh",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Leg",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Foot",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Toes",
+      scale: 2,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Bigtoe",
+      scale: 2,
+      color: 0x0000ff,
+    },
+  ],
+  },
+  {
+    name: 'Test',
+    id: 0,
+    path: 'models/male.fbx',
+    scale: 0.2,
+    type: 'fbx',
+    joints: [{
+      name: "J_Hip",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Lumbar",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Dorsal",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Neck",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "J_Head",
+      scale: 1,
+      color: 0xffff00,
+    },
+    {
+      name: "L_Collar",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Arm",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Forearm",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Hand",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger11",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger12",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger13",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger14",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger15",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger16",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger17",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger18",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger19",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger20",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger21",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger22",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger23",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger31",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger32",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger33",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger41",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger42",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger43",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger51",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger52",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Finger53",
+      scale: 5,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Thigh",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Leg",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_Foot",
+      scale: 1,
+      color: 0xff0000,
+    },
+    {
+      name: "L_FourToes",
+      scale: 2,
+      color: 0xff0000,
+    },
+    {
+      name: "L_BigToe",
+      scale: 2,
+      color: 0xff0000,
+    },
+    {
+      name: "R_Collar",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Arm",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Forearm",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Hand",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger11",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger12",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger13",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger14",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger15",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger16",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger17",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger18",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger19",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger20",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger21",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger22",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger23",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger31",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger32",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger33",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger41",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger42",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger43",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger51",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger52",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Finger53",
+      scale: 5,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Thigh",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Leg",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_Foot",
+      scale: 1,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_FourToes",
+      scale: 2,
+      color: 0x0000ff,
+    },
+    {
+      name: "R_BigToe",
+      scale: 2,
+      color: 0x0000ff,
+    },
+  ],
+  },
+  {
     name: 'Female mannequin',
     id: 1,
     src: 'https://justsketchme.nyc3.cdn.digitaloceanspaces.com/xbot.fbx',
@@ -259,7 +962,7 @@ const characters = [{
   },
   {
     name: 'Male mannequin',
-    id: 0,
+    id: 7,
     src: 'https://justsketchme.nyc3.cdn.digitaloceanspaces.com/ybot.fbx',
     path: 'models/ybot.fbx',
     scale: 1,
