@@ -68,6 +68,5 @@ document.addEventListener('mousemove', function (event) {
 }, false);
 
 document.addEventListener('touchstart', function (event) {
-  event.preventDefault();
   sceneManager.onClick(event.touches[0].clientX, event.touches[0].clientY);
 }, false);

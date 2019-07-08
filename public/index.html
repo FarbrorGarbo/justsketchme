@@ -6,17 +6,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Analytics -->
+  
   <script>
-      // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      // })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
+    const version = '19';
 
-      // ga('create', 'UA-87109679-1', 'auto');
-      // ga('send', 'pageview', 'firebaseapp');
+    /* Google Analytics */
+    if (!local) {
+      (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+      ga('create', 'UA-87109679-1', 'auto');
+      ga('send', 'pageview',  `webapp-v${version}`);
+    }
+    /* End Google Analytics */
   </script>
-  <!-- End Google Analytics -->
+ 
 
   <title>JustSketchMe</title>
 
@@ -42,66 +51,24 @@
 <body>
   <div class="contribute-popup">
     <button onclick="document.querySelector('.contribute-popup').style.display = 'none';">Close</button>
-    <h2>Keep JustSketchMe awesome!</h2>
+    <h2>Keep JustSketchMe AWESOME!</h2>
     <p>
-      JustSketchMe is free to use and doesn't contain ads.
+      JustSketchMe is <b>free to use</b> and <b>doesn't contain ads</b>.
     </p>
     <p>
       <b>We want to keep it that way!</b>
     </p>
-    <p>
-      Support the development?
-    </p>
     <div class="contribute">
-      <style>
-        .bmc-button img {
-          width: 27px !important;
-          margin-bottom: 1px !important;
-          box-shadow: none !important;
-          border: none !important;
-          vertical-align: middle !important;
-        }
-
-        .bmc-button {
-          line-height: 36px !important;
-          height: 37px !important;
-          text-decoration: none !important;
-          display: inline-flex !important;
-          color: #FFFFFF !important;
-          background-color: #FF813F !important;
-          border-radius: 3px !important;
-          border: 1px solid transparent !important;
-          padding: 0px 9px !important;
-          font-size: 17px !important;
-          letter-spacing: -0.08px !important;
-          box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
-          -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-          margin: 0 auto !important;
-          font-family: 'Lato', sans-serif !important;
-          -webkit-box-sizing: border-box !important;
-          box-sizing: border-box !important;
-          -o-transition: 0.3s all linear !important;
-          -webkit-transition: 0.3s all linear !important;
-          -moz-transition: 0.3s all linear !important;
-          -ms-transition: 0.3s all linear !important;
-          transition: 0.3s all linear !important;
-        }
-
-        .bmc-button:hover,
-        .bmc-button:active,
-        .bmc-button:focus {
-          -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-          text-decoration: none !important;
-          box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-          opacity: 0.85 !important;
-          color: #FFFFFF !important;
-        }
-      </style>
-      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet"><a
-        class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/AdmtxiM4N"><img
+      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
+      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/AdmtxiM4N"><img
           src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg"
-          alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+          alt="Buy me a coffee"><span style="margin-left:5px">Buy us a coffee</span>
+      </a>
     </div>
+    <p>
+      Your contributions keeps the servers running
+      <br>and supports us adding new features.
+    </p>
   </div>
 
   <div id="info" class="menu">
@@ -123,11 +90,11 @@
           </button>
         </li>
         <li>
-            <button class="model" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
-              <img src="images/tools/stick-man.svg" />
-              Knight
-            </button>
-          </li>
+          <button class="model" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
+            <img src="images/tools/stick-man.svg" />
+            Knight
+          </button>
+        </li>
         <li>
           <button class="model" onclick="addCharacterToScene(3);toggle_visibility('.model-list');">
             <img src="images/tools/stick-man.svg" />
@@ -144,8 +111,8 @@
         <img src="images/tools/scale.svg" />
       </button>
       <button onclick="setGizmo('delete')" title="Remove character">
-          <img src="images/tools/trash.svg" />
-        </button>
+        <img src="images/tools/trash.svg" />
+      </button>
       <button onclick="setGizmo('none')" title="Hide controls">
         <img src="images/tools/vision.svg" />
       </button>
@@ -159,9 +126,9 @@
   <div id="snackbar"><a id="reload">A new version of this app is available. Click here to update.</a></div>
   <div id="bottom" class="menu">
     <div>
-      <a href="https://www.buymeacoffee.com/AdmtxiM4N" target="_blank" rel="noopener noreferrer">
+      <button onclick="toggle_visibility('.contribute-popup')" title="Contribute">
         <img src="images/tools/coffee.svg" />
-      </a>
+      </button>
     </div>
     <div class="controls">
       <button onclick="toggleEffect()" title="Toggle outlines">
@@ -197,31 +164,31 @@
       </button>
     </div>
     <div>
-     <button onclick="toggle_visibility('.info')"" title="Info">
-      <img src="images/tools/info.svg" />
-      <div class="info" style="display: block;">
-        <b>
-          Better instructions coming soon, but for now:
-        </b>
-        <br>
-        <ul>
-          <li>Rotate around the scene by holding down the main mouse button and dragging.</li>
-          <li>Pan around the scene by holding down the secondary mouse button and dragging.</li>
-          <li>Zoom by scrolling.</li>
-          <li>Add characters to the scene with the character selector in the top left.</li>
-          <li>Toggle joint manipulation with the cute bone-looking gizmo in the center top.</li>
-          <li>Move characters around the scene with the arrows gizmo in the center top.</li>
-          <li>Remove characters by selecting the trash gizmo in the center top and selecting the character.</li>
-          <li>Hide all armature info and gizmos with the eye tool in the center top.</li>
-          <li>Undo a move with the undo button in the top right.</li>
-          <li>Toggle the outline effect with the paintbrush iun the bottom center.</li>
-          <li>Change the light intensity (both ambient and spotlight) with the slider menu in the bottom center.</li>
-          <li>Take a screenshot with the camera icon in the bottom center.</li>
-          <li>Buy the developers a coffee with the donate button in the bottom left.</li>
-          <li>The "i" button in the bottom right brings this up again.</li>
-        </ul>
-      </div>
-    </button>
+      <button onclick="toggle_visibility('.info')"" title=" Info">
+        <img src="images/tools/info.svg" />
+        <div class="info" style="display: block;">
+          <b>
+            Better instructions coming soon, but for now:
+          </b>
+          <br>
+          <ul>
+            <li>Rotate around the scene by holding down the main mouse button and dragging.</li>
+            <li>Pan around the scene by holding down the secondary mouse button and dragging.</li>
+            <li>Zoom by scrolling.</li>
+            <li>Add characters to the scene with the character selector in the top left.</li>
+            <li>Toggle joint manipulation with the cute bone-looking gizmo in the center top.</li>
+            <li>Move characters around the scene with the arrows gizmo in the center top.</li>
+            <li>Remove characters by selecting the trash gizmo in the center top and selecting the character.</li>
+            <li>Hide all armature info and gizmos with the eye tool in the center top.</li>
+            <li>Undo a move with the undo button in the top right.</li>
+            <li>Toggle the outline effect with the paintbrush iun the bottom center.</li>
+            <li>Change the light intensity (both ambient and spotlight) with the slider menu in the bottom center.</li>
+            <li>Take a screenshot with the camera icon in the bottom center.</li>
+            <li>Buy the developers a coffee with the donate button in the bottom left.</li>
+            <li>The "i" button in the bottom right brings this up again.</li>
+          </ul>
+        </div>
+      </button>
     </div>
   </div>
 

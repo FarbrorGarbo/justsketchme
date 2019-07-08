@@ -1,5 +1,7 @@
-var dataCacheName = 'v16';
-var cacheName = 'v16';
+const version = '19';
+var dataCacheName = `v${version}`;
+var cacheName = `v${version}`;
+
 var filesToCache = [
   '/',
  "./images",
