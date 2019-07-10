@@ -96,6 +96,7 @@ img {
 
 .info{
   position: absolute;
+  display: none;
   bottom: 64px;
   right: 0;
   list-style: none;
