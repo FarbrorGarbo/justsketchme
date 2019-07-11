@@ -110,6 +110,17 @@ img {
   padding: 10px;
 }
 
+.pulse{ 
+  animation: pulse 60s infinite;
+  animation-timing-function: linear;   
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  98% { transform: scale(1); }
+  99% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
 .contribute-popup {
   position: fixed;
