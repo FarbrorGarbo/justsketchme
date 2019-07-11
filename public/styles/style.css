@@ -110,8 +110,8 @@ img {
   padding: 10px;
 }
 
-.pulse{ 
-  animation: pulse 60s infinite;
+.pulse { 
+  animation: pulse 20s infinite;
   animation-timing-function: linear;   
 }
 
