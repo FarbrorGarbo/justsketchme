@@ -118,7 +118,7 @@ img {
 @keyframes pulse {
   0% { transform: scale(1); }
   98% { transform: scale(1); }
-  99% { transform: scale(1.1); }
+  99% { transform: scale(1.4); }
   100% { transform: scale(1); }
 }
 
