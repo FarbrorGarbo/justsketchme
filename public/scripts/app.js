@@ -47,8 +47,6 @@ navigator.serviceWorker.addEventListener('controllerchange', function () {
   refreshing = true;
 });
 
-setTimeout(() => toggle_visibility('.contribute-popup'), 60000); 
-
 function toggle_visibility(query) {
   var e = document.querySelector(query);
   if(e.style.display == 'block')
