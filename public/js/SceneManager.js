@@ -23,8 +23,6 @@ function SceneManager(canvas) {
 
   function buildScene() {
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
-
     const gridHelper = new THREE.PolarGridHelper(300, 10);
     scene.add(gridHelper);
 
@@ -32,7 +30,7 @@ function SceneManager(canvas) {
   }
 
   function buildRender({ width, height }) {
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
     const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
     renderer.setPixelRatio(DPR);
     renderer.setSize(width, height);
@@ -107,8 +105,8 @@ function SceneManager(canvas) {
 
   this.takeScreenshot = function () {
     var a = document.createElement('a');
-    effect.render(scene, camera);
-    a.href = renderer.domElement.toDataURL().replace("image/png", "image/octet-stream");
+    renderer.setClearColor( 0x000000, 0 );
+    a.href = renderer.domElement.toDataURL("image/png", "image/octet-stream");
     a.download = 'JustSketchMe - Screenshot.png'
     a.click();
   }
