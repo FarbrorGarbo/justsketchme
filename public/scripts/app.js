@@ -47,6 +47,11 @@ navigator.serviceWorker.addEventListener('controllerchange', function () {
   refreshing = true;
 });
 
+function setActive(el) {
+  document.querySelector('.active').classList.remove('active');
+  el.classList.add('active');
+}
+
 function toggle_visibility(query) {
   var e = document.querySelector(query);
   if(e.style.display == 'block')
