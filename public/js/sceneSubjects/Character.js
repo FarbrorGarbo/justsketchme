@@ -146,6 +146,9 @@ function Character(characterIndex, center = false) {
     if (activeGizmo === gizmos.TRANSLATE) {
       character.translateControl = new Control(joints[0].parent, "translate");
     }
+    if (activeGizmo === gizmos.SCALE) {
+      character.translateControl = new Control(joints[0].parent, "scale");
+    }
     if (activeGizmo === gizmos.NONE) {
       joints.forEach(joint => joint.visible = false);
       if (character.translateControl) {
