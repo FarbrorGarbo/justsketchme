@@ -1,4 +1,4 @@
-const version = '20';
+const version = '22';
 var dataCacheName = `v${version}`;
 var cacheName = `v${version}`;
 
