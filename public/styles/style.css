@@ -33,7 +33,6 @@ body {
   justify-content: space-between;
   z-index: 100;
   padding: 10px;
-  background-color: #e2e2e28c;
 }
 
 .controls {
@@ -44,18 +43,27 @@ body {
 }
 
 button {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   padding: 0;
   outline: none;
   border: none;
   cursor: pointer;
   background: none;
+  transition-duration: 0.1s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button.active {
+  transform: scale(1.3);
 }
 
 img {
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 50px;
+  max-height: 50px;
 }
 
 /* Model list */
@@ -67,7 +75,6 @@ img {
   list-style: none;
   padding: 10px;
   margin: 0;
-  background: #e2e2e28c;
 }
 
 .model-list li {
@@ -91,7 +98,6 @@ img {
   right: calc(50% - 85px);
   list-style: none;
   padding: 10px;
-  background: #e2e2e28c;
 }
 
 .info{
@@ -108,18 +114,6 @@ img {
 .control {
   width: 130px;
   padding: 10px;
-}
-
-.pulse { 
-  animation: pulse 20s infinite;
-  animation-timing-function: linear;   
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  98% { transform: scale(1); }
-  99% { transform: scale(1.4); }
-  100% { transform: scale(1); }
 }
 
 .contribute-popup {
@@ -173,7 +167,7 @@ img {
 #snackbar {
   visibility: hidden;
   width: 300px;
-  margin-left: -150px;
+  left: calc(50% - 150px);  
   background-color: #333;
   color: #fff;
   text-align: center;
@@ -181,7 +175,6 @@ img {
   padding: 16px;
   position: fixed;
   z-index: 1;
-  left: 50%;
   bottom: 100px;
 }
 
