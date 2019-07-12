@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;  
+  font-family: Arial, Helvetica, sans-serif;
   background-color: #fff;
   margin: 0px;
   overflow: hidden;
@@ -36,29 +36,44 @@ body {
 }
 
 .controls {
-  max-width: 240px;
+  max-width: 180px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
 button {
-  width: 50px;
-  height: 50px;
+  position: relative;
+  width: 40px;
+  height: 40px;
   padding: 0;
   outline: none;
   border: none;
   cursor: pointer;
   background: none;
   transition-duration: 0.1s;
+  filter: grayscale(100%);
+}
+
+@media (min-width: 768px) {
+
+.controls {
+  max-width: 240px;
+}
+  button {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 button:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  filter: grayscale(20%);
 }
 
 button.active {
-  transform: scale(1.3);
+  transform: scale(1.1);
+  filter: grayscale(0%);
 }
 
 img {
@@ -67,7 +82,7 @@ img {
 }
 
 /* Model list */
-.model-list{
+.model-list {
   position: absolute;
   display: none;
   top: 64px;
@@ -91,7 +106,7 @@ img {
   font-size: 14px;
 }
 
-.light-controls{
+.light-controls {
   position: absolute;
   display: none;
   bottom: 64px;
@@ -100,15 +115,17 @@ img {
   padding: 10px;
 }
 
-.info{
+.info {
   position: absolute;
   display: none;
-  bottom: 64px;
-  right: 0;
+  bottom: 100px;
+  right: 10px;
   list-style: none;
   padding: 10px;
+  color: #fff;
   text-align: left;
-  background: #e2e2e2;
+  border: solid transparent 5px;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .control {
@@ -119,20 +136,20 @@ img {
 .contribute-popup {
   position: fixed;
   display: none;
-	max-width: 500px;
+  max-width: 500px;
   width: 100%;
   height: 300px;
-	left: calc(50% - 280px);
-	top: calc(50% - 150px);
-	padding: 30px;
-	border-radius: 5px;
-	font-size: 14px;
+  left: calc(50% - 280px);
+  top: calc(50% - 150px);
+  padding: 30px;
+  border-radius: 5px;
+  font-size: 14px;
   background: #fff;
   background-size: contain;
   background-position: center bottom;
-	z-index: 100000;
-	box-shadow: 4px 4px 23px -2px rgba(0,0,0,0.75);
-	text-align: center;
+  z-index: 100000;
+  box-shadow: 4px 4px 23px -2px rgba(0, 0, 0, 0.75);
+  text-align: center;
 }
 
 @media screen and (max-width: 480px) {
@@ -160,14 +177,14 @@ img {
 
 .contribute-popup .contribute {
   width: 175px;
-  height:37px;
+  height: 37px;
   margin: 60px auto;
 }
 
 #snackbar {
   visibility: hidden;
   width: 300px;
-  left: calc(50% - 150px);  
+  left: calc(50% - 150px);
   background-color: #333;
   color: #fff;
   text-align: center;
@@ -201,8 +218,8 @@ img {
   height: 37px !important;
   text-decoration: none !important;
   display: inline-flex !important;
-  color: #FFFFFF !important;
-  background-color: #FF813F !important;
+  color: #ffffff !important;
+  background-color: #ff813f !important;
   border-radius: 3px !important;
   border: 1px solid transparent !important;
   padding: 0px 9px !important;
@@ -211,7 +228,7 @@ img {
   box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
   -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
   margin: 0 auto !important;
-  font-family: 'Lato', sans-serif !important;
+  font-family: "Lato", sans-serif !important;
   -webkit-box-sizing: border-box !important;
   box-sizing: border-box !important;
   -o-transition: 0.3s all linear !important;
@@ -228,5 +245,76 @@ img {
   text-decoration: none !important;
   box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
   opacity: 0.85 !important;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
+}
+
+/** Code for hover info **/
+
+@media (min-width: 768px) {
+  dfn {
+    padding: 0 0.4em;
+    font-style: normal;
+    position: relative;
+  }
+
+  dfn::after {
+    content: attr(data-info);
+    display: inline;
+    position: absolute;
+    top: 22px;
+    left: 0;
+    opacity: 0;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5em;
+    padding: 0.5em 0.8em;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    pointer-events: none; /* This prevents the box from apearing when hovered. */
+    transition: opacity 250ms, top 250ms;
+  }
+  dfn::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    border: solid transparent 5px;
+    border-bottom-color: rgba(0, 0, 0, 0.8);
+    transition: opacity 250ms, top 250ms;
+  }
+  dfn:hover {
+    z-index: 2;
+  } /* Keeps the info boxes on top of other elements */
+  dfn:hover::after,
+  dfn:hover::before {
+    opacity: 1;
+  }
+  dfn:hover::after {
+    top: 30px;
+  }
+  dfn:hover::before {
+    top: 20px;
+  }
+
+  dfn.above:after {
+    top: -80px;
+    left: 0;
+  }
+  dfn.above::before {
+    top: -25px;
+    left: 20px;
+    border-top-color: rgba(0, 0, 0, 0.8);
+    border-bottom-color: transparent;
+  }
+  dfn.above:hover::after {
+    top: -110px;
+  }
+  dfn.above:hover::before {
+    top: -59px;
+    
+  }
 }

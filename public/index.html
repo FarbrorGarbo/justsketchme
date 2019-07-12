@@ -70,7 +70,9 @@
   <div id="info" class="menu">
     <div class="models">
       <button onclick="toggle_visibility('.model-list')" title="Character list">
-        <img src="images/models.svg" />
+        <dfn data-info="List of characters">
+          <img src="images/models.svg" />
+        </dfn>
       </button>
       <ul class="model-list">
         <li>
@@ -97,21 +99,31 @@
     </div>
     <div class="controls">
       <button class="active" onclick="setGizmo('rotate'); setActive(this);" title="Joint manipulator">
-        <img src="images/joints.svg" />
+        <dfn data-info="Joint manipulation">
+          <img src="images/joints.svg" />
+        </dfn>
       </button>
       <button onclick="setGizmo('translate'); setActive(this);" title="Move character">
-        <img src="images/move.svg" />
+        <dfn data-info="Move character">
+          <img src="images/move.svg" />
+        </dfn>
       </button>
       <button onclick="setGizmo('scale'); setActive(this);" title="Scale character">
-        <img src="images/geometry.svg" />
+        <dfn data-info="Scale character">
+          <img src="images/geometry.svg" />
+        </dfn>
       </button>
       <button onclick="setGizmo('delete'); setActive(this);" title="Remove character">
-        <img src="images/trash.svg" />
+        <dfn data-info="Remove character">
+          <img src="images/trash.svg" />
+        </dfn>
       </button>
     </div>
     <div>
       <button onclick="setGizmo('none'); setActive(this);" title="Hide controls">
-        <img src="images/view.svg" />
+        <dfn data-info="View">
+          <img src="images/view.svg" />
+        </dfn>
       </button>
     </div>
   </div>
@@ -123,16 +135,22 @@
   <div id="bottom" class="menu">
     <div>
       <button onclick="toggle_visibility('.contribute-popup')" title="Contribute">
-        <img src="images/heart.svg" />
+        <dfn class="above" data-info="Support the development">
+          <img src="images/heart.svg" />
+        </dfn>
       </button>
     </div>
     <div class="controls">
       <button onclick="toggleEffect()" title="Toggle outlines">
-        <img src="images/effect.svg" />
+        <dfn class="above" data-info="Outline effect">
+          <img src="images/effect.svg" />
+        </dfn>
       </button>
       <div class="lights">
         <button onclick="toggle_visibility('.light-controls')" title="Light controls">
-          <img src="images/lights.svg" />
+          <dfn class="above" data-info="Adjust lighting">
+            <img src="images/lights.svg" />
+          </dfn>
         </button>
         <div class="light-controls">
           <div class="control">
@@ -156,34 +174,25 @@
         </div>
       </div>
       <button onclick="takeScreenshot()" title="Take screenshot">
-        <img src="images/agenda.svg" />
+        <dfn class="above" data-info="Take screenshot">
+          <img src="images/agenda.svg" />
+        </dfn>
       </button>
     </div>
     <div>
       <button onclick="toggle_visibility('.info')"" title=" Info">
-        <img src="images/instructions.svg" />
+        <dfn class="above" data-info="Move info">
+          <img src="images/instructions.svg" />
+        </dfn>
       </button>
       <div class="info">
-        <b>
-          Better instructions coming soon, but for now:
-        </b>
-        <br>
-        <ul>
-          <li>Rotate around the scene by holding down the main mouse button and dragging.</li>
-          <li>Pan around the scene by holding down the secondary mouse button and dragging.</li>
-          <li>Zoom by scrolling.</li>
-          <li>Add characters to the scene with the character selector in the top left.</li>
-          <li>Toggle joint manipulation with the cute bone-looking gizmo in the center top.</li>
-          <li>Move characters around the scene with the arrows gizmo in the center top.</li>
-          <li>Remove characters by selecting the trash gizmo in the center top and selecting the character.</li>
-          <li>Hide all armature info and gizmos with the eye tool in the center top.</li>
-          <li>Undo a move with the undo button in the top right.</li>
-          <li>Toggle the outline effect with the paintbrush iun the bottom center.</li>
-          <li>Change the light intensity (both ambient and spotlight) with the slider menu in the bottom center.</li>
-          <li>Take a screenshot with the camera icon in the bottom center.</li>
-          <li>Buy the developers a coffee with the donate button in the bottom left.</li>
-          <li>The "i" button in the bottom right brings this up again.</li>
-        </ul>
+        <p>
+            Rotate around the scene by holding down the main mouse button and dragging.
+            <br>
+            Pan around the scene by holding down the secondary mouse button and dragging.
+            <br>
+            Zoom by scrolling.
+        </p>
       </div>
     </div>
   </div>
