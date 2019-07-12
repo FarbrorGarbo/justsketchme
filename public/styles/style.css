@@ -95,7 +95,7 @@ img {
   position: absolute;
   display: none;
   bottom: 64px;
-  right: calc(50% - 85px);
+  right: calc(50% - 100px);
   list-style: none;
   padding: 10px;
 }
@@ -112,7 +112,7 @@ img {
 }
 
 .control {
-  width: 130px;
+  width: 160px;
   padding: 10px;
 }
 
