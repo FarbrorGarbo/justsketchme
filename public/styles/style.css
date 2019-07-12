@@ -52,7 +52,7 @@ button {
   cursor: pointer;
   background: none;
   transition-duration: 0.1s;
-  filter: grayscale(100%);
+  filter: grayscale(85%);
 }
 
 @media (min-width: 768px) {
