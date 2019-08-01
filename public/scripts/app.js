@@ -52,6 +52,8 @@ function setActive(el) {
   el.classList.add('active');
 }
 
+setTimeout (() => toggle_visibility('.contribute-popup'), 30000);
+
 function toggle_visibility(query) {
   var e = document.querySelector(query);
   if(e.style.display == 'block')
