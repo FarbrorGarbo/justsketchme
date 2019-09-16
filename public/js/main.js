@@ -57,6 +57,10 @@ function decreaseDirectionalLightIntensity () {
   sceneManager.decreaseDirectionalLightIntensity();
 }
 
+function undo () {
+  sceneManager.undo();
+}
+
 document.addEventListener('mousedown', function (event) {
   event.preventDefault();
   sceneManager.onClick(event.clientX, event.clientY)

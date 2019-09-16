@@ -1,6 +1,7 @@
 let camera = null;
 let scene = null;
 let orbitControl = null;
+let prevStore = [];
 
 function SceneManager(canvas) {
 
@@ -163,4 +164,11 @@ function SceneManager(canvas) {
     }
   }
   
+  this.undo = function () {
+    if (prevStore.length > 0) {
+      const prevRotationValues = prevStore.pop();
+      console.log(`Undoing rotation on ${prevRotationValues.object.name}`);
+      prevRotationValues.object.rotation.set(prevRotationValues.x, prevRotationValues.y, prevRotationValues.z);
+    }
+  }
 }
