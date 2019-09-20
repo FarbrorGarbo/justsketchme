@@ -88,8 +88,7 @@ function Character(characterIndex, center = false) {
         if (!character.jointControl) {
           character.jointControl = new Control(selectedJoint.parent, "rotate");
         } else {
-          character.jointControl.detach();
-          character.jointControl.attach(selectedJoint.parent);
+          character.jointControl.updateObject(selectedJoint.parent);
         }
         selectedJoint.setColor(jointColors.SELECTED_COLOR);
         selectedJoint.setOpacity(jointOpacities.SELECTED_OPACITY);

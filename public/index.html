@@ -9,7 +9,7 @@
 
   <script>
     const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-    const version = '25';
+    const version = '26';
 
     /* Google Analytics */
     if (!local) {
@@ -147,6 +147,11 @@
       </button>
     </div>
     <div class="controls">
+      <button onclick="undo()" title="Undo">
+        <dfn class="above" data-info="Undo action">
+          <img src="images/recycling.svg" />
+        </dfn>
+      </button>
       <button onclick="toggleEffect()" title="Toggle outlines">
         <dfn class="above" data-info="Outline effect">
           <img src="images/effect.svg" />
