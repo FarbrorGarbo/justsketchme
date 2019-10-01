@@ -46,81 +46,105 @@
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="msapplication-config" content="images/icons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
   <!-- MailMunch for JustSketchMe -->
   <script src="//a.mailmunch.co/app/v1/site.js" id="mailmunch-script" data-mailmunch-site-id="688969"
     async="async"></script>
 </head>
 
 <body>
-  <div class="contribute-popup">
-    <p>
-      JustSketchMe is <b>free to use</b> and <b>doesn't contain ads</b>. &nbsp;
-    </p>
-    <a href="https://www.patreon.com/join/justsketchme?" class="patreon" target="_blank">
-      <svg viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg">
-        <g>
-          <circle cx="362.589996" cy="204.589996" data-fill="1" id="Oval" r="204.589996"></circle>
-          <rect data-fill="2" height="545.799988" id="Rectangle" width="100" x="0" y="0"></rect>
-        </g>
-      </svg>
-      Become a patron
-    </a>
+  <div id="modal" class="licence-modal modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+      <header class="modal-card-head">
+        <p class="modal-card-title">All the features!</p>
+        <button class="delete" aria-label="close" onclick="toggleLicenceModal()"></button>
+      </header>
+      <div class="modal-card-body">
+        <div class="media-content">
+          <div class="content">
+            <ul>
+              <li>Saving and loading poses 💾</li>
+              <li>Preset pose library 💃 🕺</li>
+              <li>Preset hand pose library (with finger guns) 🤙 ✌️ 🤟 🤘 👌</li>
+              <li>iOS and Android app 📱</li>
+              <li>Desktop app 🖥</li>
+            </ul>
+            <br>
+            <p>
+              <script src="https://gumroad.com/js/gumroad.js"></script>
+              <a class="gumroad-button" href="https://gum.co/justsketchme?wanted=true" target="_blank">
+                Get access to all features
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <footer class="modal-card-foot">
+          Already paid? &nbsp;
+        
+          <button id="licence-key" class="button is-primary">Enter licence key...</button>
+      </footer>
+    </div>
   </div>
 
   <div id="info" class="menu">
     <div class="models">
-      <button onclick="toggle_visibility('.model-list')" title="Character list">
+      <button class="tool-button" onclick="toggle_visibility('.model-list')" title="Character list">
         <dfn data-info="List of characters">
           <img src="images/models.svg" />
         </dfn>
       </button>
       <ul class="model-list">
         <li>
-          <button class="model" onclick="addCharacterToScene(0);toggle_visibility('.model-list');">
+          <button class="model tool-button" onclick="addCharacterToScene(0);toggle_visibility('.model-list');">
             Female mannequin
           </button>
         </li>
         <li>
-          <button class="model" onclick="addCharacterToScene(1);toggle_visibility('.model-list');">
+          <button class="model tool-button" onclick="addCharacterToScene(1);toggle_visibility('.model-list');">
             Male mannequin
           </button>
         </li>
         <li>
-          <button class="model" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
+          <button class="model tool-button" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
             Knight
           </button>
         </li>
         <li>
-          <button class="model" onclick="addCharacterToScene(3);toggle_visibility('.model-list');">
+          <button class="model tool-button" onclick="addCharacterToScene(3);toggle_visibility('.model-list');">
             Assassin
           </button>
         </li>
       </ul>
     </div>
     <div class="controls">
-      <button class="active" onclick="setGizmo('rotate'); setActive(this);" title="Joint manipulator">
+      <button class="tool-button" class="active" onclick="setGizmo('rotate'); setActive(this);"
+        title="Joint manipulator">
         <dfn data-info="Manipulate joints">
           <img src="images/joints.svg" />
         </dfn>
       </button>
-      <button onclick="setGizmo('translate'); setActive(this);" title="Move character">
+      <button class="tool-button" onclick="setGizmo('translate'); setActive(this);" title="Move character">
         <dfn data-info="Move character">
           <img src="images/move.svg" />
         </dfn>
       </button>
-      <button onclick="setGizmo('scale'); setActive(this);" title="Scale character">
+      <button class="tool-button" onclick="setGizmo('scale'); setActive(this);" title="Scale character">
         <dfn data-info="Scale character">
           <img src="images/geometry.svg" />
         </dfn>
       </button>
-      <button onclick="setGizmo('delete'); setActive(this);" title="Remove character">
+      <button class="tool-button" onclick="setGizmo('delete'); setActive(this);" title="Remove character">
         <dfn data-info="Remove character">
           <img src="images/trash.svg" />
         </dfn>
       </button>
     </div>
     <div>
-      <button onclick="setGizmo('none'); setActive(this);" title="Hide controls">
+      <button class="tool-button" onclick="setGizmo('none'); setActive(this);" title="Hide controls">
         <dfn data-info="View">
           <img src="images/view.svg" />
         </dfn>
@@ -134,45 +158,49 @@
   </div>
   <div id="bottom" class="menu">
     <div>
-      <button onclick="takeScreenshot()" title="Take screenshot">
+      <button class="tool-button" onclick="saveScene()" title="Take screenshot">
         <dfn class="above" data-info="Take screenshot">
           <img src="images/agenda.svg" />
         </dfn>
       </button>
     </div>
     <div class="controls">
-      <button onclick="undo()" title="Undo">
+      <button class="tool-button" onclick="undo()" title="Undo">
         <dfn class="above" data-info="Undo action">
           <img src="images/recycling.svg" />
         </dfn>
       </button>
-      <button onclick="toggleEffect()" title="Toggle outlines">
+      <button class="tool-button" onclick="toggleEffect()" title="Toggle outlines">
         <dfn class="above" data-info="Outline effect">
           <img src="images/effect.svg" />
         </dfn>
       </button>
       <div class="lights">
-        <button onclick="toggle_visibility('.light-controls')" title="Light controls">
+        <button class="tool-button" onclick="toggle_visibility('.light-controls')" title="Light controls">
           <dfn class="above" data-info="Adjust lighting">
             <img src="images/lights.svg" />
           </dfn>
         </button>
         <div class="light-controls">
           <div class="control">
-            <button onclick="increaseAmbientLightIntensity()" title="Increase ambient light intensity">
+            <button class="tool-button" onclick="increaseAmbientLightIntensity()"
+              title="Increase ambient light intensity">
               <img src="images/tools/add-circular-button.svg" />
             </button>
             <img src="images/ambient.svg" />
-            <button onclick="decreaseAmbientLightIntensity()" title="Decrease ambient light intensity">
+            <button class="tool-button" onclick="decreaseAmbientLightIntensity()"
+              title="Decrease ambient light intensity">
               <img src="images/tools/minus-circular-button.svg" />
             </button>
           </div>
           <div class="control">
-            <button onclick="increaseDirectionalLightIntensity()" title="Increase directional light intensity">
+            <button class="tool-button" onclick="increaseDirectionalLightIntensity()"
+              title="Increase directional light intensity">
               <img src="images/tools/add-circular-button.svg" />
             </button>
             <img src="images/light.svg" />
-            <button onclick="decreaseDirectionalLightIntensity()" title="Decrease ambient light intensity">
+            <button class="tool-button" onclick="decreaseDirectionalLightIntensity()"
+              title="Decrease ambient light intensity">
               <img src="images/tools/minus-circular-button.svg" />
             </button>
           </div>
@@ -180,7 +208,7 @@
       </div>
     </div>
     <div>
-      <button onclick="toggle_visibility('.info')"" title=" Info">
+      <button class="tool-button" onclick="toggle_visibility('.info')"" title=" Info">
         <dfn class="above" data-info="Move info">
           <img src="images/instructions.svg" />
         </dfn>
@@ -201,6 +229,7 @@
 
   <div id="loading">Loading model...</div>
 
+  <script src="js/licenceManager.js"></script>
   <script src="js/characters.js"></script>
 
   <script src="js/threelibs/three.js"></script>

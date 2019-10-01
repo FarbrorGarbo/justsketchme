@@ -101,6 +101,7 @@ function SceneManager(canvas) {
   }
 
   this.toggleEffect = function () {
+    if (!licenceCheck()) return;
     effect.enabled = !effect.enabled;
   }
 

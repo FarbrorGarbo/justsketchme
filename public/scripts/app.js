@@ -1,7 +1,7 @@
 let newWorker;
 
 // The click event on the notification
-document.getElementById('reload').addEventListener('click', function(){
+document.getElementById('reload').addEventListener('click', function () {
   newWorker.postMessage({ action: 'skipWaiting' });
 });
 
@@ -19,10 +19,10 @@ if ('serviceWorker' in navigator) {
         switch (newWorker.state) {
           case 'installed':
 
-// There is a new service worker available, show the notification
+            // There is a new service worker available, show the notification
             if (navigator.serviceWorker.controller) {
               let notification = document.getElementById('snackbar');
-  notification .className = 'show';
+              notification.className = 'show';
             }
 
             break;
@@ -33,7 +33,7 @@ if ('serviceWorker' in navigator) {
   // Do some clean up
   window.addEventListener('load', () => {
     if (navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({command: 'trimCaches'});
+      navigator.serviceWorker.controller.postMessage({ command: 'trimCaches' });
     }
   });
 }
@@ -54,8 +54,8 @@ function setActive(el) {
 
 function toggle_visibility(query) {
   var e = document.querySelector(query);
-  if(e.style.display == 'block')
-     e.style.display = 'none';
+  if (e.style.display == 'block')
+    e.style.display = 'none';
   else
-     e.style.display = 'block';
+    e.style.display = 'block';
 }

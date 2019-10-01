@@ -23,7 +23,7 @@ body {
 
 #bottom {
   position: absolute;
-  bottom: 40px;
+  bottom: 0;
   left: 0;
   right: 0;
 }
@@ -42,7 +42,7 @@ body {
   justify-content: space-between;
 }
 
-button {
+.tool-button {
   position: relative;
   width: 40px;
   height: 40px;
@@ -60,18 +60,18 @@ button {
 .controls {
   max-width: 240px;
 }
-  button {
+.tool-button {
     width: 50px;
     height: 50px;
   }
 }
 
-button:hover {
+.tool-button:hover {
   transform: scale(1.05);
   filter: grayscale(20%);
 }
 
-button.active {
+.tool-button.active {
   transform: scale(1.1);
   filter: grayscale(0%);
 }
@@ -131,44 +131,6 @@ img {
 .control {
   width: 160px;
   padding: 10px;
-}
-
-.contribute-popup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  width: 100%;
-  height: 46px;
-  left: 0;
-  bottom: 0;
-  font-size: 14px;
-  background: #fff;
-  background-size: contain;
-  background-position: center bottom;
-  z-index: 100000;
-  box-shadow: 4px 4px 23px -2px rgba(0, 0, 0, 0.75);
-  text-align: center;
-}
-
-
-.contribute-popup .patreon {
-  padding: 5px 20px;
-  border-radius: 20px;
-  color: white;
-  text-decoration: none;
-  background-color: #e85b46
-}
-
-.contribute-popup .patreon svg {
-  height: 11px;
-  fill: white;
-}
-
-@media (max-width: 420px) {
-  .contribute-popup p {
-    display: none;
-  }
 }
 
 #snackbar {
