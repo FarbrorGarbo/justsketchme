@@ -23,7 +23,7 @@ body {
 
 #bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
   left: 0;
   right: 0;
 }
@@ -134,14 +134,14 @@ img {
 }
 
 .contribute-popup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
-  display: none;
-  max-width: 500px;
   width: 100%;
-  left: 10px;
-  bottom: 80px;
-  padding: 30px;
-  border-radius: 5px;
+  height: 46px;
+  left: 0;
+  bottom: 0;
   font-size: 14px;
   background: #fff;
   background-size: contain;
@@ -151,27 +151,24 @@ img {
   text-align: center;
 }
 
-@media screen and (max-width: 480px) {
-  .contribute-popup {
-    left: auto;
-    max-width: none;
-    width: auto;
-    margin: 0 10px;
+
+.contribute-popup .patreon {
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: white;
+  text-decoration: none;
+  background-color: #e85b46
+}
+
+.contribute-popup .patreon svg {
+  height: 11px;
+  fill: white;
+}
+
+@media (max-width: 420px) {
+  .contribute-popup p {
+    display: none;
   }
-}
-
-.contribute-popup button {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  background: none;
-  outline: none;
-  border: none;
-  cursor: pointer;
-}
-
-.contribute-popup .contribute {
-  margin: 0 auto;
 }
 
 #snackbar {

@@ -9,7 +9,7 @@
 
   <script>
     const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-    const version = '26';
+    const version = '27';
 
     /* Google Analytics */
     if (!local) {
@@ -46,31 +46,25 @@
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="msapplication-config" content="images/icons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
+  <!-- MailMunch for JustSketchMe -->
+  <script src="//a.mailmunch.co/app/v1/site.js" id="mailmunch-script" data-mailmunch-site-id="688969"
+    async="async"></script>
 </head>
 
 <body>
   <div class="contribute-popup">
-    <button onclick="document.querySelector('.contribute-popup').style.display = 'none';">Close</button>
-    <h2>Keep JustSketchMe AWESOME!</h2>
     <p>
-      JustSketchMe is <b>free to use</b> and <b>doesn't contain ads</b>.
+      JustSketchMe is <b>free to use</b> and <b>doesn't contain ads</b>. &nbsp;
     </p>
-    <p>
-      <b>We want to keep it that way!</b>
-    </p>
-    <div class="contribute">
-      <link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet">
-      <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/AdmtxiM4N"><img
-          src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg"
-          alt="Buy me a coffee"><span style="margin-left:5px">Buy us a coffee</span>
-      </a>
-    </div>
-    <p>
-      <br>
-      Don't have cash to throw at us but <b>still want to contribute</b>?
-      <br><br>
-      <b>Give us a shoutout</b> on social media when you upload your artwork!
-    </p>
+    <a href="https://www.patreon.com/join/justsketchme?" class="patreon" target="_blank">
+      <svg viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <circle cx="362.589996" cy="204.589996" data-fill="1" id="Oval" r="204.589996"></circle>
+          <rect data-fill="2" height="545.799988" id="Rectangle" width="100" x="0" y="0"></rect>
+        </g>
+      </svg>
+      Become a patron
+    </a>
   </div>
 
   <div id="info" class="menu">
@@ -140,9 +134,9 @@
   </div>
   <div id="bottom" class="menu">
     <div>
-      <button onclick="toggle_visibility('.contribute-popup')" title="Contribute">
-        <dfn class="above" data-info="Support the development">
-          <img src="images/heart.svg" />
+      <button onclick="takeScreenshot()" title="Take screenshot">
+        <dfn class="above" data-info="Take screenshot">
+          <img src="images/agenda.svg" />
         </dfn>
       </button>
     </div>
@@ -184,11 +178,6 @@
           </div>
         </div>
       </div>
-      <button onclick="takeScreenshot()" title="Take screenshot">
-        <dfn class="above" data-info="Take screenshot">
-          <img src="images/agenda.svg" />
-        </dfn>
-      </button>
     </div>
     <div>
       <button onclick="toggle_visibility('.info')"" title=" Info">
@@ -198,11 +187,11 @@
       </button>
       <div class="info">
         <p>
-            Rotate around the scene by holding down the main mouse button and dragging.
-            <br>
-            Pan around the scene by holding down the secondary mouse button and dragging.
-            <br>
-            Zoom by scrolling.
+          Rotate around the scene by holding down the main mouse button and dragging.
+          <br>
+          Pan around the scene by holding down the secondary mouse button and dragging.
+          <br>
+          Zoom by scrolling.
         </p>
       </div>
     </div>
