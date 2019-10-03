@@ -48,7 +48,10 @@ navigator.serviceWorker.addEventListener('controllerchange', function () {
 });
 
 function setActive(el) {
-  document.querySelector('.active').classList.remove('active');
+  const active_ones = document.querySelector('.active');
+  if (active_ones){
+    active_ones.classList.remove('active');
+  }
   el.classList.add('active');
 }
 

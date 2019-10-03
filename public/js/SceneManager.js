@@ -2,6 +2,8 @@ let camera = null;
 let scene = null;
 let orbitControl = null;
 let prevStore = [];
+let lastAccessed = null;
+let savedPoses = [];
 
 function SceneManager(canvas) {
 
@@ -20,7 +22,6 @@ function SceneManager(canvas) {
   const sceneSubjects = createSceneSubjects();
   let ambientLight, directionalLight = null;
   const lights = createLights();
-
 
   function buildScene() {
     const scene = new THREE.Scene();
@@ -66,7 +67,7 @@ function SceneManager(canvas) {
     const sceneSubjects = [
       new Character(0, true),
     ];
-
+    lastAccessed = sceneSubjects[0];
     return sceneSubjects;
   }
 
@@ -101,22 +102,70 @@ function SceneManager(canvas) {
   }
 
   this.toggleEffect = function () {
-    if (!licenceCheck()) return;
     effect.enabled = !effect.enabled;
   }
 
   this.takeScreenshot = function () {
     var a = document.createElement('a');
-    renderer.setClearColor( 0x000000, 0 );
+    renderer.setClearColor(0x000000, 0);
     a.href = renderer.domElement.toDataURL("image/png", "image/octet-stream");
     a.download = 'JustSketchMe - Screenshot.png'
     a.click();
   }
 
+  this.savePose = function () {
+    if (!licenceCheck()) return;
+
+    const savedPose = lastAccessed.getPose();
+
+    const name = prompt("Give your pose a name");
+    
+    if(!name) {
+      alert("No name specified. Your pose has not been saved.");
+    }
+    else if(savedPoses.filter(pose => pose.pose_name == name).length > 0) {
+      var request = new XMLHttpRequest()
+      request.open('PUT', `https://cors-anywhere.herokuapp.com/https://sheetdb.io/api/v1/dmanujok7dm7d/id/${savedPoses.filter(pose => pose.pose_name == name)[0].id}`, true)
+      request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      request.onload = function () {
+        var data = JSON.parse(this.response)
+
+        if (request.status >= 200 && request.status < 400) {
+          alert("Your pose has been updated");
+          getPoses();
+        } else {
+          console.log('Saving error')
+        }
+      }
+      request.send(JSON.stringify({ "data": [{ "id": Math.random().toString(36).substr(2, 9), "licence_key": licence_key, "pose_name": name, "pose_values": savedPose }] }));
+    }
+    else {
+      var request = new XMLHttpRequest()
+      request.open('POST', 'https://cors-anywhere.herokuapp.com/https://sheetdb.io/api/v1/dmanujok7dm7d/', true)
+      request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      request.onload = function () {
+        var data = JSON.parse(this.response)
+
+        if (request.status >= 200 && request.status < 400) {
+          alert("Your pose has been saved");
+          getPoses();
+        } else {
+          console.log('Saving error')
+        }
+      }
+      request.send(JSON.stringify({ "data": [{ "id": Math.random().toString(36).substr(2, 9), "licence_key": licence_key, "pose_name": name, "pose_values": savedPose }] }));
+    }
+  }
+
+  this.loadPose = function (id) {
+    console.log(savedPoses);
+    lastAccessed.setPose(JSON.parse(savedPoses[id].pose_values));
+  }
+
   this.increaseAmbientLightIntensity = function () {
     ambientLight.increaseIntensity();
   }
-  
+
   this.decreaseAmbientLightIntensity = function () {
     ambientLight.decreaseIntensity();
   }
@@ -130,14 +179,6 @@ function SceneManager(canvas) {
   }
 
   this.update = function () {
-    const elapsedTime = clock.getElapsedTime();
-
-    // for (let i = 0; i < sceneSubjects.length; i++)
-    //   sceneSubjects[i].update(elapsedTime);
-    
-    // for (let i = 0; i < lights.length; i++)
-    //   lights[i].update(elapsedTime);
-
     effect.render(scene, camera);
   }
 
@@ -164,7 +205,7 @@ function SceneManager(canvas) {
       sceneSubjects[i].onMouseMove(x, y);
     }
   }
-  
+
   this.undo = function () {
     if (prevStore.length > 0) {
       const prevRotationValues = prevStore.pop();

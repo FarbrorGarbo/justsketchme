@@ -9,7 +9,7 @@
 
   <script>
     const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-    const version = '27';
+    const version = '30';
 
     /* Google Analytics */
     if (!local) {
@@ -67,8 +67,8 @@
           <div class="content">
             <ul>
               <li>Saving and loading poses 💾</li>
-              <li>Preset pose library 💃 🕺</li>
-              <li>Preset hand pose library (with finger guns) 🤙 ✌️ 🤟 🤘 👌</li>
+              <li>Preset pose library 💃 🕺 (in progress)</li>
+              <!-- <li>Preset hand pose library (with finger guns) 🤙 ✌️ 🤟 🤘 👌</li> -->
               <li>iOS and Android app 📱</li>
               <li>Desktop app 🖥</li>
             </ul>
@@ -83,9 +83,9 @@
         </div>
       </div>
       <footer class="modal-card-foot">
-          Already paid? &nbsp;
-        
-          <button id="licence-key" class="button is-primary">Enter licence key...</button>
+        Already paid? &nbsp;
+
+        <button id="licence-key" class="button is-primary">Enter licence key...</button>
       </footer>
     </div>
   </div>
@@ -208,20 +208,24 @@
       </div>
     </div>
     <div>
-      <button class="tool-button" onclick="toggle_visibility('.info')"" title=" Info">
-        <dfn class="above" data-info="Move info">
-          <img src="images/instructions.svg" />
+      <button class="tool-button" onclick="savePose()" title="Save pose">
+        <dfn class="above" data-info="Save pose">
+          <img src="images/save.svg" />
         </dfn>
       </button>
-      <div class="info">
-        <p>
-          Rotate around the scene by holding down the main mouse button and dragging.
-          <br>
-          Pan around the scene by holding down the secondary mouse button and dragging.
-          <br>
-          Zoom by scrolling.
-        </p>
-      </div>
+      <button class="tool-button" onclick="licenceCheck();toggle_visibility('.pose-list')" title="Pose library">
+        <dfn class="above" data-info="Pose library">
+          <img src="images/library.svg" />
+        </dfn>
+      </button>
+      <ul class="pose-list">
+        <li>
+          <button class="model tool-button" onclick="toggle_visibility('.pose-list');">
+            No poses in your library
+          </button>
+        </li>
+      </ul>
+
     </div>
   </div>
 

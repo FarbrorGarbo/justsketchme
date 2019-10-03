@@ -41,6 +41,14 @@ function takeScreenshot() {
   sceneManager.takeScreenshot();
 }
 
+function savePose() {
+  sceneManager.savePose();
+}
+
+function loadPose(id) {
+  sceneManager.loadPose(id);
+}
+
 function increaseAmbientLightIntensity () {
   sceneManager.increaseAmbientLightIntensity();
 }
@@ -59,6 +67,33 @@ function decreaseDirectionalLightIntensity () {
 
 function undo () {
   sceneManager.undo();
+}
+
+function getPoses (){
+  if (!licence_key) return;
+  console.log('getting');
+  var request = new XMLHttpRequest()
+  request.open('GET', `https://cors-anywhere.herokuapp.com/https://sheetdb.io/api/v1/dmanujok7dm7d/search?licence_key=${licence_key}`, true)
+  request.onload = function() {
+    var data = JSON.parse(this.response)
+
+    if (request.status >= 200 && request.status < 400) {
+      savedPoses = data;
+      console.log(data);
+      document.querySelector('.pose-list').innerHTML = "";
+      data.forEach((element, index) => {
+        document.querySelector('.pose-list').innerHTML += `
+        <li>
+          <button class="model tool-button" onclick="loadPose(${index});toggle_visibility('.pose-list');">
+            ${element.pose_name}
+          </button>
+        </li>`;
+      });
+    } else {
+      console.log('Getting error')
+    }
+  }
+  request.send();
 }
 
 document.addEventListener('mousedown', function (event) {

@@ -82,7 +82,8 @@ img {
 }
 
 /* Model list */
-.model-list {
+.model-list,
+.pose-list {
   position: absolute;
   display: none;
   top: 64px;
@@ -92,15 +93,20 @@ img {
   margin: 0;
 }
 
-.model-list li {
+.pose-list {
+  top: unset;
+  bottom: 64px;
+  left: unset;
+  right: 0;
+}
+
+.model-list li,
+.pose-list li {
   padding-bottom: 10px;
 }
 
-.model-list li img {
-  width: 30px;
-}
-
-.model-list li button {
+.model-list li button,
+.pose-list li button {
   width: auto;
   height: auto;
   font-size: 14px;

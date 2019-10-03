@@ -69,6 +69,7 @@ function Character(characterIndex, center = false) {
   }
 
   character.selectJoint = function (x, y, joints) {
+    lastAccessed = character;
     const mouse = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
 
@@ -170,6 +171,23 @@ function Character(characterIndex, center = false) {
     character.hoverJoint(x, y, joints);
   }
 
+  character.getPose = function () {
+    let pose = {};
+    character.traverseJoints(characterInfo, character.rig, function (child) {
+      pose[child.name] = {
+        x: child.rotation.x,
+        y: child.rotation.y,
+        z: child.rotation.z,
+      };
+    });
+    return pose;
+  }
+
+  character.setPose = function (pose) {
+    character.traverseJoints(characterInfo, character.rig, function (child) {
+        child.rotation.set(pose[child.name].x, pose[child.name].y, pose[child.name].z);
+    });
+  }
 }
 
 function onError(err) {
