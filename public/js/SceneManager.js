@@ -121,7 +121,7 @@ function SceneManager(canvas) {
     const name = prompt("Give your pose a name");
     
     if(!name) {
-      alert("No name specified. Your pose has not been saved.");
+      return;
     }
     else if(savedPoses.filter(pose => pose.pose_name == name).length > 0) {
       var request = new XMLHttpRequest()
@@ -158,7 +158,7 @@ function SceneManager(canvas) {
   }
 
   this.loadPose = function (id) {
-    console.log(savedPoses);
+    if (!licenceCheck()) return;
     lastAccessed.setPose(JSON.parse(savedPoses[id].pose_values));
   }
 

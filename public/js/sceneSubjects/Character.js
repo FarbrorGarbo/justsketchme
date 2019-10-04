@@ -69,7 +69,6 @@ function Character(characterIndex, center = false) {
   }
 
   character.selectJoint = function (x, y, joints) {
-    lastAccessed = character;
     const mouse = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
 
@@ -81,6 +80,8 @@ function Character(characterIndex, center = false) {
     var intersects = raycaster.intersectObjects(joints);
     if (activeGizmo === gizmos.ROTATE) {
       if (intersects.length > 0) {
+        lastAccessed = character;
+
         var selectedJoint = intersects[0].object;
         joints.forEach(joint => {
           joint.reset();

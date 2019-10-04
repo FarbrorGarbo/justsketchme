@@ -49,46 +49,72 @@ function loadPose(id) {
   sceneManager.loadPose(id);
 }
 
-function increaseAmbientLightIntensity () {
+function deletePose(id) {
+  if (!confirm(`Delete ${savedPoses[id].pose_name}?`)) return;
+  var request = new XMLHttpRequest()
+  request.open('DELETE', `https://cors-anywhere.herokuapp.com/https://sheetdb.io/api/v1/dmanujok7dm7d/id/${savedPoses[id].id}`, true)
+  request.onload = function () {
+    var data = JSON.parse(this.response)
+    if (request.status >= 200 && request.status < 400) {
+      getPoses();
+    } else {
+      console.log('Saving error')
+    }
+  }
+  request.send();
+}
+
+function increaseAmbientLightIntensity() {
   sceneManager.increaseAmbientLightIntensity();
 }
 
-function decreaseAmbientLightIntensity () {
+function decreaseAmbientLightIntensity() {
   sceneManager.decreaseAmbientLightIntensity();
 }
 
-function increaseDirectionalLightIntensity () {
+function increaseDirectionalLightIntensity() {
   sceneManager.increaseDirectionalLightIntensity();
 }
 
-function decreaseDirectionalLightIntensity () {
+function decreaseDirectionalLightIntensity() {
   sceneManager.decreaseDirectionalLightIntensity();
 }
 
-function undo () {
+function undo() {
   sceneManager.undo();
 }
 
-function getPoses (){
+function getPoses() {
   if (!licence_key) return;
   console.log('getting');
   var request = new XMLHttpRequest()
   request.open('GET', `https://cors-anywhere.herokuapp.com/https://sheetdb.io/api/v1/dmanujok7dm7d/search?licence_key=${licence_key}`, true)
-  request.onload = function() {
+  request.onload = function () {
     var data = JSON.parse(this.response)
 
     if (request.status >= 200 && request.status < 400) {
       savedPoses = data;
       console.log(data);
-      document.querySelector('.pose-list').innerHTML = "";
-      data.forEach((element, index) => {
-        document.querySelector('.pose-list').innerHTML += `
-        <li>
-          <button class="model tool-button" onclick="loadPose(${index});toggle_visibility('.pose-list');">
-            ${element.pose_name}
+      document.querySelector('#pose-list').innerHTML = "";
+
+      if (data.length > 0) {
+        data.forEach((element, index) => {
+          document.querySelector('#pose-list').innerHTML += `
+        <a class="panel-block pose">
+          <button class="unbutton" onclick="loadPose(${index});toggle_visibility('.pose-list');">
+          ${element.pose_name}
           </button>
-        </li>`;
-      });
+          <button class="delete" aria-label="delete" onclick="deletePose(${index})"></button>
+        </a>
+        `;
+        });
+      } else {
+        document.querySelector('#pose-list').innerHTML += `
+          <a class="panel-block pose">
+            You have no saved poses
+          </a>
+        `;
+      }
     } else {
       console.log('Getting error')
     }

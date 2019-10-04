@@ -9,7 +9,7 @@
 
   <script>
     const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-    const version = '30';
+    const version = '33';
 
     /* Google Analytics */
     if (!local) {
@@ -97,28 +97,31 @@
           <img src="images/models.svg" />
         </dfn>
       </button>
-      <ul class="model-list">
-        <li>
-          <button class="model tool-button" onclick="addCharacterToScene(0);toggle_visibility('.model-list');">
-            Female mannequin
-          </button>
-        </li>
-        <li>
-          <button class="model tool-button" onclick="addCharacterToScene(1);toggle_visibility('.model-list');">
-            Male mannequin
-          </button>
-        </li>
-        <li>
-          <button class="model tool-button" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
-            Knight
-          </button>
-        </li>
-        <li>
-          <button class="model tool-button" onclick="addCharacterToScene(3);toggle_visibility('.model-list');">
-            Assassin
-          </button>
-        </li>
-      </ul>
+      <div class="model-list">
+        <nav class="panel">
+          <p class="panel-heading">
+            Characters
+          </p>
+          <!-- <p class="panel-tabs">
+            <a class="is-active">Your characters</a>
+            <a>Character library (coming soon)</a>
+          </p> -->
+          <div id="character-list">
+            <a class="panel-block" onclick="addCharacterToScene(0);toggle_visibility('.model-list');">
+              Female mannequin
+            </a>
+            <a class="panel-block" onclick="addCharacterToScene(1);toggle_visibility('.model-list');">
+              Male mannequin
+            </a>
+            <a class="panel-block" onclick="addCharacterToScene(2);toggle_visibility('.model-list');">
+              Knight
+            </a>
+            <a class="panel-block" onclick="addCharacterToScene(3);toggle_visibility('.model-list');">
+              Assassin
+            </a>
+          </div>
+        </nav>
+      </div>
     </div>
     <div class="controls">
       <button class="tool-button" class="active" onclick="setGizmo('rotate'); setActive(this);"
@@ -152,9 +155,16 @@
     </div>
   </div>
   <div id="snackbar">
-    <a id="reload">
-      A new version of this app is available. Click here to update.
-    </a>
+    <div class="notification is-primary">
+      <p class="has-text-centered">
+        A new version of this app is available.
+        <br>
+        <br>
+        <button id="reload" class="button is-primary is-inverted is-outlined">
+          Update to latest version
+        </button>
+      </p>
+    </div>
   </div>
   <div id="bottom" class="menu">
     <div>
@@ -181,7 +191,7 @@
             <img src="images/lights.svg" />
           </dfn>
         </button>
-        <div class="light-controls">
+        <div class="light-controls box" style="display: none;">
           <div class="control">
             <button class="tool-button" onclick="increaseAmbientLightIntensity()"
               title="Increase ambient light intensity">
@@ -213,19 +223,27 @@
           <img src="images/save.svg" />
         </dfn>
       </button>
-      <button class="tool-button" onclick="licenceCheck();toggle_visibility('.pose-list')" title="Pose library">
+      <button class="tool-button" onclick="toggle_visibility('.pose-list')" title="Pose library">
         <dfn class="above" data-info="Pose library">
           <img src="images/library.svg" />
         </dfn>
       </button>
       <ul class="pose-list">
-        <li>
-          <button class="model tool-button" onclick="toggle_visibility('.pose-list');">
-            No poses in your library
-          </button>
-        </li>
+        <nav class="panel">
+          <p class="panel-heading">
+            Poses
+          </p>
+          <p class="panel-tabs">
+            <a class="is-active">Your poses</a>
+            <a>Pose library (coming soon)</a>
+          </p>
+          <div id="pose-list">
+            <a class="panel-block">
+              No saved poses
+            </a>
+          </div>
+        </nav>
       </ul>
-
     </div>
   </div>
 

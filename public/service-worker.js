@@ -1,4 +1,4 @@
-const version = '30';
+const version = '33';
 var dataCacheName = `v${version}`;
 var cacheName = `v${version}`;
 
@@ -45,6 +45,11 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
+
+  // Don't cache backend sheet
+  if ( e.request.url.match( '^.*(\/dmanujok7dm7d\/).*$' ) ) {
+    return false;
+  }
   e.respondWith(
     caches.match(e.request).then(function(response) {
       if(response) {
