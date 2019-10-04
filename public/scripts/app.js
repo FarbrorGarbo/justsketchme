@@ -62,3 +62,22 @@ function toggle_visibility(query) {
   else
     e.style.display = 'block';
 }
+
+function toggle_saved_poses() {
+  const poseList = document.querySelector('#pose-list');
+  const poseLibrary = document.querySelector('#pose-library');
+  const savedToggle = document.querySelector('#saved-toggle');
+  const libraryToggle = document.querySelector('#library-toggle');
+
+  if(poseList.classList.contains('is-hidden')) {
+    poseList.classList.remove('is-hidden');
+    poseLibrary.classList.add('is-hidden');
+    libraryToggle.classList.remove('is-active');
+    savedToggle.classList.add('is-active');
+  } else {
+    poseLibrary.classList.remove('is-hidden');
+    poseList.classList.add('is-hidden');
+    savedToggle.classList.remove('is-active');
+    libraryToggle.classList.add('is-active');
+  }
+}

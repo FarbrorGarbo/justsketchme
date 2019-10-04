@@ -94,6 +94,9 @@ img {
 }
 
 .pose-list {
+  max-height: 80vh;
+  min-width: 250px;
+  overflow-y: auto;
   top: unset;
   bottom: 64px;
   left: unset;

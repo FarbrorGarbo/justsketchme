@@ -4,6 +4,7 @@ let orbitControl = null;
 let prevStore = [];
 let lastAccessed = null;
 let savedPoses = [];
+let poseLibrary = [];
 
 function SceneManager(canvas) {
 
@@ -157,9 +158,9 @@ function SceneManager(canvas) {
     }
   }
 
-  this.loadPose = function (id) {
+  this.loadPose = function (pose) {
     if (!licenceCheck()) return;
-    lastAccessed.setPose(JSON.parse(savedPoses[id].pose_values));
+    lastAccessed.setPose(pose);
   }
 
   this.increaseAmbientLightIntensity = function () {

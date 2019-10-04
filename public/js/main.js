@@ -45,8 +45,12 @@ function savePose() {
   sceneManager.savePose();
 }
 
-function loadPose(id) {
-  sceneManager.loadPose(id);
+function loadSavedPose(id) {
+  sceneManager.loadPose(JSON.parse(savedPoses[id].pose_values));
+}
+
+function loadLibraryPose(id) {
+  sceneManager.loadPose(JSON.parse(poseLibrary[id].pose_values));
 }
 
 function deletePose(id) {
@@ -94,14 +98,14 @@ function getPoses() {
 
     if (request.status >= 200 && request.status < 400) {
       savedPoses = data;
-      console.log(data);
+      // console.log(data);
       document.querySelector('#pose-list').innerHTML = "";
 
       if (data.length > 0) {
         data.forEach((element, index) => {
           document.querySelector('#pose-list').innerHTML += `
         <a class="panel-block pose">
-          <button class="unbutton" onclick="loadPose(${index});toggle_visibility('.pose-list');">
+          <button class="unbutton" onclick="loadSavedPose(${index});toggle_visibility('.pose-list');">
           ${element.pose_name}
           </button>
           <button class="delete" aria-label="delete" onclick="deletePose(${index})"></button>
@@ -115,6 +119,36 @@ function getPoses() {
           </a>
         `;
       }
+    } else {
+      console.log('Getting error')
+    }
+  }
+  request.send();
+}
+
+function getPoseLibrary() {
+
+  console.log('Getting pose library');
+  var request = new XMLHttpRequest()
+  request.open('GET', 'https://cors-anywhere.herokuapp.com/https://sheetdb.io/api/v1/dmanujok7dm7d/?sheet=Presets', true)
+  request.onload = function () {
+    var data = JSON.parse(this.response)
+
+    if (request.status >= 200 && request.status < 400) {
+      poseLibrary = data;
+      console.log(data);
+      document.querySelector('#pose-library').innerHTML = "";
+
+      data.forEach((element, index) => {
+        document.querySelector('#pose-library').innerHTML += `
+      <a class="panel-block pose">
+        <button class="unbutton" onclick="loadLibraryPose(${index});toggle_visibility('.pose-list');">
+        ${element.pose_name}
+        </button>
+      </a>
+      `;
+      });
+
     } else {
       console.log('Getting error')
     }

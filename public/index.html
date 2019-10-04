@@ -9,7 +9,7 @@
 
   <script>
     const local = (location.hostname === "localhost" || location.hostname === "127.0.0.1");
-    const version = '33';
+    const version = '34';
 
     /* Google Analytics */
     if (!local) {
@@ -67,7 +67,7 @@
           <div class="content">
             <ul>
               <li>Saving and loading poses 💾</li>
-              <li>Preset pose library 💃 🕺 (in progress)</li>
+              <li>Preset pose library 💃 🕺</li>
               <!-- <li>Preset hand pose library (with finger guns) 🤙 ✌️ 🤟 🤘 👌</li> -->
               <li>iOS and Android app 📱</li>
               <li>Desktop app 🖥</li>
@@ -168,7 +168,7 @@
   </div>
   <div id="bottom" class="menu">
     <div>
-      <button class="tool-button" onclick="saveScene()" title="Take screenshot">
+      <button class="tool-button" onclick="takeScreenshot()" title="Take screenshot">
         <dfn class="above" data-info="Take screenshot">
           <img src="images/agenda.svg" />
         </dfn>
@@ -228,22 +228,57 @@
           <img src="images/library.svg" />
         </dfn>
       </button>
-      <ul class="pose-list">
+      <div class="pose-list">
         <nav class="panel">
           <p class="panel-heading">
             Poses
           </p>
           <p class="panel-tabs">
-            <a class="is-active">Your poses</a>
-            <a>Pose library (coming soon)</a>
+            <a class="is-active" id="saved-toggle" onclick="toggle_saved_poses()">Your poses</a>
+            <a id="library-toggle" onclick="toggle_saved_poses()">Pose library</a>
           </p>
           <div id="pose-list">
             <a class="panel-block">
               No saved poses
             </a>
           </div>
+          <div id="pose-library" class="is-hidden">
+            <a class="panel-block" onclick="licenceCheck()">
+              T pose
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Walk
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Run
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Sit
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Stomp
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Jump
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Reach
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Dance 1
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Dance 2
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Fighting stance
+            </a>
+            <a class="panel-block" onclick="licenceCheck()">
+              Forward fold
+            </a>
+          </div>
         </nav>
-      </ul>
+      </div>
     </div>
   </div>
 

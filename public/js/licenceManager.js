@@ -24,6 +24,7 @@ function validateLicenceKey() {
       document.querySelector('.licence-modal').remove('is-active');
       localStorage.setItem('licence_key', licence_key);
       getPoses();
+      getPoseLibrary();
     } else {
       alert("Invalid licence key")
     }
