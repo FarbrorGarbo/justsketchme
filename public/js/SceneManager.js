@@ -2,6 +2,7 @@ let camera = null;
 let scene = null;
 let orbitControl = null;
 let prevStore = [];
+let gridHelper = null;
 
 function SceneManager(canvas) {
 
@@ -24,7 +25,7 @@ function SceneManager(canvas) {
 
   function buildScene() {
     const scene = new THREE.Scene();
-    const gridHelper = new THREE.PolarGridHelper(300, 10);
+    gridHelper = new THREE.PolarGridHelper(300, 10);
     scene.add(gridHelper);
 
     return scene;
@@ -106,10 +107,21 @@ function SceneManager(canvas) {
 
   this.takeScreenshot = function () {
     var a = document.createElement('a');
+    gridHelper.visible = false;
     renderer.setClearColor( 0x000000, 0 );
-    a.href = renderer.domElement.toDataURL("image/png", "image/octet-stream");
-    a.download = 'JustSketchMe - Screenshot.png'
-    a.click();
+
+    // Hide the grid temporarily before taking the screenshot
+    setTimeout(function () {
+      a.href = renderer.domElement.toDataURL("image/png", "image/octet-stream");
+      a.download = 'JustSketchMe - Screenshot.png'
+      a.click();
+
+      // Show grid again
+      setTimeout(function () {
+        gridHelper.visible = true;
+      }, 50);
+    }, 10);
+    
   }
 
   this.increaseAmbientLightIntensity = function () {
